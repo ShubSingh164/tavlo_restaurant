@@ -1,0 +1,321 @@
+/**
+ * Tavlo Restaurant ERP - Reviews Page Styles
+ */
+
+.reviewsPage {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+}
+
+/* Stats Row */
+.statsRow {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-4);
+}
+
+.statCard {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-5);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-gray-100);
+}
+
+.statIcon {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.statContent {
+    display: flex;
+    flex-direction: column;
+}
+
+.statValue {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-gray-900);
+    line-height: 1.2;
+}
+
+.statLabel {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+/* Filter Bar */
+.filterBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--spacing-4);
+}
+
+.filterLeft {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-3);
+}
+
+.sectionTitle {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin: 0;
+}
+
+.reviewCount {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+.filterRight {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+}
+
+.filterBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-gray-600);
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+}
+
+.filterBtn:hover {
+    background: var(--color-gray-50);
+}
+
+.ratingSelect {
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+}
+
+/* Reviews Grid */
+.reviewsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-4);
+}
+
+/* Review Card */
+.reviewCard {
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-5);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-gray-100);
+}
+
+.reviewHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-4);
+}
+
+.reviewerInfo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+}
+
+.reviewerAvatar {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+}
+
+.reviewerName {
+    display: block;
+    font-weight: 600;
+    color: var(--color-gray-900);
+}
+
+.reviewDate {
+    display: block;
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+}
+
+.ratingStars {
+    display: flex;
+    gap: 2px;
+}
+
+.reviewComment {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+    line-height: 1.6;
+    margin: 0 0 var(--spacing-4) 0;
+}
+
+.orderItems {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-2);
+    margin-bottom: var(--spacing-4);
+}
+
+.orderItemsLabel {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+}
+
+.orderItemTag {
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 500;
+    color: #f97316;
+    background: rgba(249, 115, 22, 0.1);
+    border-radius: var(--radius-full);
+}
+
+/* Reply Box */
+.replyBox {
+    padding: var(--spacing-4);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-xl);
+    border-left: 3px solid #f97316;
+}
+
+.replyHeader {
+    margin-bottom: var(--spacing-2);
+}
+
+.replyLabel {
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    color: #f97316;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.replyText {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Review Actions */
+.reviewActions {
+    padding-top: var(--spacing-3);
+    border-top: 1px solid var(--color-gray-100);
+}
+
+.replyBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: #f97316;
+    background: transparent;
+    border: 1px solid #f97316;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.replyBtn:hover {
+    background: rgba(249, 115, 22, 0.05);
+}
+
+.replyForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+}
+
+.replyInput {
+    width: 100%;
+    padding: var(--spacing-3);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+    background: var(--color-gray-50);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    resize: vertical;
+}
+
+.replyInput:focus {
+    outline: none;
+    border-color: #f97316;
+}
+
+.replyFormActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-2);
+}
+
+.cancelBtn {
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-gray-600);
+    background: var(--color-gray-100);
+    border: none;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+}
+
+.submitBtn {
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-white);
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    border: none;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .statsRow {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .reviewsGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .statsRow {
+        grid-template-columns: 1fr;
+    }
+
+    .filterBar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

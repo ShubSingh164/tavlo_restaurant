@@ -1,0 +1,760 @@
+/* [project]/src/app/analytics/page.module.css [app-client] (css) */
+.page-module__009YoW__analyticsPage {
+  gap: var(--spacing-6);
+  flex-direction: column;
+  display: flex;
+}
+
+.page-module__009YoW__pageHeader {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.page-module__009YoW__pageTitle {
+  font-size: var(--font-size-2xl);
+  color: var(--color-gray-900);
+  margin: 0 0 var(--spacing-1) 0;
+  font-weight: 700;
+}
+
+.page-module__009YoW__pageSubtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+  margin: 0;
+}
+
+.page-module__009YoW__pageActions {
+  gap: var(--spacing-3);
+  display: flex;
+}
+
+.page-module__009YoW__exportBtn {
+  align-items: center;
+  gap: var(--spacing-2);
+  padding: var(--spacing-3) var(--spacing-5);
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-700);
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  font-weight: 600;
+  transition: all .2s;
+  display: inline-flex;
+}
+
+.page-module__009YoW__exportBtn:hover {
+  background: var(--color-gray-50);
+  border-color: var(--color-gray-300);
+}
+
+.page-module__009YoW__metricsRow {
+  gap: var(--spacing-4);
+  grid-template-columns: repeat(4, 1fr);
+  display: grid;
+}
+
+.page-module__009YoW__metricCard {
+  gap: var(--spacing-4);
+  background: var(--color-white);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-5);
+  border: 1px solid var(--color-gray-100);
+  display: flex;
+  box-shadow: 0 1px 3px #0000000d;
+}
+
+.page-module__009YoW__metricIcon {
+  border-radius: var(--radius-xl);
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  width: 56px;
+  height: 56px;
+  display: flex;
+}
+
+.page-module__009YoW__metricContent {
+  flex-direction: column;
+  flex: 1;
+  display: flex;
+}
+
+.page-module__009YoW__metricTitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+}
+
+.page-module__009YoW__metricValue {
+  color: var(--color-gray-900);
+  margin: var(--spacing-1) 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.page-module__009YoW__metricFooter {
+  align-items: center;
+  gap: var(--spacing-2);
+  display: flex;
+}
+
+.page-module__009YoW__metricChange {
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-flex;
+}
+
+.page-module__009YoW__metricChange.page-module__009YoW__positive {
+  color: #16a34a;
+}
+
+.page-module__009YoW__metricChange.page-module__009YoW__negative {
+  color: #dc2626;
+}
+
+.page-module__009YoW__metricSubtitle {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-400);
+}
+
+.page-module__009YoW__chartsRow {
+  gap: var(--spacing-4);
+  grid-template-columns: 1.5fr 1fr;
+  display: grid;
+}
+
+.page-module__009YoW__secondRow {
+  gap: var(--spacing-4);
+  grid-template-columns: 1fr 1.2fr;
+  display: grid;
+}
+
+.page-module__009YoW__thirdRow {
+  gap: var(--spacing-4);
+  grid-template-columns: 1fr 1fr;
+  display: grid;
+}
+
+.page-module__009YoW__chartCard, .page-module__009YoW__channelCard, .page-module__009YoW__peakCard, .page-module__009YoW__topItemsCard, .page-module__009YoW__paymentCard, .page-module__009YoW__customerCard {
+  background: var(--color-white);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-5);
+  border: 1px solid var(--color-gray-100);
+  box-shadow: 0 1px 3px #0000000d;
+}
+
+.page-module__009YoW__cardHeader {
+  margin-bottom: var(--spacing-4);
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.page-module__009YoW__cardTitle {
+  font-size: var(--font-size-base);
+  color: var(--color-gray-900);
+  margin: 0;
+  font-weight: 600;
+}
+
+.page-module__009YoW__periodBtn {
+  background: var(--color-gray-50);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-700);
+  cursor: pointer;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  font-weight: 500;
+  transition: all .2s;
+  display: inline-flex;
+}
+
+.page-module__009YoW__periodBtn:hover {
+  background: var(--color-gray-100);
+}
+
+.page-module__009YoW__chartHeader {
+  margin-bottom: var(--spacing-5);
+  justify-content: space-between;
+  align-items: flex-start;
+  display: flex;
+}
+
+.page-module__009YoW__chartTitle {
+  font-size: var(--font-size-lg);
+  color: var(--color-gray-900);
+  margin: 0;
+  font-weight: 600;
+}
+
+.page-module__009YoW__chartSubtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+  margin: var(--spacing-1) 0 0 0;
+}
+
+.page-module__009YoW__chartControls {
+  gap: var(--spacing-2);
+  display: flex;
+}
+
+.page-module__009YoW__revenueStats {
+  gap: var(--spacing-4);
+  padding: var(--spacing-4);
+  background: var(--color-gray-50);
+  border-radius: var(--radius-xl);
+  margin-bottom: var(--spacing-5);
+  grid-template-columns: repeat(3, 1fr);
+  display: grid;
+}
+
+.page-module__009YoW__revenueStat {
+  flex-direction: column;
+  display: flex;
+}
+
+.page-module__009YoW__revenueLabel {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+}
+
+.page-module__009YoW__revenueValue {
+  font-size: var(--font-size-xl);
+  color: var(--color-gray-900);
+  margin: var(--spacing-1) 0;
+  font-weight: 700;
+}
+
+.page-module__009YoW__revenueChange {
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-flex;
+}
+
+.page-module__009YoW__revenueChange.page-module__009YoW__positive {
+  color: #16a34a;
+}
+
+.page-module__009YoW__revenueBest {
+  font-size: var(--font-size-sm);
+  color: #f97316;
+  font-weight: 600;
+}
+
+.page-module__009YoW__chartContainer {
+  gap: var(--spacing-3);
+  height: 220px;
+  display: flex;
+}
+
+.page-module__009YoW__chartYAxis {
+  color: var(--color-gray-400);
+  text-align: right;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  padding: 5px 0;
+  font-size: 11px;
+  display: flex;
+}
+
+.page-module__009YoW__chartArea {
+  flex-direction: column;
+  flex: 1;
+  display: flex;
+}
+
+.page-module__009YoW__lineSvg {
+  flex: 1;
+  width: 100%;
+}
+
+.page-module__009YoW__chartXAxis {
+  color: var(--color-gray-400);
+  padding-top: var(--spacing-2);
+  justify-content: space-between;
+  font-size: 11px;
+  display: flex;
+}
+
+.page-module__009YoW__channelTotal {
+  text-align: center;
+  padding: var(--spacing-4);
+  border-radius: var(--radius-xl);
+  margin-bottom: var(--spacing-4);
+  background: linear-gradient(135deg, #f973161a, #f973160d);
+}
+
+.page-module__009YoW__channelTotalLabel {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+  display: block;
+}
+
+.page-module__009YoW__channelTotalValue {
+  color: var(--color-gray-900);
+  margin: var(--spacing-1) 0;
+  font-size: 2rem;
+  font-weight: 700;
+  display: block;
+}
+
+.page-module__009YoW__channelChange {
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-flex;
+}
+
+.page-module__009YoW__channelChange.page-module__009YoW__positive {
+  color: #16a34a;
+}
+
+.page-module__009YoW__channelList {
+  gap: var(--spacing-3);
+  flex-direction: column;
+  display: flex;
+}
+
+.page-module__009YoW__channelItem {
+  align-items: center;
+  gap: var(--spacing-3);
+  display: flex;
+}
+
+.page-module__009YoW__channelInfo {
+  align-items: center;
+  gap: var(--spacing-2);
+  width: 100px;
+  display: flex;
+}
+
+.page-module__009YoW__channelDot {
+  border-radius: var(--radius-full);
+  width: 10px;
+  height: 10px;
+}
+
+.page-module__009YoW__channelName {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-700);
+}
+
+.page-module__009YoW__channelBar {
+  background: var(--color-gray-100);
+  border-radius: var(--radius-full);
+  flex: 1;
+  height: 8px;
+  overflow: hidden;
+}
+
+.page-module__009YoW__channelBarFill {
+  border-radius: var(--radius-full);
+  height: 100%;
+  transition: width .3s;
+}
+
+.page-module__009YoW__channelStats {
+  gap: var(--spacing-2);
+  justify-content: flex-end;
+  width: 80px;
+  display: flex;
+}
+
+.page-module__009YoW__channelOrders {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-900);
+  font-weight: 600;
+}
+
+.page-module__009YoW__channelPercent {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-400);
+}
+
+.page-module__009YoW__peakBadge {
+  color: #f97316;
+  font-size: var(--font-size-sm);
+  border-radius: var(--radius-full);
+  background: #f973161a;
+  padding: 4px 12px;
+  font-weight: 600;
+}
+
+.page-module__009YoW__peakChart {
+  height: 160px;
+  padding: var(--spacing-4) 0;
+  border-bottom: 1px solid var(--color-gray-100);
+  align-items: flex-end;
+  gap: 6px;
+  display: flex;
+}
+
+.page-module__009YoW__peakBar {
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  height: 100%;
+  display: flex;
+}
+
+.page-module__009YoW__peakBarFill {
+  background: linear-gradient(#f97316, #fed7aa);
+  border-radius: 4px 4px 0 0;
+  width: 100%;
+  margin-top: auto;
+  transition: height .3s;
+}
+
+.page-module__009YoW__peakBarFill.page-module__009YoW__peak {
+  background: linear-gradient(#ea580c, #f97316);
+  box-shadow: 0 4px 12px #f9731666;
+}
+
+.page-module__009YoW__peakLabel {
+  color: var(--color-gray-400);
+  margin-top: var(--spacing-2);
+  white-space: nowrap;
+  font-size: 9px;
+}
+
+.page-module__009YoW__peakStats {
+  gap: var(--spacing-3);
+  padding-top: var(--spacing-4);
+  grid-template-columns: repeat(3, 1fr);
+  display: grid;
+}
+
+.page-module__009YoW__peakStat {
+  text-align: center;
+}
+
+.page-module__009YoW__peakStatValue {
+  font-size: var(--font-size-lg);
+  color: var(--color-gray-900);
+  font-weight: 700;
+  display: block;
+}
+
+.page-module__009YoW__peakStatLabel {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-500);
+}
+
+.page-module__009YoW__topItemsList {
+  gap: var(--spacing-3);
+  flex-direction: column;
+  display: flex;
+}
+
+.page-module__009YoW__topItem {
+  align-items: center;
+  gap: var(--spacing-3);
+  padding: var(--spacing-3);
+  background: var(--color-gray-50);
+  border-radius: var(--radius-xl);
+  transition: background .2s;
+  display: flex;
+}
+
+.page-module__009YoW__topItem:hover {
+  background: var(--color-gray-100);
+}
+
+.page-module__009YoW__topItemRank {
+  width: 24px;
+  height: 24px;
+  font-size: var(--font-size-sm);
+  color: #f97316;
+  border-radius: var(--radius-full);
+  background: #f973161a;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  display: flex;
+}
+
+.page-module__009YoW__topItemImage {
+  border-radius: var(--radius-lg);
+  object-fit: cover;
+  width: 48px;
+  height: 48px;
+}
+
+.page-module__009YoW__topItemInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.page-module__009YoW__topItemName {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-900);
+  font-weight: 600;
+  display: block;
+}
+
+.page-module__009YoW__topItemPrice {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-500);
+}
+
+.page-module__009YoW__topItemStats {
+  align-items: flex-end;
+  gap: var(--spacing-1);
+  flex-direction: column;
+  width: 120px;
+  display: flex;
+}
+
+.page-module__009YoW__topItemBar {
+  background: var(--color-gray-200);
+  border-radius: var(--radius-full);
+  width: 100%;
+  height: 6px;
+  overflow: hidden;
+}
+
+.page-module__009YoW__topItemBarFill {
+  border-radius: var(--radius-full);
+  background: linear-gradient(90deg, #f97316, #22c55e);
+  height: 100%;
+}
+
+.page-module__009YoW__topItemOrders {
+  color: var(--color-gray-500);
+  font-size: 11px;
+}
+
+.page-module__009YoW__paymentContent {
+  gap: var(--spacing-6);
+  align-items: center;
+  display: flex;
+}
+
+.page-module__009YoW__paymentDonut {
+  flex-shrink: 0;
+  width: 160px;
+  height: 160px;
+  position: relative;
+}
+
+.page-module__009YoW__paymentDonut svg {
+  width: 100%;
+  height: 100%;
+}
+
+.page-module__009YoW__donutCenter {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.page-module__009YoW__donutTotal {
+  font-size: var(--font-size-lg);
+  color: var(--color-gray-900);
+  font-weight: 700;
+  display: block;
+}
+
+.page-module__009YoW__donutLabel {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-500);
+}
+
+.page-module__009YoW__paymentLegend {
+  gap: var(--spacing-3);
+  flex-direction: column;
+  flex: 1;
+  display: flex;
+}
+
+.page-module__009YoW__paymentItem {
+  padding: var(--spacing-2) 0;
+  border-bottom: 1px solid var(--color-gray-100);
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.page-module__009YoW__paymentItem:last-child {
+  border-bottom: none;
+}
+
+.page-module__009YoW__paymentItemLeft {
+  align-items: center;
+  gap: var(--spacing-2);
+  display: flex;
+}
+
+.page-module__009YoW__paymentDot {
+  border-radius: var(--radius-full);
+  width: 12px;
+  height: 12px;
+}
+
+.page-module__009YoW__paymentName {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-700);
+}
+
+.page-module__009YoW__paymentItemRight {
+  align-items: center;
+  gap: var(--spacing-3);
+  display: flex;
+}
+
+.page-module__009YoW__paymentAmount {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-900);
+  font-weight: 600;
+}
+
+.page-module__009YoW__paymentPercent {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+  text-align: right;
+  min-width: 40px;
+}
+
+.page-module__009YoW__customerStats {
+  gap: var(--spacing-4);
+  margin-bottom: var(--spacing-5);
+  grid-template-columns: repeat(3, 1fr);
+  display: grid;
+}
+
+.page-module__009YoW__customerStat {
+  padding: var(--spacing-4);
+  background: var(--color-gray-50);
+  border-radius: var(--radius-xl);
+}
+
+.page-module__009YoW__customerStatHeader {
+  margin-bottom: var(--spacing-2);
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.page-module__009YoW__customerStatLabel {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+}
+
+.page-module__009YoW__customerChange {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.page-module__009YoW__customerChange.page-module__009YoW__positive {
+  color: #16a34a;
+}
+
+.page-module__009YoW__customerChange.page-module__009YoW__negative {
+  color: #dc2626;
+}
+
+.page-module__009YoW__customerStatValue {
+  color: var(--color-gray-900);
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: block;
+}
+
+.page-module__009YoW__customerStatPeriod {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-400);
+}
+
+.page-module__009YoW__customerRatio {
+  padding: var(--spacing-4);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, #f973160d, #3b82f60d);
+}
+
+.page-module__009YoW__ratioLabel {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-700);
+  margin-bottom: var(--spacing-3);
+  font-weight: 500;
+  display: block;
+}
+
+.page-module__009YoW__ratioBar {
+  border-radius: var(--radius-lg);
+  height: 40px;
+  display: flex;
+  overflow: hidden;
+}
+
+.page-module__009YoW__ratioNew {
+  color: #fff;
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  justify-content: center;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+}
+
+.page-module__009YoW__ratioReturning {
+  color: #fff;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  justify-content: center;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+}
+
+@media (max-width: 1280px) {
+  .page-module__009YoW__metricsRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .page-module__009YoW__chartsRow, .page-module__009YoW__secondRow, .page-module__009YoW__thirdRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-module__009YoW__metricsRow {
+    grid-template-columns: 1fr;
+  }
+
+  .page-module__009YoW__pageHeader {
+    align-items: flex-start;
+    gap: var(--spacing-4);
+    flex-direction: column;
+  }
+
+  .page-module__009YoW__revenueStats {
+    grid-template-columns: 1fr;
+  }
+
+  .page-module__009YoW__paymentContent {
+    flex-direction: column;
+  }
+
+  .page-module__009YoW__customerStats {
+    grid-template-columns: 1fr;
+  }
+
+  .page-module__009YoW__chartControls {
+    flex-wrap: wrap;
+  }
+}
+
+/*# sourceMappingURL=src_app_analytics_page_module_css_bad6b30c._.single.css.map*/

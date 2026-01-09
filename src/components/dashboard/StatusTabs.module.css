@@ -1,0 +1,76 @@
+/**
+ * Tavlo Restaurant ERP - Status Tabs Styles
+ */
+
+.tabs {
+    display: flex;
+    gap: var(--spacing-2);
+    flex-wrap: wrap;
+}
+
+.tab {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-600);
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.tab:hover {
+    border-color: var(--color-gray-300);
+}
+
+/* Active States */
+.tab.active {
+    background: var(--color-gray-800);
+    color: var(--color-white);
+    border-color: var(--color-gray-800);
+}
+
+.tab.active.success {
+    background: var(--color-success);
+    border-color: var(--color-success);
+}
+
+.tab.active.warning {
+    background: var(--color-warning);
+    border-color: var(--color-warning);
+    color: var(--color-gray-900);
+}
+
+.tab.active.error {
+    background: var(--color-error);
+    border-color: var(--color-error);
+}
+
+.label {
+    white-space: nowrap;
+}
+
+.count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 var(--spacing-2);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+    border-radius: var(--radius-full);
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.tab.active .count {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.tab.active.warning .count {
+    background: rgba(0, 0, 0, 0.1);
+}

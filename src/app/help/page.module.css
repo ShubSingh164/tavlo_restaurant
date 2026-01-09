@@ -1,0 +1,364 @@
+/**
+ * Tavlo Restaurant ERP - Help Page Styles
+ */
+
+.helpPage {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-8);
+}
+
+/* Hero Section */
+.heroSection {
+    text-align: center;
+    padding: var(--spacing-8) var(--spacing-6);
+    background: linear-gradient(135deg, #fef3c7, #fffbeb);
+    border-radius: var(--radius-2xl);
+}
+
+.heroTitle {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-gray-900);
+    margin: 0 0 var(--spacing-2) 0;
+}
+
+.heroSubtitle {
+    font-size: var(--font-size-base);
+    color: var(--color-gray-600);
+    margin: 0 0 var(--spacing-6) 0;
+}
+
+.searchBox {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    max-width: 500px;
+    margin: 0 auto;
+    padding: var(--spacing-3) var(--spacing-5);
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-full);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.searchBox svg {
+    color: var(--color-gray-400);
+    flex-shrink: 0;
+}
+
+.searchBox input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: var(--font-size-base);
+    outline: none;
+}
+
+/* Support Options */
+.supportOptions {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-4);
+}
+
+.supportCard {
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-5);
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-gray-100);
+    transition: all 0.2s;
+    cursor: pointer;
+}
+
+.supportCard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.supportIcon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: var(--spacing-3);
+}
+
+.supportTitle {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin: 0 0 var(--spacing-1) 0;
+}
+
+.supportDesc {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+    margin: 0 0 var(--spacing-3) 0;
+}
+
+.supportAction {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: #f97316;
+}
+
+/* FAQ Section */
+.faqSection {
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-6);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-gray-100);
+}
+
+.sectionTitle {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin: 0 0 var(--spacing-6) 0;
+}
+
+.faqGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-6);
+}
+
+.faqCategory {
+    padding: var(--spacing-4);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-xl);
+}
+
+.categoryHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    margin-bottom: var(--spacing-4);
+}
+
+.categoryIcon {
+    font-size: 1.5rem;
+}
+
+.categoryTitle {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin: 0;
+}
+
+.faqList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+}
+
+.faqItem {
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.faqQuestion {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: var(--spacing-3) var(--spacing-4);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-gray-700);
+    background: transparent;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.faqQuestion:hover {
+    background: var(--color-gray-50);
+}
+
+.faqQuestion svg {
+    flex-shrink: 0;
+    color: var(--color-gray-400);
+    transition: transform 0.2s;
+}
+
+.faqItem.open .faqQuestion svg {
+    transform: rotate(180deg);
+}
+
+.faqAnswer {
+    padding: 0 var(--spacing-4) var(--spacing-4) var(--spacing-4);
+}
+
+.faqAnswer p {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Contact Section */
+.contactSection {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--spacing-6);
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-6);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-gray-100);
+}
+
+.contactInfo {
+    padding-right: var(--spacing-6);
+    border-right: 1px solid var(--color-gray-100);
+}
+
+.contactTitle {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin: 0 0 var(--spacing-2) 0;
+}
+
+.contactDesc {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+    line-height: 1.6;
+    margin: 0 0 var(--spacing-6) 0;
+}
+
+.contactDetails {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+}
+
+.contactItem {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+}
+
+.contactItem .contactIcon {
+    font-size: 1.25rem;
+}
+
+.contactLabel {
+    display: block;
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+}
+
+.contactValue {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-gray-900);
+}
+
+/* Contact Form */
+.contactForm {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+}
+
+.formRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-4);
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+}
+
+.formGroup label {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-gray-700);
+}
+
+.formGroup input,
+.formGroup textarea {
+    padding: var(--spacing-3) var(--spacing-4);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+    background: var(--color-gray-50);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    transition: all 0.2s;
+}
+
+.formGroup input:focus,
+.formGroup textarea:focus {
+    outline: none;
+    border-color: #f97316;
+    background: var(--color-white);
+}
+
+.formGroup textarea {
+    resize: vertical;
+}
+
+.submitBtn {
+    align-self: flex-start;
+    padding: var(--spacing-3) var(--spacing-6);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-white);
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    border: none;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.submitBtn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .supportOptions {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .faqGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .contactSection {
+        grid-template-columns: 1fr;
+    }
+
+    .contactInfo {
+        padding-right: 0;
+        border-right: none;
+        border-bottom: 1px solid var(--color-gray-100);
+        padding-bottom: var(--spacing-6);
+    }
+}
+
+@media (max-width: 768px) {
+    .supportOptions {
+        grid-template-columns: 1fr;
+    }
+
+    .formRow {
+        grid-template-columns: 1fr;
+    }
+
+    .heroTitle {
+        font-size: 1.5rem;
+    }
+}

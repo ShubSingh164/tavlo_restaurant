@@ -1,0 +1,815 @@
+/**
+ * Tavlo Restaurant ERP - Analytics Page Styles
+ */
+
+.analyticsPage {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+}
+
+/* ============================================================================
+   PAGE HEADER
+   ============================================================================ */
+
+.pageHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pageTitle {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    color: var(--color-gray-900);
+    margin: 0 0 var(--spacing-1) 0;
+}
+
+.pageSubtitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+    margin: 0;
+}
+
+.pageActions {
+    display: flex;
+    gap: var(--spacing-3);
+}
+
+.exportBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-3) var(--spacing-5);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-gray-700);
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.exportBtn:hover {
+    background: var(--color-gray-50);
+    border-color: var(--color-gray-300);
+}
+
+/* ============================================================================
+   METRICS ROW
+   ============================================================================ */
+
+.metricsRow {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-4);
+}
+
+.metricCard {
+    display: flex;
+    gap: var(--spacing-4);
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-5);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-gray-100);
+}
+
+.metricIcon {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.metricContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.metricTitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+.metricValue {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-gray-900);
+    line-height: 1.2;
+    margin: var(--spacing-1) 0;
+}
+
+.metricFooter {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.metricChange {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.metricChange.positive {
+    color: #16a34a;
+}
+
+.metricChange.negative {
+    color: #dc2626;
+}
+
+.metricSubtitle {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-400);
+}
+
+/* ============================================================================
+   CHARTS ROW
+   ============================================================================ */
+
+.chartsRow {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: var(--spacing-4);
+}
+
+.secondRow {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: var(--spacing-4);
+}
+
+.thirdRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-4);
+}
+
+/* ============================================================================
+   COMMON CARD STYLES
+   ============================================================================ */
+
+.chartCard,
+.channelCard,
+.peakCard,
+.topItemsCard,
+.paymentCard,
+.customerCard {
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-5);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-gray-100);
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-4);
+}
+
+.cardTitle {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin: 0;
+}
+
+.periodBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: var(--color-gray-50);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-gray-700);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.periodBtn:hover {
+    background: var(--color-gray-100);
+}
+
+/* ============================================================================
+   REVENUE CHART
+   ============================================================================ */
+
+.chartHeader {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-5);
+}
+
+.chartTitle {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin: 0;
+}
+
+.chartSubtitle {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+    margin: var(--spacing-1) 0 0 0;
+}
+
+.chartControls {
+    display: flex;
+    gap: var(--spacing-2);
+}
+
+.revenueStats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-4);
+    padding: var(--spacing-4);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-xl);
+    margin-bottom: var(--spacing-5);
+}
+
+.revenueStat {
+    display: flex;
+    flex-direction: column;
+}
+
+.revenueLabel {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+.revenueValue {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--color-gray-900);
+    margin: var(--spacing-1) 0;
+}
+
+.revenueChange {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.revenueChange.positive {
+    color: #16a34a;
+}
+
+.revenueBest {
+    font-size: var(--font-size-sm);
+    color: #f97316;
+    font-weight: 600;
+}
+
+.chartContainer {
+    display: flex;
+    gap: var(--spacing-3);
+    height: 220px;
+}
+
+.chartYAxis {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--color-gray-400);
+    padding: 5px 0;
+    width: 30px;
+    text-align: right;
+}
+
+.chartArea {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.lineSvg {
+    flex: 1;
+    width: 100%;
+}
+
+.chartXAxis {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--color-gray-400);
+    padding-top: var(--spacing-2);
+}
+
+/* ============================================================================
+   ORDERS BY CHANNEL
+   ============================================================================ */
+
+.channelTotal {
+    text-align: center;
+    padding: var(--spacing-4);
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(249, 115, 22, 0.05));
+    border-radius: var(--radius-xl);
+    margin-bottom: var(--spacing-4);
+}
+
+.channelTotalLabel {
+    display: block;
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+.channelTotalValue {
+    display: block;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-gray-900);
+    margin: var(--spacing-1) 0;
+}
+
+.channelChange {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.channelChange.positive {
+    color: #16a34a;
+}
+
+.channelList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+}
+
+.channelItem {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+}
+
+.channelInfo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    width: 100px;
+}
+
+.channelDot {
+    width: 10px;
+    height: 10px;
+    border-radius: var(--radius-full);
+}
+
+.channelName {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+}
+
+.channelBar {
+    flex: 1;
+    height: 8px;
+    background: var(--color-gray-100);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.channelBarFill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width 0.3s ease;
+}
+
+.channelStats {
+    display: flex;
+    gap: var(--spacing-2);
+    width: 80px;
+    justify-content: flex-end;
+}
+
+.channelOrders {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-gray-900);
+}
+
+.channelPercent {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-400);
+}
+
+/* ============================================================================
+   PEAK HOURS
+   ============================================================================ */
+
+.peakBadge {
+    padding: 4px 12px;
+    background: rgba(249, 115, 22, 0.1);
+    color: #f97316;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    border-radius: var(--radius-full);
+}
+
+.peakChart {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+    height: 160px;
+    padding: var(--spacing-4) 0;
+    border-bottom: 1px solid var(--color-gray-100);
+}
+
+.peakBar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.peakBarFill {
+    width: 100%;
+    background: linear-gradient(180deg, #f97316, #fed7aa);
+    border-radius: 4px 4px 0 0;
+    transition: height 0.3s ease;
+    margin-top: auto;
+}
+
+.peakBarFill.peak {
+    background: linear-gradient(180deg, #ea580c, #f97316);
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4);
+}
+
+.peakLabel {
+    font-size: 9px;
+    color: var(--color-gray-400);
+    margin-top: var(--spacing-2);
+    white-space: nowrap;
+}
+
+.peakStats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-3);
+    padding-top: var(--spacing-4);
+}
+
+.peakStat {
+    text-align: center;
+}
+
+.peakStatValue {
+    display: block;
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--color-gray-900);
+}
+
+.peakStatLabel {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+}
+
+/* ============================================================================
+   TOP SELLING ITEMS
+   ============================================================================ */
+
+.topItemsList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+}
+
+.topItem {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    padding: var(--spacing-3);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-xl);
+    transition: background 0.2s;
+}
+
+.topItem:hover {
+    background: var(--color-gray-100);
+}
+
+.topItemRank {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    color: #f97316;
+    background: rgba(249, 115, 22, 0.1);
+    border-radius: var(--radius-full);
+}
+
+.topItemImage {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-lg);
+    object-fit: cover;
+}
+
+.topItemInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.topItemName {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-gray-900);
+}
+
+.topItemPrice {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+}
+
+.topItemStats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--spacing-1);
+    width: 120px;
+}
+
+.topItemBar {
+    width: 100%;
+    height: 6px;
+    background: var(--color-gray-200);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.topItemBarFill {
+    height: 100%;
+    background: linear-gradient(90deg, #f97316, #22c55e);
+    border-radius: var(--radius-full);
+}
+
+.topItemOrders {
+    font-size: 11px;
+    color: var(--color-gray-500);
+}
+
+/* ============================================================================
+   PAYMENT METHODS
+   ============================================================================ */
+
+.paymentContent {
+    display: flex;
+    gap: var(--spacing-6);
+    align-items: center;
+}
+
+.paymentDonut {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    flex-shrink: 0;
+}
+
+.paymentDonut svg {
+    width: 100%;
+    height: 100%;
+}
+
+.donutCenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.donutTotal {
+    display: block;
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    color: var(--color-gray-900);
+}
+
+.donutLabel {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+}
+
+.paymentLegend {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+}
+
+.paymentItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-2) 0;
+    border-bottom: 1px solid var(--color-gray-100);
+}
+
+.paymentItem:last-child {
+    border-bottom: none;
+}
+
+.paymentItemLeft {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.paymentDot {
+    width: 12px;
+    height: 12px;
+    border-radius: var(--radius-full);
+}
+
+.paymentName {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+}
+
+.paymentItemRight {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+}
+
+.paymentAmount {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-gray-900);
+}
+
+.paymentPercent {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+    min-width: 40px;
+    text-align: right;
+}
+
+/* ============================================================================
+   CUSTOMER ANALYTICS
+   ============================================================================ */
+
+.customerStats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-4);
+    margin-bottom: var(--spacing-5);
+}
+
+.customerStat {
+    padding: var(--spacing-4);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-xl);
+}
+
+.customerStatHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-2);
+}
+
+.customerStatLabel {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+.customerChange {
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.customerChange.positive {
+    color: #16a34a;
+}
+
+.customerChange.negative {
+    color: #dc2626;
+}
+
+.customerStatValue {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-gray-900);
+}
+
+.customerStatPeriod {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-400);
+}
+
+.customerRatio {
+    padding: var(--spacing-4);
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.05), rgba(59, 130, 246, 0.05));
+    border-radius: var(--radius-xl);
+}
+
+.ratioLabel {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-gray-700);
+    margin-bottom: var(--spacing-3);
+}
+
+.ratioBar {
+    display: flex;
+    height: 40px;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.ratioNew {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.ratioReturning {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+@media (max-width: 1280px) {
+    .metricsRow {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .chartsRow {
+        grid-template-columns: 1fr;
+    }
+
+    .secondRow,
+    .thirdRow {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .metricsRow {
+        grid-template-columns: 1fr;
+    }
+
+    .pageHeader {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-4);
+    }
+
+    .revenueStats {
+        grid-template-columns: 1fr;
+    }
+
+    .paymentContent {
+        flex-direction: column;
+    }
+
+    .customerStats {
+        grid-template-columns: 1fr;
+    }
+
+    .chartControls {
+        flex-wrap: wrap;
+    }
+}

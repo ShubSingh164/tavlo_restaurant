@@ -1,0 +1,347 @@
+/* [project]/src/app/help/page.module.css [app-client] (css) */
+.page-module__dzFrVa__helpPage {
+  gap: var(--spacing-8);
+  flex-direction: column;
+  display: flex;
+}
+
+.page-module__dzFrVa__heroSection {
+  text-align: center;
+  padding: var(--spacing-8) var(--spacing-6);
+  border-radius: var(--radius-2xl);
+  background: linear-gradient(135deg, #fef3c7, #fffbeb);
+}
+
+.page-module__dzFrVa__heroTitle {
+  color: var(--color-gray-900);
+  margin: 0 0 var(--spacing-2) 0;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.page-module__dzFrVa__heroSubtitle {
+  font-size: var(--font-size-base);
+  color: var(--color-gray-600);
+  margin: 0 0 var(--spacing-6) 0;
+}
+
+.page-module__dzFrVa__searchBox {
+  align-items: center;
+  gap: var(--spacing-3);
+  max-width: 500px;
+  padding: var(--spacing-3) var(--spacing-5);
+  background: var(--color-white);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-full);
+  margin: 0 auto;
+  display: flex;
+  box-shadow: 0 4px 12px #0000000d;
+}
+
+.page-module__dzFrVa__searchBox svg {
+  color: var(--color-gray-400);
+  flex-shrink: 0;
+}
+
+.page-module__dzFrVa__searchBox input {
+  font-size: var(--font-size-base);
+  background: none;
+  border: none;
+  outline: none;
+  flex: 1;
+}
+
+.page-module__dzFrVa__supportOptions {
+  gap: var(--spacing-4);
+  grid-template-columns: repeat(4, 1fr);
+  display: grid;
+}
+
+.page-module__dzFrVa__supportCard {
+  background: var(--color-white);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-5);
+  text-align: center;
+  border: 1px solid var(--color-gray-100);
+  cursor: pointer;
+  transition: all .2s;
+  box-shadow: 0 1px 3px #0000000d;
+}
+
+.page-module__dzFrVa__supportCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px #0000001a;
+}
+
+.page-module__dzFrVa__supportIcon {
+  margin-bottom: var(--spacing-3);
+  font-size: 2rem;
+  display: block;
+}
+
+.page-module__dzFrVa__supportTitle {
+  font-size: var(--font-size-base);
+  color: var(--color-gray-900);
+  margin: 0 0 var(--spacing-1) 0;
+  font-weight: 600;
+}
+
+.page-module__dzFrVa__supportDesc {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+  margin: 0 0 var(--spacing-3) 0;
+}
+
+.page-module__dzFrVa__supportAction {
+  font-size: var(--font-size-sm);
+  color: #f97316;
+  font-weight: 600;
+}
+
+.page-module__dzFrVa__faqSection {
+  background: var(--color-white);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-6);
+  border: 1px solid var(--color-gray-100);
+  box-shadow: 0 1px 3px #0000000d;
+}
+
+.page-module__dzFrVa__sectionTitle {
+  font-size: var(--font-size-xl);
+  color: var(--color-gray-900);
+  margin: 0 0 var(--spacing-6) 0;
+  font-weight: 600;
+}
+
+.page-module__dzFrVa__faqGrid {
+  gap: var(--spacing-6);
+  grid-template-columns: repeat(2, 1fr);
+  display: grid;
+}
+
+.page-module__dzFrVa__faqCategory {
+  padding: var(--spacing-4);
+  background: var(--color-gray-50);
+  border-radius: var(--radius-xl);
+}
+
+.page-module__dzFrVa__categoryHeader {
+  align-items: center;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-4);
+  display: flex;
+}
+
+.page-module__dzFrVa__categoryIcon {
+  font-size: 1.5rem;
+}
+
+.page-module__dzFrVa__categoryTitle {
+  font-size: var(--font-size-base);
+  color: var(--color-gray-900);
+  margin: 0;
+  font-weight: 600;
+}
+
+.page-module__dzFrVa__faqList {
+  gap: var(--spacing-2);
+  flex-direction: column;
+  display: flex;
+}
+
+.page-module__dzFrVa__faqItem {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.page-module__dzFrVa__faqQuestion {
+  width: 100%;
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-700);
+  text-align: left;
+  cursor: pointer;
+  background: none;
+  border: none;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  transition: all .2s;
+  display: flex;
+}
+
+.page-module__dzFrVa__faqQuestion:hover {
+  background: var(--color-gray-50);
+}
+
+.page-module__dzFrVa__faqQuestion svg {
+  color: var(--color-gray-400);
+  flex-shrink: 0;
+  transition: transform .2s;
+}
+
+.page-module__dzFrVa__faqItem.page-module__dzFrVa__open .page-module__dzFrVa__faqQuestion svg {
+  transform: rotate(180deg);
+}
+
+.page-module__dzFrVa__faqAnswer {
+  padding: 0 var(--spacing-4) var(--spacing-4) var(--spacing-4);
+}
+
+.page-module__dzFrVa__faqAnswer p {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-600);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.page-module__dzFrVa__contactSection {
+  gap: var(--spacing-6);
+  background: var(--color-white);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-6);
+  border: 1px solid var(--color-gray-100);
+  grid-template-columns: 1fr 2fr;
+  display: grid;
+  box-shadow: 0 1px 3px #0000000d;
+}
+
+.page-module__dzFrVa__contactInfo {
+  padding-right: var(--spacing-6);
+  border-right: 1px solid var(--color-gray-100);
+}
+
+.page-module__dzFrVa__contactTitle {
+  font-size: var(--font-size-xl);
+  color: var(--color-gray-900);
+  margin: 0 0 var(--spacing-2) 0;
+  font-weight: 600;
+}
+
+.page-module__dzFrVa__contactDesc {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-600);
+  margin: 0 0 var(--spacing-6) 0;
+  line-height: 1.6;
+}
+
+.page-module__dzFrVa__contactDetails {
+  gap: var(--spacing-4);
+  flex-direction: column;
+  display: flex;
+}
+
+.page-module__dzFrVa__contactItem {
+  align-items: center;
+  gap: var(--spacing-3);
+  display: flex;
+}
+
+.page-module__dzFrVa__contactItem .page-module__dzFrVa__contactIcon {
+  font-size: 1.25rem;
+}
+
+.page-module__dzFrVa__contactLabel {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-500);
+  display: block;
+}
+
+.page-module__dzFrVa__contactValue {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-900);
+  font-weight: 600;
+  display: block;
+}
+
+.page-module__dzFrVa__contactForm {
+  gap: var(--spacing-4);
+  flex-direction: column;
+  display: flex;
+}
+
+.page-module__dzFrVa__formRow {
+  gap: var(--spacing-4);
+  grid-template-columns: 1fr 1fr;
+  display: grid;
+}
+
+.page-module__dzFrVa__formGroup {
+  gap: var(--spacing-2);
+  flex-direction: column;
+  display: flex;
+}
+
+.page-module__dzFrVa__formGroup label {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-700);
+  font-weight: 500;
+}
+
+.page-module__dzFrVa__formGroup input, .page-module__dzFrVa__formGroup textarea {
+  padding: var(--spacing-3) var(--spacing-4);
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-700);
+  background: var(--color-gray-50);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+  transition: all .2s;
+}
+
+.page-module__dzFrVa__formGroup input:focus, .page-module__dzFrVa__formGroup textarea:focus {
+  background: var(--color-white);
+  border-color: #f97316;
+  outline: none;
+}
+
+.page-module__dzFrVa__formGroup textarea {
+  resize: vertical;
+}
+
+.page-module__dzFrVa__submitBtn {
+  padding: var(--spacing-3) var(--spacing-6);
+  font-size: var(--font-size-sm);
+  color: var(--color-white);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  border: none;
+  align-self: flex-start;
+  font-weight: 600;
+  transition: all .2s;
+}
+
+.page-module__dzFrVa__submitBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px #f9731666;
+}
+
+@media (max-width: 1024px) {
+  .page-module__dzFrVa__supportOptions {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .page-module__dzFrVa__faqGrid, .page-module__dzFrVa__contactSection {
+    grid-template-columns: 1fr;
+  }
+
+  .page-module__dzFrVa__contactInfo {
+    border-right: none;
+    border-bottom: 1px solid var(--color-gray-100);
+    padding-right: 0;
+    padding-bottom: var(--spacing-6);
+  }
+}
+
+@media (max-width: 768px) {
+  .page-module__dzFrVa__supportOptions, .page-module__dzFrVa__formRow {
+    grid-template-columns: 1fr;
+  }
+
+  .page-module__dzFrVa__heroTitle {
+    font-size: 1.5rem;
+  }
+}
+
+/*# sourceMappingURL=src_app_help_page_module_css_bad6b30c._.single.css.map*/

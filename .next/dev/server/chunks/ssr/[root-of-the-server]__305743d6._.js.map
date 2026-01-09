@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 18, "column": 0}, "map": {"version":3,"sources":["file:///Users/shubham/Documents/important%20website%20project/tavlo/src/app/page.tsx"],"sourcesContent":["/**\n * Tavlo Restaurant ERP - Root Page\n * \n * Redirects to the dashboard page.\n * \n * @backend Replace with auth check - redirect to login if not authenticated\n */\n\nimport { redirect } from 'next/navigation';\n\nexport default function Home() {\n  // Redirect to dashboard\n  redirect('/dashboard');\n}\n"],"names":[],"mappings":";;;;AAAA;;;;;;CAMC,GAED;AAAA;;AAEe,SAAS;IACtB,wBAAwB;IACxB,IAAA,iMAAQ,EAAC;AACX"}}]
+}

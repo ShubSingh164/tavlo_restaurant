@@ -1,0 +1,97 @@
+/**
+ * Tavlo Restaurant ERP - KPI Card Styles
+ */
+
+.kpiCard {
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-5);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-gray-100);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+    transition: box-shadow var(--transition-normal);
+}
+
+.kpiCard:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.kpiCard.primary {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+    border: none;
+}
+
+.kpiCard.primary .label,
+.kpiCard.primary .value,
+.kpiCard.primary .changeLabel {
+    color: var(--color-white);
+}
+
+.kpiCard.primary .change {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--color-white);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.label {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+    font-weight: var(--font-weight-medium);
+}
+
+.icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    color: var(--color-gray-400);
+}
+
+.value {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-gray-900);
+}
+
+.footer {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    margin-top: var(--spacing-1);
+}
+
+.change {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-1);
+    padding: var(--spacing-1) var(--spacing-2);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-semibold);
+}
+
+.change.positive {
+    background: var(--color-success-bg);
+    color: var(--color-success);
+}
+
+.change.negative {
+    background: var(--color-error-bg);
+    color: var(--color-error);
+}
+
+.changeLabel {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-400);
+}

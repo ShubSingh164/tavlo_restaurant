@@ -1,0 +1,41 @@
+/**
+ * Tavlo Restaurant ERP - Admin Layout Styles
+ */
+
+.adminLayout {
+    display: flex;
+    min-height: 100vh;
+    background: var(--color-warm-bg);
+}
+
+.mainArea {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    transition: margin-left var(--transition-normal);
+}
+
+.content {
+    flex: 1;
+    padding: var(--spacing-6);
+    overflow-y: auto;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .mainArea {
+        margin-left: var(--sidebar-collapsed-width);
+    }
+}
+
+@media (max-width: 768px) {
+    .mainArea {
+        margin-left: 0;
+    }
+
+    .content {
+        padding: var(--spacing-4);
+    }
+}

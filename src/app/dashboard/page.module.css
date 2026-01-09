@@ -1,0 +1,1018 @@
+/**
+ * Tavlo Restaurant ERP - Dashboard Styles (Redesigned)
+ * 
+ * Professional styling inspired by FOODPOINT and Platelink designs
+ * with warm orange/cream color palette.
+ */
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+}
+
+/* ============================================================================
+   KPI ROW
+   ============================================================================ */
+
+.kpiRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1.3fr;
+    gap: var(--spacing-4);
+}
+
+.kpiCard {
+    position: relative;
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-5);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-gray-100);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.kpiCard:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.kpiCard.primary {
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    border: none;
+}
+
+.kpiCard.primary .kpiTitle,
+.kpiCard.primary .kpiValue,
+.kpiCard.primary .kpiSubtitle {
+    color: white;
+}
+
+.kpiCard.primary .kpiInfo {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.kpiCard.primary .kpiChange {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.kpiCard.primary .kpiSparkline {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.kpiHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-3);
+}
+
+.kpiTitle {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-gray-600);
+}
+
+.kpiInfo {
+    background: none;
+    border: none;
+    color: var(--color-gray-400);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: var(--radius-full);
+    transition: background 0.2s;
+}
+
+.kpiInfo:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.kpiBody {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    margin-bottom: var(--spacing-1);
+}
+
+.kpiValue {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-gray-900);
+    letter-spacing: -0.5px;
+}
+
+.kpiChange {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.kpiChange.positive {
+    background: rgba(34, 197, 94, 0.1);
+    color: #16a34a;
+}
+
+.kpiChange.negative {
+    background: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+}
+
+.kpiSubtitle {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+}
+
+.kpiSparkline {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 80px;
+    height: 40px;
+    color: var(--color-gray-200);
+}
+
+.kpiSparkline svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* ============================================================================
+   TOTAL PROFIT CARD (Featured Orange Card)
+   ============================================================================ */
+
+.profitCard {
+    position: relative;
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-5);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.profitBadge {
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+    opacity: 0.9;
+    margin-bottom: var(--spacing-2);
+}
+
+.profitAmount {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: var(--spacing-3);
+}
+
+.profitViewBtn {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: var(--radius-lg);
+    color: white;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: fit-content;
+}
+
+.profitViewBtn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.profitTrend {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 0 var(--radius-2xl) var(--radius-2xl) 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-4);
+}
+
+.profitTrendLabel {
+    font-size: 11px;
+    font-weight: 500;
+    opacity: 0.8;
+    margin-bottom: var(--spacing-2);
+}
+
+.profitTrendChart {
+    width: 60px;
+    height: 30px;
+    margin-bottom: var(--spacing-2);
+}
+
+.profitTrendChart svg {
+    width: 100%;
+    height: 100%;
+}
+
+.profitTrendChange {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 4px 8px;
+    border-radius: var(--radius-full);
+}
+
+/* ============================================================================
+   CHARTS ROW
+   ============================================================================ */
+
+.chartsRow {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: var(--spacing-4);
+}
+
+.chartsRight {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+}
+
+.totalsRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-4);
+}
+
+/* ============================================================================
+   SALES FIGURES CHART
+   ============================================================================ */
+
+.salesChart {
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-5);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-gray-100);
+}
+
+.chartHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-5);
+}
+
+.chartTitle {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin: 0;
+}
+
+.chartControls {
+    display: flex;
+    gap: var(--spacing-2);
+}
+
+.periodBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: var(--color-gray-50);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-gray-700);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.periodBtn:hover {
+    background: var(--color-gray-100);
+    border-color: var(--color-gray-300);
+}
+
+.periodBtn.active {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+}
+
+.chartArea {
+    display: flex;
+    gap: var(--spacing-3);
+    height: 220px;
+}
+
+.yAxis {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--color-gray-400);
+    padding: 10px 0;
+    text-align: right;
+    width: 30px;
+}
+
+.chartSvgContainer {
+    flex: 1;
+    position: relative;
+}
+
+.chartSvg {
+    width: 100%;
+    height: 200px;
+}
+
+.peakTooltip {
+    position: absolute;
+    transform: translateX(-50%);
+    background: #f97316;
+    color: white;
+    padding: 4px 10px;
+    border-radius: var(--radius-md);
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.peakTooltip::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #f97316;
+}
+
+.xAxis {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-2) 0 0 0;
+    font-size: 11px;
+    color: var(--color-gray-400);
+}
+
+.xAxis .activeMonth {
+    color: #f97316;
+    font-weight: 600;
+    background: rgba(249, 115, 22, 0.1);
+    padding: 2px 8px;
+    border-radius: var(--radius-md);
+}
+
+/* ============================================================================
+   EARNING CATEGORIES CHART
+   ============================================================================ */
+
+.earningChart {
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-5);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-gray-100);
+}
+
+.barChartContainer {
+    display: flex;
+    gap: var(--spacing-3);
+    height: 160px;
+    margin: var(--spacing-4) 0;
+}
+
+.barYAxis {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--color-gray-400);
+    width: 25px;
+    text-align: right;
+}
+
+.barsWrapper {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--spacing-2);
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--color-gray-100);
+}
+
+.barGroup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    height: 100%;
+}
+
+.bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    flex: 1;
+    width: 100%;
+    justify-content: center;
+}
+
+.bar {
+    width: 10px;
+    border-radius: 4px 4px 0 0;
+    transition: height 0.3s ease;
+}
+
+.bar.foodBar {
+    background: linear-gradient(180deg, #3b82f6 0%, #2563eb 100%);
+}
+
+.bar.drinkBar {
+    background: linear-gradient(180deg, #22c55e 0%, #16a34a 100%);
+}
+
+.bar.dessertBar {
+    background: linear-gradient(180deg, #f97316 0%, #ea580c 100%);
+}
+
+.barLabel {
+    font-size: 11px;
+    color: var(--color-gray-500);
+    margin-top: var(--spacing-2);
+}
+
+.chartLegend {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-5);
+    margin-top: var(--spacing-3);
+}
+
+.legendItem {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+}
+
+.legendDot {
+    width: 10px;
+    height: 10px;
+    border-radius: var(--radius-full);
+}
+
+.legendDot.foodDot {
+    background: #3b82f6;
+}
+
+.legendDot.drinkDot {
+    background: #22c55e;
+}
+
+.legendDot.dessertDot {
+    background: #f97316;
+}
+
+/* ============================================================================
+   TOTAL CARDS (Sales & Orders)
+   ============================================================================ */
+
+.totalCard {
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-4);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-gray-100);
+    position: relative;
+    overflow: hidden;
+}
+
+.totalHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-2);
+}
+
+.totalLabel {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+}
+
+.totalChange {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.totalChange.positive {
+    color: #16a34a;
+}
+
+.totalChange.negative {
+    color: #dc2626;
+}
+
+.totalValue {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-gray-900);
+    letter-spacing: -0.5px;
+}
+
+.totalTrend {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+}
+
+.trendLine {
+    width: 100%;
+    height: 100%;
+}
+
+/* ============================================================================
+   DATA ROW (Popular Items + Transactions)
+   ============================================================================ */
+
+.dataRow {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: var(--spacing-4);
+}
+
+/* ============================================================================
+   POPULAR MENU ITEMS
+   ============================================================================ */
+
+.popularCard {
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-5);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-gray-100);
+}
+
+.cardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-4);
+}
+
+.cardTitle {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin: 0;
+}
+
+.viewAllLink {
+    font-size: var(--font-size-sm);
+    color: #f97316;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.viewAllLink:hover {
+    text-decoration: underline;
+}
+
+.popularList {
+    display: flex;
+    flex-direction: column;
+}
+
+.popularItem {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    padding: var(--spacing-3) 0;
+    border-bottom: 1px solid var(--color-gray-50);
+}
+
+.popularItem:last-child {
+    border-bottom: none;
+}
+
+.popularRank {
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    color: var(--color-gray-400);
+    width: 28px;
+}
+
+.popularImage {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.popularImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.popularDetails {
+    flex: 1;
+    min-width: 0;
+}
+
+.popularName {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin-bottom: 2px;
+}
+
+.popularCategory {
+    font-size: var(--font-size-xs);
+    color: #f97316;
+}
+
+.popularStats {
+    text-align: right;
+}
+
+.popularOrders {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    color: var(--color-gray-900);
+}
+
+.popularChange {
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.popularChange.positive {
+    color: #16a34a;
+}
+
+.popularChange.negative {
+    color: #dc2626;
+}
+
+/* ============================================================================
+   LAST TRANSACTIONS
+   ============================================================================ */
+
+.transactionsCard {
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-5);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-gray-100);
+}
+
+.transactionsList {
+    display: flex;
+    flex-direction: column;
+}
+
+.transactionItem {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    padding: var(--spacing-3) 0;
+    border-bottom: 1px solid var(--color-gray-50);
+    transition: background 0.2s;
+}
+
+.transactionItem:last-child {
+    border-bottom: none;
+}
+
+.transactionItem:hover {
+    background: var(--color-gray-50);
+    margin: 0 calc(-1 * var(--spacing-3));
+    padding-left: var(--spacing-3);
+    padding-right: var(--spacing-3);
+    border-radius: var(--radius-lg);
+}
+
+.transactionImage {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.transactionImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.transactionDetails {
+    flex: 1;
+    min-width: 0;
+}
+
+.transactionName {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.transactionTime {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-400);
+}
+
+.transactionPrice {
+    font-size: var(--font-size-sm);
+    font-weight: 700;
+    color: var(--color-gray-900);
+}
+
+/* ============================================================================
+   BOTTOM ROW (Specialties + Reviews)
+   ============================================================================ */
+
+.bottomRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-4);
+}
+
+/* ============================================================================
+   SPECIALTIES SALES
+   ============================================================================ */
+
+.specialtiesCard {
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-5);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-gray-100);
+}
+
+.specialtiesList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+    margin-top: var(--spacing-4);
+}
+
+.specialtyItem {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+}
+
+.specialtyImage {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.specialtyImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.specialtyInfo {
+    min-width: 100px;
+}
+
+.specialtyCategory {
+    display: block;
+    font-size: 11px;
+    color: var(--color-gray-400);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.specialtyName {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-gray-900);
+}
+
+.specialtyChange {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.specialtyChange.positive {
+    background: rgba(34, 197, 94, 0.1);
+    color: #16a34a;
+}
+
+.specialtyChange.negative {
+    background: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+}
+
+.specialtyAvailability {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+}
+
+.availLabel {
+    font-size: 11px;
+    color: var(--color-gray-500);
+    width: 50px;
+}
+
+.availBar {
+    flex: 1;
+    height: 6px;
+    background: var(--color-gray-100);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.availFill {
+    height: 100%;
+    background: linear-gradient(90deg, #f97316 0%, #22c55e 100%);
+    border-radius: var(--radius-full);
+    transition: width 0.3s ease;
+}
+
+.availPercent {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-gray-700);
+    width: 40px;
+    text-align: right;
+}
+
+/* ============================================================================
+   CUSTOMER REVIEWS
+   ============================================================================ */
+
+.reviewsCard {
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-5);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-gray-100);
+}
+
+.reviewsList {
+    display: flex;
+    gap: var(--spacing-4);
+    margin-top: var(--spacing-4);
+}
+
+.reviewItem {
+    flex: 1;
+    background: var(--color-gray-50);
+    border-radius: var(--radius-xl);
+    padding: var(--spacing-4);
+}
+
+.reviewHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    margin-bottom: var(--spacing-3);
+}
+
+.reviewAvatar {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+}
+
+.reviewMeta {
+    flex: 1;
+}
+
+.reviewName {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-gray-900);
+}
+
+.reviewDate {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-400);
+}
+
+.reviewRating {
+    display: flex;
+    gap: 2px;
+    color: #facc15;
+}
+
+.reviewText {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+@media (max-width: 1400px) {
+    .kpiRow {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .chartsRow {
+        grid-template-columns: 1fr;
+    }
+
+    .chartsRight {
+        flex-direction: row;
+    }
+
+    .earningChart {
+        flex: 1;
+    }
+
+    .totalsRow {
+        flex-direction: column;
+        width: 200px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .dataRow {
+        grid-template-columns: 1fr;
+    }
+
+    .bottomRow {
+        grid-template-columns: 1fr;
+    }
+
+    .chartsRight {
+        flex-direction: column;
+    }
+
+    .totalsRow {
+        width: auto;
+        flex-direction: row;
+    }
+}
+
+@media (max-width: 768px) {
+    .kpiRow {
+        grid-template-columns: 1fr;
+    }
+
+    .reviewsList {
+        flex-direction: column;
+    }
+
+    .profitTrend {
+        position: static;
+        width: auto;
+        height: auto;
+        border-radius: var(--radius-xl);
+        margin-top: var(--spacing-4);
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}

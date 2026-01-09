@@ -1,0 +1,710 @@
+/**
+ * Tavlo Restaurant ERP - Settings Page Styles
+ */
+
+.settingsPage {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: var(--spacing-6);
+    min-height: calc(100vh - 200px);
+}
+
+/* ============================================================================
+   SIDEBAR NAVIGATION
+   ============================================================================ */
+
+.settingsSidebar {
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-5);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-gray-100);
+    height: fit-content;
+    position: sticky;
+    top: var(--spacing-6);
+}
+
+.sidebarHeader {
+    margin-bottom: var(--spacing-4);
+    padding-bottom: var(--spacing-4);
+    border-bottom: 1px solid var(--color-gray-100);
+}
+
+.sidebarTitle {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin: 0;
+}
+
+.settingsNav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+}
+
+.navItem {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    width: 100%;
+    padding: var(--spacing-3);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-xl);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.2s;
+}
+
+.navItem:hover {
+    background: var(--color-gray-50);
+}
+
+.navItem.active {
+    background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(249, 115, 22, 0.05));
+}
+
+.navItem.active .navIcon {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: white;
+}
+
+.navItem.active .navLabel {
+    color: #f97316;
+}
+
+.navIcon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-gray-100);
+    border-radius: var(--radius-lg);
+    color: var(--color-gray-600);
+    flex-shrink: 0;
+    transition: all 0.2s;
+}
+
+.navContent {
+    flex: 1;
+    min-width: 0;
+}
+
+.navLabel {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-gray-900);
+}
+
+.navDescription {
+    display: block;
+    font-size: 11px;
+    color: var(--color-gray-500);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.navItem svg:last-child {
+    color: var(--color-gray-400);
+    flex-shrink: 0;
+}
+
+/* ============================================================================
+   SETTINGS CONTENT
+   ============================================================================ */
+
+.settingsContent {
+    min-width: 0;
+}
+
+.settingsSection {
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-6);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-gray-100);
+}
+
+.sectionTitle {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin: 0 0 var(--spacing-2) 0;
+}
+
+.sectionDescription {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+    margin: 0 0 var(--spacing-6) 0;
+}
+
+/* ============================================================================
+   FORM STYLES
+   ============================================================================ */
+
+.formGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-4);
+    margin-bottom: var(--spacing-6);
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+}
+
+.formGroup.fullWidth {
+    grid-column: 1 / -1;
+}
+
+.label {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-gray-700);
+}
+
+.input,
+.select,
+.textarea {
+    padding: var(--spacing-3) var(--spacing-4);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-900);
+    background: var(--color-gray-50);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    transition: all 0.2s;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+    outline: none;
+    border-color: #f97316;
+    background: var(--color-white);
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+}
+
+.textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.select {
+    cursor: pointer;
+}
+
+/* ============================================================================
+   UPLOAD SECTION
+   ============================================================================ */
+
+.uploadSection {
+    margin-bottom: var(--spacing-6);
+    padding: var(--spacing-5);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-xl);
+}
+
+.uploadTitle {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin: 0 0 var(--spacing-4) 0;
+}
+
+.uploadArea {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+}
+
+.currentLogo {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    border: 2px solid var(--color-white);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.currentLogo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.uploadActions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+}
+
+.uploadBtn {
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: #f97316;
+    background: var(--color-white);
+    border: 1px solid #f97316;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.uploadBtn:hover {
+    background: rgba(249, 115, 22, 0.05);
+}
+
+.uploadHint {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+}
+
+/* ============================================================================
+   FORM ACTIONS
+   ============================================================================ */
+
+.formActions {
+    display: flex;
+    gap: var(--spacing-3);
+    padding-top: var(--spacing-5);
+    border-top: 1px solid var(--color-gray-100);
+}
+
+.saveBtn {
+    padding: var(--spacing-3) var(--spacing-6);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-white);
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    border: none;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.saveBtn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4);
+}
+
+.cancelBtn {
+    padding: var(--spacing-3) var(--spacing-6);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-gray-600);
+    background: var(--color-gray-100);
+    border: none;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.cancelBtn:hover {
+    background: var(--color-gray-200);
+}
+
+/* ============================================================================
+   BUSINESS HOURS
+   ============================================================================ */
+
+.hoursGrid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+    margin-bottom: var(--spacing-5);
+}
+
+.hoursRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-3) var(--spacing-4);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-xl);
+}
+
+.dayInfo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+}
+
+.dayToggle {
+    position: relative;
+    width: 44px;
+    height: 24px;
+}
+
+.dayToggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggleSlider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-gray-300);
+    transition: 0.3s;
+    border-radius: 24px;
+}
+
+.toggleSlider::before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+}
+
+.dayToggle input:checked+.toggleSlider {
+    background-color: #22c55e;
+}
+
+.dayToggle input:checked+.toggleSlider::before {
+    transform: translateX(20px);
+}
+
+.dayName {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-gray-900);
+    width: 100px;
+}
+
+.hoursInputs {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+}
+
+.timeInput {
+    padding: var(--spacing-2) var(--spacing-3);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-900);
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    width: 120px;
+}
+
+.timeSeparator {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+.hoursNote {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-2);
+    padding: var(--spacing-4);
+    background: rgba(249, 115, 22, 0.05);
+    border-radius: var(--radius-xl);
+    margin-bottom: var(--spacing-5);
+}
+
+.noteIcon {
+    font-size: 20px;
+}
+
+.hoursNote p {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+    margin: 0;
+}
+
+/* ============================================================================
+   PAYMENTS & TAX
+   ============================================================================ */
+
+.subsection {
+    margin-bottom: var(--spacing-6);
+}
+
+.subsectionTitle {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin: 0 0 var(--spacing-4) 0;
+}
+
+.paymentMethods {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-3);
+}
+
+.paymentMethod {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-3) var(--spacing-4);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-xl);
+}
+
+.methodName {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+}
+
+.switchLabel {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+
+.switchLabel input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.switch {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-gray-300);
+    transition: 0.3s;
+    border-radius: 24px;
+}
+
+.switch::before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.3s;
+    border-radius: 50%;
+}
+
+.switchLabel input:checked+.switch {
+    background-color: #22c55e;
+}
+
+.switchLabel input:checked+.switch::before {
+    transform: translateX(20px);
+}
+
+.taxNote {
+    margin-top: var(--spacing-4);
+}
+
+.checkboxLabel {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+    cursor: pointer;
+}
+
+.checkboxLabel input {
+    width: 18px;
+    height: 18px;
+    accent-color: #f97316;
+}
+
+/* ============================================================================
+   NOTIFICATIONS
+   ============================================================================ */
+
+.notificationGroups {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+    margin-bottom: var(--spacing-6);
+}
+
+.notificationGroup {
+    padding: var(--spacing-4);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-xl);
+}
+
+.groupTitle {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin: 0 0 var(--spacing-4) 0;
+}
+
+.notificationList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+}
+
+.notificationItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-3) var(--spacing-4);
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+}
+
+.notificationInfo {
+    flex: 1;
+}
+
+.notificationName {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-gray-900);
+}
+
+.notificationDesc {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+}
+
+.notificationControls {
+    display: flex;
+    gap: var(--spacing-4);
+}
+
+.checkboxSmall {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-1);
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-600);
+    cursor: pointer;
+}
+
+.checkboxSmall input {
+    width: 16px;
+    height: 16px;
+    accent-color: #f97316;
+}
+
+/* ============================================================================
+   ACCOUNT SETTINGS
+   ============================================================================ */
+
+.accountHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    margin-bottom: var(--spacing-6);
+    padding: var(--spacing-4);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-xl);
+}
+
+.accountAvatar {
+    position: relative;
+}
+
+.accountAvatar img {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 3px solid var(--color-white);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.avatarEditBtn {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-white);
+    background: #f97316;
+    border: 2px solid var(--color-white);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+}
+
+.accountInfo {
+    flex: 1;
+}
+
+.accountName {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin: 0;
+}
+
+.accountRole {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+@media (max-width: 1024px) {
+    .settingsPage {
+        grid-template-columns: 1fr;
+    }
+
+    .settingsSidebar {
+        position: static;
+    }
+
+    .settingsNav {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-2);
+    }
+
+    .navDescription {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .settingsNav {
+        grid-template-columns: 1fr;
+    }
+
+    .formGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .paymentMethods {
+        grid-template-columns: 1fr;
+    }
+
+    .notificationItem {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-3);
+    }
+
+    .hoursRow {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-3);
+    }
+}

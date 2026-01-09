@@ -1,0 +1,587 @@
+/**
+ * Tavlo Restaurant ERP - Staff Page Styles
+ */
+
+.staffPage {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+}
+
+/* ============================================================================
+   STATS ROW
+   ============================================================================ */
+
+.statsRow {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-4);
+}
+
+.statCard {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-5);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-gray-100);
+}
+
+.statIcon {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-xl);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.statContent {
+    display: flex;
+    flex-direction: column;
+}
+
+.statValue {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-gray-900);
+    line-height: 1.2;
+}
+
+.statLabel {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+/* ============================================================================
+   MAIN CONTENT LAYOUT
+   ============================================================================ */
+
+.mainContent {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: var(--spacing-4);
+}
+
+.directorySection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+}
+
+.sidebarSection {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+}
+
+/* ============================================================================
+   SECTION HEADER
+   ============================================================================ */
+
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--spacing-4);
+}
+
+.headerLeft {
+    display: flex;
+    align-items: baseline;
+    gap: var(--spacing-3);
+}
+
+.sectionTitle {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin: 0;
+}
+
+.staffCount {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-500);
+}
+
+.headerRight {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+}
+
+.searchBox {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-2) var(--spacing-4);
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    min-width: 220px;
+}
+
+.searchBox svg {
+    color: var(--color-gray-400);
+    flex-shrink: 0;
+}
+
+.searchBox input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+    outline: none;
+}
+
+.searchBox input::placeholder {
+    color: var(--color-gray-400);
+}
+
+.viewToggle {
+    display: flex;
+    background: var(--color-gray-100);
+    border-radius: var(--radius-lg);
+    padding: 4px;
+}
+
+.viewToggle button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--color-gray-500);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.viewToggle button.active {
+    background: var(--color-white);
+    color: var(--color-gray-900);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.addBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-3) var(--spacing-5);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-white);
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    border: none;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.addBtn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4);
+}
+
+/* ============================================================================
+   ROLE FILTERS
+   ============================================================================ */
+
+.roleFilters {
+    display: flex;
+    gap: var(--spacing-2);
+    flex-wrap: wrap;
+}
+
+.roleFilter {
+    padding: var(--spacing-2) var(--spacing-4);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    color: var(--color-gray-600);
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.roleFilter:hover {
+    border-color: var(--color-gray-300);
+    background: var(--color-gray-50);
+}
+
+.roleFilter.active {
+    background: #f97316;
+    color: white;
+    border-color: #f97316;
+}
+
+/* ============================================================================
+   STAFF GRID
+   ============================================================================ */
+
+.staffGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-4);
+}
+
+.staffList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+}
+
+/* ============================================================================
+   STAFF CARD
+   ============================================================================ */
+
+.staffCard {
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-5);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-gray-100);
+    transition: all 0.3s;
+}
+
+.staffCard:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: var(--spacing-4);
+}
+
+.avatarWrapper {
+    position: relative;
+}
+
+.avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 3px solid var(--color-white);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.statusDot {
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 14px;
+    height: 14px;
+    border-radius: var(--radius-full);
+    border: 2px solid var(--color-white);
+}
+
+.menuWrapper {
+    position: relative;
+}
+
+.menuBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--color-gray-50);
+    border: none;
+    border-radius: var(--radius-lg);
+    color: var(--color-gray-500);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.menuBtn:hover {
+    background: var(--color-gray-100);
+    color: var(--color-gray-700);
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: var(--spacing-2);
+    min-width: 160px;
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--color-gray-100);
+    padding: var(--spacing-2);
+    z-index: 100;
+}
+
+.dropdown button {
+    display: block;
+    width: 100%;
+    padding: var(--spacing-2) var(--spacing-3);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.dropdown button:hover {
+    background: var(--color-gray-50);
+}
+
+.dropdown .dangerItem {
+    color: #dc2626;
+}
+
+.dropdown .dangerItem:hover {
+    background: #fef2f2;
+}
+
+.cardBody {
+    text-align: center;
+    margin-bottom: var(--spacing-4);
+}
+
+.staffName {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin: 0 0 var(--spacing-2) 0;
+}
+
+.roleBadge {
+    display: inline-block;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-radius: var(--radius-full);
+    margin-bottom: var(--spacing-2);
+}
+
+.statusLabel {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+}
+
+.cardContact {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+    padding: var(--spacing-3) 0;
+    border-top: 1px solid var(--color-gray-100);
+    border-bottom: 1px solid var(--color-gray-100);
+}
+
+.contactItem {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+}
+
+.contactItem svg {
+    color: var(--color-gray-400);
+}
+
+.cardStats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-2);
+    padding: var(--spacing-4) 0;
+}
+
+.cardStat {
+    text-align: center;
+}
+
+.cardStatValue {
+    display: block;
+    font-size: var(--font-size-base);
+    font-weight: 700;
+    color: var(--color-gray-900);
+}
+
+.cardStatLabel {
+    font-size: 11px;
+    color: var(--color-gray-500);
+    text-transform: uppercase;
+}
+
+.cardShift {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-2);
+    padding: var(--spacing-3);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-lg);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+}
+
+.cardShift svg {
+    color: #f97316;
+}
+
+/* ============================================================================
+   SHIFT SCHEDULE CARD
+   ============================================================================ */
+
+.scheduleCard {
+    background: var(--color-white);
+    border-radius: var(--radius-2xl);
+    padding: var(--spacing-5);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--color-gray-100);
+}
+
+.scheduleHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--spacing-4);
+}
+
+.cardTitle {
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin: 0;
+}
+
+.viewAllBtn {
+    font-size: var(--font-size-sm);
+    color: #f97316;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.viewAllBtn:hover {
+    text-decoration: underline;
+}
+
+.shiftList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-4);
+}
+
+.shiftItem {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--spacing-3);
+    padding: var(--spacing-3);
+    background: var(--color-gray-50);
+    border-radius: var(--radius-xl);
+}
+
+.shiftTime {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-2);
+}
+
+.shiftDot {
+    width: 10px;
+    height: 10px;
+    border-radius: var(--radius-full);
+    margin-top: 4px;
+}
+
+.shiftLabel {
+    display: block;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-gray-900);
+}
+
+.shiftHours {
+    display: block;
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-500);
+}
+
+.shiftStaff {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+.shiftStaffName {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-600);
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+@media (max-width: 1280px) {
+    .mainContent {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebarSection {
+        flex-direction: row;
+    }
+
+    .scheduleCard {
+        flex: 1;
+    }
+}
+
+@media (max-width: 1024px) {
+    .statsRow {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .statsRow {
+        grid-template-columns: 1fr;
+    }
+
+    .sectionHeader {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .headerRight {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .searchBox {
+        flex: 1;
+        min-width: 100%;
+    }
+
+    .staffGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebarSection {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,193 @@
+/**
+ * Tavlo Restaurant ERP - Orders Table Styles
+ */
+
+.tableContainer {
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-gray-100);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: var(--spacing-4);
+    text-align: left;
+    border-bottom: 1px solid var(--color-gray-100);
+}
+
+.table th {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-500);
+    background: var(--color-gray-50);
+    white-space: nowrap;
+}
+
+.table td {
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+    vertical-align: middle;
+}
+
+.table tbody tr {
+    transition: background var(--transition-fast);
+}
+
+.table tbody tr:hover {
+    background: var(--color-gray-50);
+}
+
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Cell Styles */
+.billNo {
+    font-weight: var(--font-weight-medium);
+    color: var(--color-gray-800);
+}
+
+.dateTime {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.date {
+    color: var(--color-gray-700);
+}
+
+.time {
+    font-size: var(--font-size-xs);
+    color: var(--color-gray-400);
+}
+
+.amount {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-gray-800);
+}
+
+/* Status Badge */
+.statusBadge {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--spacing-1) var(--spacing-3);
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-medium);
+    border-radius: var(--radius-full);
+    text-transform: capitalize;
+}
+
+.statusBadge.completed {
+    background: var(--color-success-bg);
+    color: var(--color-success);
+}
+
+.statusBadge.preparing,
+.statusBadge.pending,
+.statusBadge.confirmed {
+    background: var(--color-warning-bg);
+    color: #B45309;
+}
+
+.statusBadge.cancelled {
+    background: var(--color-error-bg);
+    color: var(--color-error);
+}
+
+.statusBadge.ready,
+.statusBadge.served {
+    background: var(--color-info-bg);
+    color: var(--color-info);
+}
+
+/* Action Button */
+.actionWrapper {
+    position: relative;
+}
+
+.actionBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    color: var(--color-gray-500);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.actionBtn:hover {
+    background: var(--color-gray-100);
+    color: var(--color-gray-700);
+}
+
+.actionDropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 180px;
+    background: var(--color-white);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--color-gray-100);
+    padding: var(--spacing-2);
+    z-index: var(--z-dropdown);
+}
+
+.dropdownItem {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-3);
+    width: 100%;
+    padding: var(--spacing-2) var(--spacing-3);
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-700);
+    background: none;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background var(--transition-fast);
+    text-align: left;
+}
+
+.dropdownItem:hover {
+    background: var(--color-gray-100);
+}
+
+.dropdownItem.danger {
+    color: var(--color-error);
+}
+
+.dropdownItem.danger:hover {
+    background: var(--color-error-bg);
+}
+
+/* Empty State */
+.emptyState {
+    padding: var(--spacing-16);
+    text-align: center;
+}
+
+.emptyState p {
+    color: var(--color-gray-400);
+    font-size: var(--font-size-base);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .table {
+        display: block;
+        overflow-x: auto;
+    }
+}
