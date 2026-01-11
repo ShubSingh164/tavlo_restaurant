@@ -1,0 +1,330 @@
+/**
+ * Tavlo Restaurant ERP - Sign Up Page Styles
+ * Full gradient background with floating white card
+ */
+
+.authPage {
+    display: flex;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #7c2d12 0%, #c2410c 40%, #f97316 63%, #431407 100%);
+    padding: 15px;
+    padding-right: 0;
+    box-sizing: border-box;
+}
+
+/* Form Section - White Card */
+.formSection {
+    flex: 0 0 48%;
+    max-width: 620px;
+    display: flex;
+    flex-direction: column;
+    background: var(--color-white);
+    border-radius: 2rem;
+    padding: 2rem 2.5rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 10;
+    height: calc(100vh - 30px);
+    margin: 0;
+    overflow-y: auto;
+}
+
+.logoWrapper {
+    margin-bottom: 1.5rem;
+}
+
+.logo {
+    height: 45px;
+    width: auto;
+}
+
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin: 0 0 1.25rem 0;
+}
+
+.subtitle {
+    display: none;
+}
+
+/* Google Button */
+.googleBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-white);
+    background: var(--color-gray-900);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.googleBtn:hover {
+    background: var(--color-gray-700);
+    transform: translateY(-1px);
+}
+
+/* Divider */
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 1.25rem 0;
+    gap: 0;
+}
+
+.dividerLine {
+    flex: 1;
+    height: 1px;
+    background: var(--color-gray-200);
+}
+
+.dividerText {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-gray-400);
+    letter-spacing: 0.5px;
+    padding: 0 1rem;
+    white-space: nowrap;
+}
+
+/* Form */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+}
+
+.nameRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.875rem;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.label {
+    display: none;
+}
+
+.input {
+    padding: 0.875rem 1rem;
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-900);
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-300);
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #f97316;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+}
+
+.input::placeholder {
+    color: var(--color-gray-400);
+}
+
+.terms {
+    font-size: 12px;
+    color: var(--color-gray-500);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.terms a {
+    color: #dc2626;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.terms a:hover {
+    text-decoration: underline;
+}
+
+.submitBtn {
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--color-white);
+    background: var(--color-gray-900);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 0.5rem;
+}
+
+.submitBtn:hover {
+    background: var(--color-gray-700);
+    transform: translateY(-1px);
+}
+
+.switchText {
+    text-align: center;
+    font-size: var(--font-size-sm);
+    color: var(--color-gray-600);
+    margin-top: 1.25rem;
+}
+
+.switchLink {
+    color: #dc2626;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.switchLink:hover {
+    text-decoration: underline;
+}
+
+/* Carousel Section - On Gradient */
+.carouselSection {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 2rem;
+}
+
+.carouselBg {
+    display: none;
+}
+
+.carouselContent {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+.carouselTrack {
+    display: flex;
+}
+
+.carouselTrack.animated {
+    transition: transform 0.9s ease-in-out;
+}
+
+.slide {
+    flex-shrink: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.slideImage {
+    max-width: 100%;
+    height: auto;
+    max-height: 350px;
+    margin-bottom: 2rem;
+}
+
+.slideText {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-white);
+    text-align: center;
+    max-width: 400px;
+    line-height: 1.4;
+}
+
+/* Dots */
+.dots {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transition: all 0.3s;
+}
+
+.dot.activeDot {
+    background: var(--color-white);
+    width: 24px;
+    border-radius: 5px;
+}
+
+/* Trusted Section */
+.trustedSection {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 3rem;
+    width: 100%;
+    max-width: 350px;
+}
+
+.trustedLine {
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.trustedText {
+    font-size: var(--font-size-sm);
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .formSection {
+        flex: 0 0 50%;
+        padding: 1.5rem 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .authPage {
+        flex-direction: column;
+        padding: 15px;
+    }
+
+    .formSection {
+        flex: none;
+        max-width: 100%;
+        width: 100%;
+        border-radius: 1.5rem;
+        padding: 1.5rem;
+    }
+
+    .carouselSection {
+        display: none;
+    }
+
+    .nameRow {
+        grid-template-columns: 1fr;
+    }
+}

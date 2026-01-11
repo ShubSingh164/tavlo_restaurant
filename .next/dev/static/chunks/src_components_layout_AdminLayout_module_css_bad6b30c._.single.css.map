@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/src/components/layout/AdminLayout.module.css"],"sourcesContent":["/**\n * Tavlo Restaurant ERP - Admin Layout Styles\n */\n\n.adminLayout {\n    display: flex;\n    min-height: 100vh;\n    background: var(--color-warm-bg);\n}\n\n.mainArea {\n    flex: 1;\n    margin-left: var(--sidebar-width);\n    display: flex;\n    flex-direction: column;\n    min-height: 100vh;\n    transition: margin-left var(--transition-normal);\n}\n\n.content {\n    flex: 1;\n    padding: var(--spacing-6);\n    overflow-y: auto;\n}\n\n/* Responsive */\n@media (max-width: 1024px) {\n    .mainArea {\n        margin-left: var(--sidebar-collapsed-width);\n    }\n}\n\n@media (max-width: 768px) {\n    .mainArea {\n        margin-left: 0;\n    }\n\n    .content {\n        padding: var(--spacing-4);\n    }\n}"],"names":[],"mappings":"AAIA;;;;;;AAMA;;;;;;;;;AASA;;;;;;AAOA;EACI;;;;;AAKJ;EACI;;;;EAIA"}}]
-}
