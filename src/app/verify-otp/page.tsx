@@ -13,7 +13,7 @@
  * @route /verify-otp
  */
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
@@ -34,7 +34,8 @@ const slides = [
     },
 ];
 
-export default function VerifyOTPPage() {
+// Inner component that uses useSearchParams
+function VerifyOTPContent() {
     const searchParams = useSearchParams();
     const email = searchParams.get('email') || 'abc@gmail.com';
 
@@ -293,5 +294,36 @@ export default function VerifyOTPPage() {
                 </div>
             </div>
         </div>
+    );
+}
+
+// Loading fallback component
+function LoadingFallback() {
+    return (
+        <div className={styles.authPage}>
+            <div className={styles.formSection}>
+                <div className={styles.logoWrapper}>
+                    <Image
+                        src="/images/tavlo-logo.png"
+                        alt="Tavlo"
+                        width={140}
+                        height={50}
+                        className={styles.logo}
+                    />
+                </div>
+                <div className={styles.formContainer}>
+                    <h1 className={styles.title}>Loading...</h1>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+// Main export wrapped in Suspense
+export default function VerifyOTPPage() {
+    return (
+        <Suspense fallback={<LoadingFallback />}>
+            <VerifyOTPContent />
+        </Suspense>
     );
 }
