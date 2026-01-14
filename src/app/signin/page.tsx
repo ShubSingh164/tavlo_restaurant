@@ -79,8 +79,8 @@ export default function SignInPage() {
     const validPassword = '@123456';
 
     if (email === validEmail && password === validPassword) {
-      // Successful login - redirect to dashboard
-      window.location.href = '/dashboard';
+      // Successful login - redirect to OTP verification
+      window.location.href = `/verify-otp?email=${encodeURIComponent(email)}`;
     } else {
       setError('Invalid email or password. Please try again.');
     }
