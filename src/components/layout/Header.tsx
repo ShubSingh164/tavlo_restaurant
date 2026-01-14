@@ -177,7 +177,7 @@ export default function Header({ title = 'Dashboard' }: HeaderProps) {
                             <hr className={styles.dropdownDivider} />
                             <button
                                 className={`${styles.dropdownItem} ${styles.logout}`}
-                                onClick={() => window.location.href = '/signin'}
+                                onClick={() => window.location.href = '/'}
                             >
                                 Logout
                             </button>

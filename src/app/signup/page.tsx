@@ -73,8 +73,8 @@ export default function SignUpPage() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // TODO: Implement actual signup logic
-        window.location.href = '/dashboard';
+        // Redirect to OTP verification with email
+        window.location.href = `/verify-otp?email=${encodeURIComponent(email)}`;
     };
 
     return (
