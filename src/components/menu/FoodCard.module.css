@@ -209,3 +209,98 @@
     background: var(--color-gray-300);
     cursor: not-allowed;
 }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .foodCard {
+        border-radius: var(--radius-lg);
+    }
+
+    .foodCard:hover {
+        transform: none;
+    }
+
+    .imageWrapper {
+        height: 140px;
+    }
+
+    .badges {
+        top: var(--spacing-2);
+        left: var(--spacing-2);
+    }
+
+    .badge {
+        font-size: 9px;
+        padding: 2px 6px;
+    }
+
+    /* Show action overlay always on mobile (since no hover) */
+    .actionsOverlay {
+        opacity: 1;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%);
+        align-items: flex-end;
+        padding-bottom: var(--spacing-3);
+    }
+
+    .actionBtn {
+        width: 36px;
+        height: 36px;
+    }
+
+    .content {
+        padding: var(--spacing-3);
+    }
+
+    .title {
+        font-size: var(--font-size-sm);
+        margin-bottom: var(--spacing-1);
+    }
+
+    .description {
+        font-size: var(--font-size-xs);
+        margin-bottom: var(--spacing-2);
+        min-height: 32px;
+        -webkit-line-clamp: 2;
+    }
+
+    .priceSection {
+        gap: var(--spacing-1);
+    }
+
+    .price {
+        font-size: var(--font-size-base);
+    }
+
+    .originalPrice {
+        font-size: var(--font-size-xs);
+    }
+
+    .rating {
+        font-size: var(--font-size-xs);
+    }
+
+    .rating svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .addToCartBtn {
+        padding: var(--spacing-2);
+        margin-top: var(--spacing-3);
+        font-size: var(--font-size-xs);
+    }
+}
+
+@media (max-width: 480px) {
+    .imageWrapper {
+        height: 120px;
+    }
+
+    .content {
+        padding: var(--spacing-2);
+    }
+
+    .description {
+        display: none;
+    }
+}
