@@ -13,10 +13,9 @@
  * @route /verify-otp
  */
 
-import React, { useState, useEffect, useRef, Suspense } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
 import styles from './page.module.css';
 
 const slides = [
@@ -34,11 +33,8 @@ const slides = [
     },
 ];
 
-// Inner component that uses useSearchParams
-function VerifyOTPContent() {
-    const searchParams = useSearchParams();
-    const email = searchParams.get('email') || 'abc@gmail.com';
-
+export default function VerifyOTPPage() {
+    const [email, setEmail] = useState('abc@gmail.com');
     const [current, setCurrent] = useState(1);
     const [transitionEnabled, setTransitionEnabled] = useState(true);
     const [otp, setOtp] = useState(['', '', '', '', '', '']);
@@ -47,6 +43,17 @@ function VerifyOTPContent() {
     const [resendTimer, setResendTimer] = useState(0);
 
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+    // Get email from URL on client side only
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const urlParams = new URLSearchParams(window.location.search);
+            const emailParam = urlParams.get('email');
+            if (emailParam) {
+                setEmail(emailParam);
+            }
+        }
+    }, []);
 
     // Clone first and last slides for infinite loop effect
     const extendedSlides = [
@@ -157,9 +164,9 @@ function VerifyOTPContent() {
     };
 
     // Mask email for display
-    const maskEmail = (email: string) => {
-        const [localPart, domain] = email.split('@');
-        if (localPart.length <= 3) return email;
+    const maskEmail = (emailStr: string) => {
+        const [localPart, domain] = emailStr.split('@');
+        if (!domain || localPart.length <= 3) return emailStr;
         return `${localPart.slice(0, 3)}***@${domain}`;
     };
 
@@ -294,36 +301,5 @@ function VerifyOTPContent() {
                 </div>
             </div>
         </div>
-    );
-}
-
-// Loading fallback component
-function LoadingFallback() {
-    return (
-        <div className={styles.authPage}>
-            <div className={styles.formSection}>
-                <div className={styles.logoWrapper}>
-                    <Image
-                        src="/images/tavlo-logo.png"
-                        alt="Tavlo"
-                        width={140}
-                        height={50}
-                        className={styles.logo}
-                    />
-                </div>
-                <div className={styles.formContainer}>
-                    <h1 className={styles.title}>Loading...</h1>
-                </div>
-            </div>
-        </div>
-    );
-}
-
-// Main export wrapped in Suspense
-export default function VerifyOTPPage() {
-    return (
-        <Suspense fallback={<LoadingFallback />}>
-            <VerifyOTPContent />
-        </Suspense>
     );
 }
