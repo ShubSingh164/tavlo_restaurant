@@ -16,7 +16,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
 import styles from './page.module.css';
 
 const slides = [
@@ -35,9 +34,7 @@ const slides = [
 ];
 
 export default function VerifyOTPPage() {
-    const searchParams = useSearchParams();
-    const email = searchParams.get('email') || 'abc@gmail.com';
-
+    const [email, setEmail] = useState('abc@gmail.com');
     const [current, setCurrent] = useState(1);
     const [transitionEnabled, setTransitionEnabled] = useState(true);
     const [otp, setOtp] = useState(['', '', '', '', '', '']);
@@ -46,6 +43,17 @@ export default function VerifyOTPPage() {
     const [resendTimer, setResendTimer] = useState(0);
 
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+    // Get email from URL on client side only
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const urlParams = new URLSearchParams(window.location.search);
+            const emailParam = urlParams.get('email');
+            if (emailParam) {
+                setEmail(emailParam);
+            }
+        }
+    }, []);
 
     // Clone first and last slides for infinite loop effect
     const extendedSlides = [
@@ -156,9 +164,9 @@ export default function VerifyOTPPage() {
     };
 
     // Mask email for display
-    const maskEmail = (email: string) => {
-        const [localPart, domain] = email.split('@');
-        if (localPart.length <= 3) return email;
+    const maskEmail = (emailStr: string) => {
+        const [localPart, domain] = emailStr.split('@');
+        if (!domain || localPart.length <= 3) return emailStr;
         return `${localPart.slice(0, 3)}***@${domain}`;
     };
 
