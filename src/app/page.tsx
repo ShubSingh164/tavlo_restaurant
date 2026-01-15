@@ -157,10 +157,23 @@ const MoonIcon = () => (
   </svg>
 );
 
+const MenuIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M3 12h18M3 6h18M3 18h18" />
+  </svg>
+);
+
+const CloseIcon = () => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <path d="M18 6L6 18M6 6l12 12" />
+  </svg>
+);
+
 export default function LandingPage() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeFeature, setActiveFeature] = useState(0);
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Animated stats
   const stat1 = useCountUp(40, 2000);
@@ -250,6 +263,30 @@ export default function LandingPage() {
             </button>
             <Link href="/signin" className={styles.navSignin}>Sign In</Link>
             <Link href="/signup" className={styles.navCta}>
+              Start Free Trial
+              <ArrowRightIcon />
+            </Link>
+            <button
+              className={styles.mobileMenuBtn}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Toggle mobile menu"
+            >
+              {mobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        <div className={`${styles.mobileMenu} ${mobileMenuOpen ? styles.mobileMenuOpen : ''}`}>
+          <div className={styles.mobileMenuLinks}>
+            <a href="#features" onClick={() => setMobileMenuOpen(false)}>Features</a>
+            <a href="#how-it-works" onClick={() => setMobileMenuOpen(false)}>How it Works</a>
+            <a href="#ai-edge" onClick={() => setMobileMenuOpen(false)}>AI Edge</a>
+            <a href="#testimonials" onClick={() => setMobileMenuOpen(false)}>Testimonials</a>
+          </div>
+          <div className={styles.mobileMenuActions}>
+            <Link href="/signin" className={styles.mobileSignin} onClick={() => setMobileMenuOpen(false)}>Sign In</Link>
+            <Link href="/signup" className={styles.mobileCta} onClick={() => setMobileMenuOpen(false)}>
               Start Free Trial
               <ArrowRightIcon />
             </Link>
