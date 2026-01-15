@@ -333,6 +333,33 @@
     border-top: 1px solid var(--color-gray-100);
 }
 
+/* Mobile Menu Button */
+.mobileMenuBtn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: var(--color-gray-50);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    color: var(--color-gray-700);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.mobileMenuBtn:hover {
+    background: var(--color-gray-100);
+    color: var(--color-gray-900);
+}
+
+.mobileMenuBtn:active {
+    background: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary);
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .dateSelector span {
@@ -347,17 +374,44 @@
 @media (max-width: 768px) {
     .header {
         padding: var(--spacing-3) var(--spacing-4);
-        flex-wrap: wrap;
         gap: var(--spacing-3);
     }
 
+    .mobileMenuBtn {
+        display: flex;
+    }
+
+    .titleSection {
+        flex: 1;
+    }
+
+    .title {
+        font-size: var(--font-size-lg);
+    }
+
     .searchSection {
-        order: 3;
-        flex: 1 1 100%;
-        max-width: none;
+        display: none;
     }
 
     .dateSelector {
         display: none;
+    }
+
+    .userInfo {
+        display: none;
+    }
+
+    .userBtn svg:last-child {
+        display: none;
+    }
+
+    .notificationDropdown {
+        right: -50px;
+        width: calc(100vw - 32px);
+        max-width: 350px;
+    }
+
+    .userDropdown {
+        right: 0;
     }
 }
