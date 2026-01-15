@@ -69,12 +69,109 @@
 }
 
 @media (max-width: 768px) {
+    .ordersPage {
+        gap: var(--spacing-4);
+    }
+
+    .sectionTitle {
+        font-size: var(--font-size-base);
+    }
+
     .kpiGrid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-3);
     }
 
     .tableSectionHeader {
         flex-direction: column;
         align-items: flex-start;
+        gap: var(--spacing-2);
+    }
+
+    .viewAnalyticsBtn {
+        padding: var(--spacing-2) 0;
+    }
+
+    /* Mobile Order Cards */
+    .orderCards {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-3);
+    }
+
+    .orderCard {
+        background: var(--color-white);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--color-gray-100);
+        padding: var(--spacing-4);
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-3);
+    }
+
+    .orderCardHeader {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: var(--spacing-2);
+    }
+
+    .orderCardId {
+        font-weight: 600;
+        color: var(--color-gray-900);
+    }
+
+    .orderCardTime {
+        font-size: var(--font-size-xs);
+        color: var(--color-gray-500);
+    }
+
+    .orderCardDetails {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-2);
+    }
+
+    .orderCardItem {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .orderCardLabel {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--color-gray-500);
+    }
+
+    .orderCardValue {
+        font-size: var(--font-size-sm);
+        color: var(--color-gray-800);
+        font-weight: 500;
+    }
+
+    .orderCardFooter {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: var(--spacing-2);
+        border-top: 1px solid var(--color-gray-100);
+    }
+
+    .orderCardTotal {
+        font-weight: 700;
+        color: var(--color-gray-900);
+        font-size: var(--font-size-base);
+    }
+}
+
+@media (max-width: 480px) {
+    .kpiGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .orderCardDetails {
+        grid-template-columns: 1fr;
     }
 }

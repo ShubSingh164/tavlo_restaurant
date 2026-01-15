@@ -259,28 +259,28 @@ export default function CustomersPage() {
             title="Total Customers"
             value={totalCustomers}
             change={12}
-            icon={<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>}
+            icon={<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" /></svg>}
             color="linear-gradient(135deg, #3b82f6, #2563eb)"
           />
           <StatsCard
             title="Active Customers"
             value={activeCustomers}
             change={8}
-            icon={<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>}
+            icon={<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>}
             color="linear-gradient(135deg, #22c55e, #16a34a)"
           />
           <StatsCard
             title="VIP Members"
             value={vipCustomers}
             change={25}
-            icon={<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>}
+            icon={<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>}
             color="linear-gradient(135deg, #8b5cf6, #7c3aed)"
           />
           <StatsCard
             title="Total Revenue"
             value={formatCurrency(totalRevenue)}
             change={18}
-            icon={<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>}
+            icon={<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2"><line x1="12" y1="1" x2="12" y2="23" /><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6" /></svg>}
             color="linear-gradient(135deg, #f97316, #ea580c)"
           />
         </div>
@@ -302,7 +302,7 @@ export default function CustomersPage() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
-              <select 
+              <select
                 className={styles.filterSelect}
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
@@ -320,6 +320,7 @@ export default function CustomersPage() {
           </div>
 
           <div className={styles.tableWrapper}>
+            {/* Desktop Table View */}
             <table className={styles.table}>
               <thead>
                 <tr>
@@ -339,6 +340,64 @@ export default function CustomersPage() {
                 ))}
               </tbody>
             </table>
+
+            {/* Mobile Card View */}
+            <div className={styles.mobileCards}>
+              {filteredCustomers.map(customer => {
+                const getStatusBadge = (status: string) => {
+                  const statusConfig: Record<string, { bg: string; color: string; label: string }> = {
+                    active: { bg: '#dcfce7', color: '#16a34a', label: 'Active' },
+                    inactive: { bg: '#fef3c7', color: '#d97706', label: 'Inactive' },
+                    vip: { bg: '#f3e8ff', color: '#9333ea', label: 'VIP' },
+                  };
+                  return statusConfig[status] || statusConfig.active;
+                };
+                const status = getStatusBadge(customer.status);
+
+                return (
+                  <div key={customer.id} className={styles.mobileCard}>
+                    <div className={styles.mobileCardHeader}>
+                      <div className={styles.customerInfo}>
+                        <img src={customer.avatar} alt={customer.name} className={styles.customerAvatar} />
+                        <div>
+                          <span className={styles.customerName}>{customer.name}</span>
+                          <span className={styles.customerId}>ID: {customer.id}</span>
+                        </div>
+                      </div>
+                      <span className={styles.statusBadge} style={{ background: status.bg, color: status.color }}>
+                        {status.label}
+                      </span>
+                    </div>
+                    <div className={styles.mobileCardBody}>
+                      <div className={styles.mobileCardItem}>
+                        <span className={styles.mobileCardLabel}>Phone</span>
+                        <span className={styles.mobileCardValue}>{customer.phone}</span>
+                      </div>
+                      <div className={styles.mobileCardItem}>
+                        <span className={styles.mobileCardLabel}>Orders</span>
+                        <span className={styles.mobileCardValue}>{customer.totalOrders}</span>
+                      </div>
+                      <div className={styles.mobileCardItem}>
+                        <span className={styles.mobileCardLabel}>Total Spent</span>
+                        <span className={styles.mobileCardValue}>{formatCurrency(customer.totalSpent)}</span>
+                      </div>
+                      <div className={styles.mobileCardItem}>
+                        <span className={styles.mobileCardLabel}>Points</span>
+                        <span className={styles.mobileCardValue} style={{ color: '#f97316' }}>{customer.loyaltyPoints} pts</span>
+                      </div>
+                    </div>
+                    <div className={styles.mobileCardFooter}>
+                      <span className={styles.mobileCardLabel}>
+                        Last: {new Date(customer.lastVisit).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
+                      </span>
+                      <button className={styles.actionBtn}>
+                        <MoreIcon />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
