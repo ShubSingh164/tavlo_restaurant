@@ -157,7 +157,7 @@ export default function VerifyOTPPage() {
         // For demo: accept any 6-digit code
         // In production, this would validate against backend
         if (otpCode === '123456') {
-            window.location.href = '/dashboard';
+            window.location.href = '/onboarding/basic-details';
         } else {
             setError('Invalid verification code. Please try again.');
         }

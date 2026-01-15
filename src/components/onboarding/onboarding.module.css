@@ -1,0 +1,557 @@
+/**
+ * Tavlo Restaurant ERP - Onboarding Pages Styles
+ * Multi-step wizard with orange gradient background and white card
+ */
+
+/* Main Wrapper - Orange Gradient Background */
+.onboardingPage {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #7c2d12 0%, #c2410c 40%, #f97316 63%, #431407 100%);
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* White Card Container */
+.onboardingCard {
+    width: 100%;
+    max-width: 1100px;
+    min-height: calc(100vh - 40px);
+    background: #ffffff;
+    border-radius: 2rem;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    display: flex;
+    overflow: hidden;
+}
+
+/* Left Sidebar */
+.sidebar {
+    width: 280px;
+    flex-shrink: 0;
+    background: #fafafa;
+    border-right: 1px solid #f0f0f0;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebarLogo {
+    margin-bottom: 2rem;
+}
+
+.sidebarLogo img {
+    height: 40px;
+    width: auto;
+}
+
+/* Step Navigation */
+.stepList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.stepItem {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.875rem 1rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+}
+
+.stepItem:hover {
+    background: #f5f5f5;
+}
+
+.stepItem.active {
+    background: #fff5f5;
+}
+
+.stepIndicator {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.stepIndicator.completed {
+    background: #b91c1c;
+    color: white;
+}
+
+.stepIndicator.active {
+    background: #b91c1c;
+    color: white;
+    box-shadow: 0 0 0 4px rgba(185, 28, 28, 0.2);
+}
+
+.stepIndicator.pending {
+    background: transparent;
+    border: 2px solid #d1d5db;
+    color: #9ca3af;
+}
+
+.stepLabel {
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    transition: color 0.2s;
+}
+
+.stepItem.active .stepLabel {
+    color: #b91c1c;
+    font-weight: 600;
+}
+
+.stepItem.completed .stepLabel {
+    color: #374151;
+}
+
+/* Main Content Area */
+.mainContent {
+    flex: 1;
+    padding: 2.5rem 3rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Form Header */
+.formHeader {
+    margin-bottom: 2rem;
+}
+
+.formTitle {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 0.5rem 0;
+}
+
+.formSubtitle {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0;
+}
+
+/* Form Styles */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    flex: 1;
+}
+
+.formGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.formGroup.fullWidth {
+    grid-column: 1 / -1;
+}
+
+.label {
+    font-size: 13px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.required {
+    color: #dc2626;
+    margin-left: 2px;
+}
+
+.input,
+.select,
+.textarea {
+    padding: 0.875rem 1rem;
+    font-size: 14px;
+    color: #111827;
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    transition: all 0.2s;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+    outline: none;
+    border-color: #f97316;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+}
+
+.input::placeholder {
+    color: #9ca3af;
+}
+
+.select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 40px;
+    cursor: pointer;
+}
+
+.textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* File Upload */
+.fileUpload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    border: 2px dashed #e5e5e5;
+    border-radius: 12px;
+    background: #fafafa;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.fileUpload:hover {
+    border-color: #f97316;
+    background: #fff7ed;
+}
+
+.fileUploadIcon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 1rem;
+    color: #9ca3af;
+}
+
+.fileUploadText {
+    font-size: 14px;
+    color: #6b7280;
+    text-align: center;
+}
+
+.fileUploadText span {
+    color: #f97316;
+    font-weight: 500;
+}
+
+/* Checkbox Group */
+.checkboxGroup {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0.5rem 0;
+}
+
+.checkboxLabel {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 14px;
+    color: #374151;
+    cursor: pointer;
+}
+
+.checkbox {
+    width: 18px;
+    height: 18px;
+    accent-color: #f97316;
+    cursor: pointer;
+}
+
+/* Toggle Group */
+.toggleGroup {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.25rem;
+    background: #f5f5f5;
+    border-radius: 8px;
+    width: fit-content;
+}
+
+.toggleBtn {
+    padding: 0.5rem 1.25rem;
+    font-size: 13px;
+    font-weight: 500;
+    color: #6b7280;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.toggleBtn.active {
+    background: #ffffff;
+    color: #111827;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Form Actions */
+.formActions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding-top: 2rem;
+    margin-top: auto;
+    border-top: 1px solid #f0f0f0;
+}
+
+.btnPrevious {
+    padding: 0.875rem 2rem;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btnPrevious:hover {
+    background: #f9fafb;
+    border-color: #d1d5db;
+}
+
+.btnPrevious:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btnSkip {
+    padding: 0.875rem 2rem;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b7280;
+    background: transparent;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btnSkip:hover {
+    color: #374151;
+    border-color: #d1d5db;
+    background: #f9fafb;
+}
+
+.btnNext {
+    padding: 0.875rem 2rem;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    background: #111827;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btnNext:hover {
+    background: #1f2937;
+    transform: translateY(-1px);
+}
+
+.btnGoLive {
+    padding: 0.875rem 2rem;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btnGoLive:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+}
+
+/* Review Section */
+.reviewSection {
+    background: #fafafa;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.reviewSectionHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.reviewSectionTitle {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    margin: 0;
+}
+
+.editLink {
+    font-size: 13px;
+    color: #f97316;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.editLink:hover {
+    text-decoration: underline;
+}
+
+.reviewGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.reviewItem {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.reviewLabel {
+    font-size: 12px;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.reviewValue {
+    font-size: 14px;
+    color: #111827;
+    font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .onboardingCard {
+        flex-direction: column;
+        max-width: 600px;
+    }
+
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #f0f0f0;
+        padding: 1.5rem;
+    }
+
+    .stepList {
+        flex-direction: row;
+        overflow-x: auto;
+        gap: 0.25rem;
+        padding-bottom: 0.5rem;
+    }
+
+    .stepItem {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.75rem;
+        min-width: fit-content;
+    }
+
+    .stepLabel {
+        font-size: 11px;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .mainContent {
+        padding: 1.5rem;
+    }
+
+    .formGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .onboardingPage {
+        padding: 12px;
+    }
+
+    .onboardingCard {
+        min-height: calc(100vh - 24px);
+        border-radius: 1.5rem;
+    }
+
+    .sidebar {
+        padding: 1rem;
+    }
+
+    .stepItem {
+        padding: 0.5rem;
+    }
+
+    .stepIndicator {
+        width: 20px;
+        height: 20px;
+        font-size: 10px;
+    }
+
+    .stepLabel {
+        font-size: 10px;
+    }
+
+    .mainContent {
+        padding: 1.25rem;
+    }
+
+    .formHeader {
+        margin-bottom: 1.5rem;
+    }
+
+    .formTitle {
+        font-size: 1.25rem;
+    }
+
+    .formActions {
+        flex-direction: column-reverse;
+        gap: 0.75rem;
+    }
+
+    .btnPrevious,
+    .btnSkip,
+    .btnNext,
+    .btnGoLive {
+        width: 100%;
+        text-align: center;
+    }
+
+    .reviewGrid {
+        grid-template-columns: 1fr;
+    }
+}

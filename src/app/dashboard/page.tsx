@@ -70,16 +70,24 @@ interface KpiCardProps {
     subtitle?: string;
     change?: number;
     variant?: 'default' | 'primary' | 'danger';
+    tooltip?: string;
 }
 
-function KpiCard({ title, value, subtitle, change, variant = 'default' }: KpiCardProps) {
+function KpiCard({ title, value, subtitle, change, variant = 'default', tooltip }: KpiCardProps) {
     const isPositive = change !== undefined && change >= 0;
 
     return (
         <div className={`${styles.kpiCard} ${styles[variant]}`}>
             <div className={styles.kpiHeader}>
                 <span className={styles.kpiTitle}>{title}</span>
-                <button className={styles.kpiInfo}><InfoIcon /></button>
+                <div className={styles.kpiInfoWrapper}>
+                    <button className={styles.kpiInfo}><InfoIcon /></button>
+                    {tooltip && (
+                        <div className={styles.kpiTooltip}>
+                            {tooltip}
+                        </div>
+                    )}
+                </div>
             </div>
             <div className={styles.kpiBody}>
                 <span className={styles.kpiValue}>{value}</span>
@@ -848,18 +856,21 @@ export default function DashboardPage() {
                         subtitle="Today"
                         change={10.7}
                         variant="primary"
+                        tooltip="Today's total revenue from all completed orders. Compared to the same day last week."
                     />
                     <KpiCard
                         title="Ongoing Orders"
                         value="13"
                         subtitle="Orders in Kitchen"
                         change={0}
+                        tooltip="Active orders currently being prepared in the kitchen. Includes dine-in, takeaway, and delivery orders."
                     />
                     <KpiCard
                         title="Customer Retention"
                         value="12.3%"
                         subtitle="This Month"
                         change={-5.1}
+                        tooltip="Percentage of customers who returned to order again this month. Higher retention indicates better customer loyalty."
                     />
                     <TotalProfitCard />
                 </section>
