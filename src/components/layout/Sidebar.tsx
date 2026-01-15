@@ -190,7 +190,13 @@ const navigationGroups: NavGroup[] = [
  * AdminSidebar component
  * Renders the main navigation sidebar with grouped menu items
  */
-export default function AdminSidebar() {
+
+interface AdminSidebarProps {
+    isOpen?: boolean;
+    onClose?: () => void;
+}
+
+export default function AdminSidebar({ isOpen = false, onClose }: AdminSidebarProps) {
     const pathname = usePathname();
     const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -206,8 +212,15 @@ export default function AdminSidebar() {
 
     const isActive = (href: string) => pathname === href;
 
+    const handleNavClick = () => {
+        // Close mobile sidebar when navigating
+        if (onClose) {
+            onClose();
+        }
+    };
+
     return (
-        <aside className={`${styles.sidebar} ${isCollapsed ? styles.collapsed : ''}`}>
+        <aside className={`${styles.sidebar} ${isCollapsed ? styles.collapsed : ''} ${isOpen ? styles.open : ''}`}>
             {/* Logo Section */}
             <div className={styles.logoSection}>
                 <Link href="/dashboard" className={styles.logo}>
@@ -266,6 +279,7 @@ export default function AdminSidebar() {
                                         href={item.href}
                                         className={`${styles.navItem} ${isActive(item.href) ? styles.active : ''}`}
                                         title={isCollapsed ? item.label : undefined}
+                                        onClick={handleNavClick}
                                     >
                                         <span className={styles.navIcon}>{item.icon}</span>
                                         {!isCollapsed && (

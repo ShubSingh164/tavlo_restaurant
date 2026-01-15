@@ -365,6 +365,11 @@
     text-transform: capitalize;
 }
 
+/* Mobile Cards - Hidden by default */
+.mobileCards {
+    display: none;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .statsRow {
@@ -391,7 +396,176 @@
 }
 
 @media (max-width: 768px) {
+    .billingPage {
+        gap: var(--spacing-4);
+    }
+
     .statsRow {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-3);
+    }
+
+    .statsCard {
+        padding: var(--spacing-3);
+        gap: var(--spacing-3);
+    }
+
+    .statsIcon {
+        width: 44px;
+        height: 44px;
+    }
+
+    .statsValue {
+        font-size: 1.25rem;
+    }
+
+    .statsTitle {
+        font-size: var(--font-size-xs);
+    }
+
+    /* Charts Row Mobile */
+    .chartCard,
+    .settlementsCard {
+        padding: var(--spacing-4);
+    }
+
+    .methodItem {
+        flex-wrap: wrap;
+        gap: var(--spacing-2);
+    }
+
+    .methodInfo {
+        width: auto;
+    }
+
+    .methodBar {
+        order: 3;
+        width: 100%;
+        flex: none;
+    }
+
+    .methodStats {
+        flex-direction: row;
+        gap: var(--spacing-2);
+    }
+
+    /* Table Mobile */
+    .tableCard {
+        border-radius: var(--radius-xl);
+    }
+
+    .tableHeader {
+        padding: var(--spacing-4);
+        gap: var(--spacing-3);
+    }
+
+    .tableTitle {
+        font-size: var(--font-size-base);
+    }
+
+    .headerRight {
+        flex-direction: column;
+        gap: var(--spacing-2);
+    }
+
+    .searchBox {
+        width: 100%;
+        min-width: unset;
+    }
+
+    .filterSelect {
+        width: 100%;
+    }
+
+    .exportBtn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    /* Hide table on mobile, show cards */
+    .table {
+        display: none;
+    }
+
+    .tableWrapper {
+        padding: var(--spacing-3);
+    }
+
+    /* Mobile Transaction Cards */
+    .mobileCards {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-3);
+    }
+
+    .mobileCard {
+        background: var(--color-gray-50);
+        border-radius: var(--radius-lg);
+        padding: var(--spacing-4);
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-3);
+    }
+
+    .mobileCardHeader {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: var(--spacing-2);
+    }
+
+    .mobileCardTitleRow {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .mobileCardBody {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-2);
+    }
+
+    .mobileCardItem {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .mobileCardLabel {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: var(--color-gray-500);
+    }
+
+    .mobileCardValue {
+        font-size: var(--font-size-sm);
+        color: var(--color-gray-800);
+        font-weight: 500;
+    }
+
+    .mobileCardFooter {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: var(--spacing-2);
+        border-top: 1px solid var(--color-gray-200);
+    }
+
+    .mobileCardTotal {
+        font-size: var(--font-size-base);
+        font-weight: 700;
+        color: var(--color-gray-900);
+    }
+}
+
+@media (max-width: 480px) {
+    .statsRow {
+        grid-template-columns: 1fr;
+    }
+
+    .mobileCardBody {
         grid-template-columns: 1fr;
     }
 }

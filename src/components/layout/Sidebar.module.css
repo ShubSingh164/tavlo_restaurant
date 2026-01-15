@@ -311,10 +311,39 @@
 
 @media (max-width: 768px) {
     .sidebar {
+        width: 280px;
         transform: translateX(-100%);
+        box-shadow: none;
+        z-index: 1000;
+        transition: transform 0.3s ease;
     }
 
     .sidebar.open {
         transform: translateX(0);
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Show all content when open on mobile */
+    .sidebar.open .logoText,
+    .sidebar.open .logoImage,
+    .sidebar.open .restaurantInfo,
+    .sidebar.open .restaurantSwitch,
+    .sidebar.open .navGroupTitle,
+    .sidebar.open .navLabel,
+    .sidebar.open .upgradeCta {
+        display: block;
+    }
+
+    .sidebar.open .navItem {
+        justify-content: flex-start;
+    }
+
+    .sidebar.open .restaurantSelector {
+        justify-content: flex-start;
+        padding: var(--spacing-3);
+    }
+
+    .collapseBtn {
+        display: none;
     }
 }

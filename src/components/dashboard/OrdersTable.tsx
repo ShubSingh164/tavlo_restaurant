@@ -91,6 +91,7 @@ export default function OrdersTable({
 
     return (
         <div className={styles.tableContainer}>
+            {/* Desktop Table View */}
             <table className={styles.table}>
                 <thead>
                     <tr>
@@ -163,6 +164,72 @@ export default function OrdersTable({
                     ))}
                 </tbody>
             </table>
+
+            {/* Mobile Card View */}
+            <div className={styles.mobileCards}>
+                {orders.map((order) => (
+                    <div key={order._id} className={styles.mobileCard}>
+                        <div className={styles.mobileCardHeader}>
+                            <div className={styles.mobileCardTitleRow}>
+                                <span className={styles.billNo}>{order.billNumber || order.orderNumber}</span>
+                                <span className={`${styles.statusBadge} ${styles[order.status]}`}>
+                                    {getOrderStatusText(order.status)}
+                                </span>
+                            </div>
+                            <div className={styles.mobileCardTime}>
+                                <span className={styles.date}>{formatDate(order.createdAt || new Date())}</span>
+                                <span className={styles.time}>{formatTime(order.createdAt || new Date())}</span>
+                            </div>
+                        </div>
+                        <div className={styles.mobileCardBody}>
+                            <div className={styles.mobileCardItem}>
+                                <span className={styles.mobileCardLabel}>Customer</span>
+                                <span className={styles.mobileCardValue}>{order.customerName || 'Guest'}</span>
+                            </div>
+                            <div className={styles.mobileCardItem}>
+                                <span className={styles.mobileCardLabel}>Table</span>
+                                <span className={styles.mobileCardValue}>#{order.tableNumber || '-'}</span>
+                            </div>
+                        </div>
+                        <div className={styles.mobileCardFooter}>
+                            <span className={styles.mobileCardTotal}>
+                                {order.total ? formatCurrency(order.total) : '-'}
+                            </span>
+                            <div className={styles.actionWrapper}>
+                                <button
+                                    className={styles.actionBtn}
+                                    onClick={() => toggleDropdown(order._id || '')}
+                                    aria-label="Order actions"
+                                >
+                                    <MoreIcon />
+                                </button>
+                                {activeDropdown === order._id && (
+                                    <div className={styles.actionDropdown}>
+                                        <button
+                                            className={styles.dropdownItem}
+                                            onClick={() => handleAction('view', order)}
+                                        >
+                                            <EyeIcon />
+                                            <span>Preview</span>
+                                        </button>
+                                        <button className={styles.dropdownItem}>
+                                            <DownloadIcon />
+                                            <span>Download</span>
+                                        </button>
+                                        <button
+                                            className={`${styles.dropdownItem} ${styles.danger}`}
+                                            onClick={() => handleAction('delete', order)}
+                                        >
+                                            <TrashIcon />
+                                            <span>Delete</span>
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
 
             {orders.length === 0 && (
                 <div className={styles.emptyState}>

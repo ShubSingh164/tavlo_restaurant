@@ -1,3 +1,5 @@
+'use client';
+
 /**
  * Tavlo Restaurant ERP - Admin Layout Wrapper
  * 
@@ -8,7 +10,7 @@
  * @usage Wrap admin pages with this layout
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import AdminSidebar from './Sidebar';
 import Header from './Header';
 import styles from './AdminLayout.module.css';
@@ -24,15 +26,30 @@ interface AdminLayoutProps {
  * @param title - Page title displayed in header
  */
 export default function AdminLayout({ children, title = 'Dashboard' }: AdminLayoutProps) {
+    const [sidebarOpen, setSidebarOpen] = useState(false);
+
+    const toggleSidebar = () => {
+        setSidebarOpen(!sidebarOpen);
+    };
+
+    const closeSidebar = () => {
+        setSidebarOpen(false);
+    };
+
     return (
         <div className={styles.adminLayout}>
+            {/* Mobile Overlay */}
+            {sidebarOpen && (
+                <div className={styles.mobileOverlay} onClick={closeSidebar} />
+            )}
+
             {/* Sidebar Navigation */}
-            <AdminSidebar />
+            <AdminSidebar isOpen={sidebarOpen} onClose={closeSidebar} />
 
             {/* Main Content Area */}
             <div className={styles.mainArea}>
                 {/* Header */}
-                <Header title={title} />
+                <Header title={title} onMenuClick={toggleSidebar} />
 
                 {/* Page Content */}
                 <main className={styles.content}>

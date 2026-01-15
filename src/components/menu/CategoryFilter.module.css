@@ -90,24 +90,39 @@
 /* Responsive */
 @media (max-width: 768px) {
     .categoryFilter {
-        gap: var(--spacing-2);
+        gap: var(--spacing-3);
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: var(--spacing-2);
+        scroll-snap-type: x mandatory;
     }
 
     .categoryPill {
-        min-width: 70px;
+        min-width: 64px;
+        flex-shrink: 0;
         padding: var(--spacing-2);
+        scroll-snap-align: start;
     }
 
     .iconWrapper {
-        width: 52px;
-        height: 52px;
+        width: 48px;
+        height: 48px;
     }
 
     .iconEmoji {
-        font-size: 24px;
+        font-size: 20px;
     }
 
     .name {
-        font-size: var(--font-size-xs);
+        font-size: 10px;
+        max-width: 60px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .indicator {
+        width: 6px;
+        height: 6px;
     }
 }

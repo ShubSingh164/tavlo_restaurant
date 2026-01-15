@@ -240,6 +240,7 @@ export default function BillingPage() {
                     </div>
 
                     <div className={styles.tableWrapper}>
+                        {/* Desktop Table View */}
                         <table className={styles.table}>
                             <thead>
                                 <tr>
@@ -277,6 +278,42 @@ export default function BillingPage() {
                                 })}
                             </tbody>
                         </table>
+
+                        {/* Mobile Card View */}
+                        <div className={styles.mobileCards}>
+                            {filteredPayments.map(payment => {
+                                const status = getStatusBadge(payment.status);
+                                return (
+                                    <div key={payment.id} className={styles.mobileCard}>
+                                        <div className={styles.mobileCardHeader}>
+                                            <div className={styles.mobileCardTitleRow}>
+                                                <span className={styles.orderId}>{payment.orderId}</span>
+                                                <span className={styles.transactionId}>{payment.id}</span>
+                                            </div>
+                                            <span className={styles.statusBadge} style={{ background: status.bg, color: status.color }}>
+                                                {payment.status}
+                                            </span>
+                                        </div>
+                                        <div className={styles.mobileCardBody}>
+                                            <div className={styles.mobileCardItem}>
+                                                <span className={styles.mobileCardLabel}>Customer</span>
+                                                <span className={styles.mobileCardValue}>{payment.customer}</span>
+                                            </div>
+                                            <div className={styles.mobileCardItem}>
+                                                <span className={styles.mobileCardLabel}>Date</span>
+                                                <span className={styles.mobileCardValue}>{payment.date}</span>
+                                            </div>
+                                        </div>
+                                        <div className={styles.mobileCardFooter}>
+                                            <span className={styles.mobileCardTotal}>{formatCurrency(payment.amount)}</span>
+                                            <span className={styles.methodBadge}>
+                                                {getMethodIcon(payment.method)} {payment.method}
+                                            </span>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
                     </div>
                 </div>
             </div>
