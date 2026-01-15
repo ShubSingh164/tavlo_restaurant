@@ -203,17 +203,15 @@ function SalesFiguresChart() {
         <div className={styles.salesChart}>
             <div className={styles.chartHeader}>
                 <h3 className={styles.chartTitle}>Sales Figures</h3>
-                <div className={styles.chartControls}>
-                    {(['This Week', 'This Month', 'This Year'] as SalesPeriod[]).map((p) => (
-                        <button
-                            key={p}
-                            className={`${styles.periodBtn} ${period === p ? styles.active : ''}`}
-                            onClick={() => setPeriod(p)}
-                        >
-                            {p}
-                        </button>
-                    ))}
-                </div>
+                <select
+                    className={styles.periodSelect}
+                    value={period}
+                    onChange={(e) => setPeriod(e.target.value as SalesPeriod)}
+                >
+                    <option value="This Week">This Week</option>
+                    <option value="This Month">This Month</option>
+                    <option value="This Year">This Year</option>
+                </select>
             </div>
 
             <div className={styles.chartArea}>
@@ -328,17 +326,15 @@ function EarningCategoriesChart() {
         <div className={styles.earningChart}>
             <div className={styles.chartHeader}>
                 <h3 className={styles.chartTitle}>Earning Categories</h3>
-                <div className={styles.chartControls}>
-                    {(['Last Week', 'This Week', 'This Month'] as EarningPeriod[]).map((p) => (
-                        <button
-                            key={p}
-                            className={`${styles.periodBtn} ${period === p ? styles.active : ''}`}
-                            onClick={() => setPeriod(p)}
-                        >
-                            {p}
-                        </button>
-                    ))}
-                </div>
+                <select
+                    className={styles.periodSelect}
+                    value={period}
+                    onChange={(e) => setPeriod(e.target.value as EarningPeriod)}
+                >
+                    <option value="Last Week">Last Week</option>
+                    <option value="This Week">This Week</option>
+                    <option value="This Month">This Month</option>
+                </select>
             </div>
 
             <div className={styles.barChartContainer}>
@@ -559,17 +555,14 @@ function LastTransactions() {
         <div className={styles.transactionsCard}>
             <div className={styles.cardHeader}>
                 <h3 className={styles.cardTitle}>Last Transaction</h3>
-                <div className={styles.chartControls}>
-                    {(['Today', 'Yesterday'] as TransactionPeriod[]).map((p) => (
-                        <button
-                            key={p}
-                            className={`${styles.periodBtn} ${period === p ? styles.active : ''}`}
-                            onClick={() => setPeriod(p)}
-                        >
-                            {p}
-                        </button>
-                    ))}
-                </div>
+                <select
+                    className={styles.periodSelect}
+                    value={period}
+                    onChange={(e) => setPeriod(e.target.value as TransactionPeriod)}
+                >
+                    <option value="Today">Today</option>
+                    <option value="Yesterday">Yesterday</option>
+                </select>
             </div>
 
             <div className={styles.transactionsList}>
