@@ -17,6 +17,7 @@
  */
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { AdminLayout } from '@/components/layout';
 import { mockDashboardMetrics, mockMenuItems, mockCategories } from '@/data/mock-data';
 import { formatCurrency } from '@/lib/utils';
@@ -114,28 +115,61 @@ function KpiCard({ title, value, subtitle, change, variant = 'default' }: KpiCar
 // SALES FIGURES CHART (Area Chart)
 // ============================================================================
 
+type SalesPeriod = 'This Week' | 'This Month' | 'This Year';
+
 function SalesFiguresChart() {
-    const [period, setPeriod] = useState('Monthly');
+    const [period, setPeriod] = useState<SalesPeriod>('This Month');
 
-    // Mock data points for the area chart
-    const dataPoints = [
-        { month: 'Jan', value: 180 },
-        { month: 'Feb', value: 220 },
-        { month: 'Mar', value: 200 },
-        { month: 'Apr', value: 280 },
-        { month: 'May', value: 320 },
-        { month: 'Jun', value: 400 },  // Peak
-        { month: 'Jul', value: 350 },
-        { month: 'Aug', value: 380 },
-        { month: 'Sep', value: 340 },
-        { month: 'Oct', value: 360 },
-        { month: 'Nov', value: 390 },
-        { month: 'Dec', value: 420 },
-    ];
+    // Mock data for different periods
+    const salesData = {
+        'This Week': [
+            { label: 'Mon', value: 45000 },
+            { label: 'Tue', value: 52000 },
+            { label: 'Wed', value: 48000 },
+            { label: 'Thu', value: 61000 },
+            { label: 'Fri', value: 75000 },
+            { label: 'Sat', value: 89000 },
+            { label: 'Sun', value: 72000 },
+        ],
+        'This Month': [
+            { label: 'Week 1', value: 180000 },
+            { label: 'Week 2', value: 220000 },
+            { label: 'Week 3', value: 280000 },
+            { label: 'Week 4', value: 320000 },
+        ],
+        'This Year': [
+            { label: 'Jan', value: 1800000 },
+            { label: 'Feb', value: 2200000 },
+            { label: 'Mar', value: 2000000 },
+            { label: 'Apr', value: 2800000 },
+            { label: 'May', value: 3200000 },
+            { label: 'Jun', value: 4000000 },
+            { label: 'Jul', value: 3500000 },
+            { label: 'Aug', value: 3800000 },
+            { label: 'Sep', value: 3400000 },
+            { label: 'Oct', value: 3600000 },
+            { label: 'Nov', value: 3900000 },
+            { label: 'Dec', value: 4200000 },
+        ],
+    };
 
+    const dataPoints = salesData[period];
     const maxValue = Math.max(...dataPoints.map(d => d.value));
     const chartHeight = 200;
     const chartWidth = 100;
+
+    // Find peak index
+    const peakIndex = dataPoints.findIndex(d => d.value === maxValue);
+
+    // Y-axis labels based on max value
+    const getYAxisLabels = () => {
+        const step = maxValue / 4;
+        return [maxValue, step * 3, step * 2, step, 0].map(v => {
+            if (v >= 1000000) return `${(v / 1000000).toFixed(1)}M`;
+            if (v >= 1000) return `${(v / 1000).toFixed(0)}K`;
+            return v.toString();
+        });
+    };
 
     // Create SVG path for area chart
     const createPath = () => {
@@ -156,33 +190,38 @@ function SalesFiguresChart() {
         return points.join(' ');
     };
 
-    // Find peak point (June in this case)
-    const peakIndex = 5;
     const peakX = (peakIndex / (dataPoints.length - 1)) * 100;
     const peakY = ((1 - dataPoints[peakIndex].value / maxValue) * (chartHeight - 40)) + 20;
+
+    const formatPeakValue = (value: number) => {
+        if (value >= 1000000) return `₹${(value / 1000000).toFixed(1)}M`;
+        if (value >= 1000) return `₹${(value / 1000).toFixed(0)}K`;
+        return `₹${value}`;
+    };
 
     return (
         <div className={styles.salesChart}>
             <div className={styles.chartHeader}>
                 <h3 className={styles.chartTitle}>Sales Figures</h3>
                 <div className={styles.chartControls}>
-                    <button
-                        className={`${styles.periodBtn} ${period === 'Monthly' ? styles.active : ''}`}
-                        onClick={() => setPeriod('Monthly')}
-                    >
-                        Monthly <ChevronDownIcon />
-                    </button>
+                    {(['This Week', 'This Month', 'This Year'] as SalesPeriod[]).map((p) => (
+                        <button
+                            key={p}
+                            className={`${styles.periodBtn} ${period === p ? styles.active : ''}`}
+                            onClick={() => setPeriod(p)}
+                        >
+                            {p}
+                        </button>
+                    ))}
                 </div>
             </div>
 
             <div className={styles.chartArea}>
                 {/* Y-Axis Labels */}
                 <div className={styles.yAxis}>
-                    <span>500</span>
-                    <span>400</span>
-                    <span>300</span>
-                    <span>200</span>
-                    <span>100</span>
+                    {getYAxisLabels().map((label, i) => (
+                        <span key={i}>{label}</span>
+                    ))}
                 </div>
 
                 {/* Chart SVG */}
@@ -223,13 +262,13 @@ function SalesFiguresChart() {
 
                     {/* Peak value tooltip */}
                     <div className={styles.peakTooltip} style={{ left: `${peakX}%`, top: `${peakY - 15}px` }}>
-                        <span className={styles.tooltipValue}>400</span>
+                        <span className={styles.tooltipValue}>{formatPeakValue(dataPoints[peakIndex].value)}</span>
                     </div>
 
                     {/* X-Axis Labels */}
                     <div className={styles.xAxis}>
                         {dataPoints.map((d, i) => (
-                            <span key={i} className={i === peakIndex ? styles.activeMonth : ''}>{d.month}</span>
+                            <span key={i} className={i === peakIndex ? styles.activeMonth : ''}>{d.label}</span>
                         ))}
                     </div>
                 </div>
@@ -242,38 +281,72 @@ function SalesFiguresChart() {
 // EARNING CATEGORIES BAR CHART
 // ============================================================================
 
+type EarningPeriod = 'Last Week' | 'This Week' | 'This Month';
+
 function EarningCategoriesChart() {
-    const [period, setPeriod] = useState('Last week');
+    const [period, setPeriod] = useState<EarningPeriod>('This Week');
 
-    const weekData = [
-        { day: 'Sun', food: 22, drink: 18, dessert: 8 },
-        { day: 'Mon', food: 28, drink: 20, dessert: 12 },
-        { day: 'Tue', food: 25, drink: 22, dessert: 15 },
-        { day: 'Wed', food: 30, drink: 18, dessert: 10 },
-        { day: 'Thu', food: 32, drink: 25, dessert: 18 },
-        { day: 'Fri', food: 35, drink: 28, dessert: 20 },
-        { day: 'Sat', food: 40, drink: 30, dessert: 22 },
-    ];
+    const earningsData = {
+        'Last Week': [
+            { day: 'Sun', food: 18, drink: 14, dessert: 6 },
+            { day: 'Mon', food: 22, drink: 16, dessert: 9 },
+            { day: 'Tue', food: 20, drink: 18, dessert: 11 },
+            { day: 'Wed', food: 25, drink: 15, dessert: 8 },
+            { day: 'Thu', food: 28, drink: 20, dessert: 14 },
+            { day: 'Fri', food: 30, drink: 24, dessert: 16 },
+            { day: 'Sat', food: 35, drink: 26, dessert: 18 },
+        ],
+        'This Week': [
+            { day: 'Sun', food: 22, drink: 18, dessert: 8 },
+            { day: 'Mon', food: 28, drink: 20, dessert: 12 },
+            { day: 'Tue', food: 25, drink: 22, dessert: 15 },
+            { day: 'Wed', food: 30, drink: 18, dessert: 10 },
+            { day: 'Thu', food: 32, drink: 25, dessert: 18 },
+            { day: 'Fri', food: 35, drink: 28, dessert: 20 },
+            { day: 'Sat', food: 40, drink: 30, dessert: 22 },
+        ],
+        'This Month': [
+            { day: 'Wk 1', food: 85, drink: 60, dessert: 35 },
+            { day: 'Wk 2', food: 95, drink: 72, dessert: 42 },
+            { day: 'Wk 3', food: 110, drink: 80, dessert: 50 },
+            { day: 'Wk 4', food: 120, drink: 88, dessert: 55 },
+        ],
+    };
 
-    const maxValue = 45;
+    const weekData = earningsData[period];
+    const maxValue = period === 'This Month' ? 130 : 45;
+
+    // Y-axis labels based on period
+    const getYAxisLabels = () => {
+        if (period === 'This Month') {
+            return ['120', '90', '60', '30', '0'];
+        }
+        return ['40', '30', '20', '10', '0'];
+    };
 
     return (
         <div className={styles.earningChart}>
             <div className={styles.chartHeader}>
                 <h3 className={styles.chartTitle}>Earning Categories</h3>
-                <button className={styles.periodBtn}>
-                    {period} <ChevronDownIcon />
-                </button>
+                <div className={styles.chartControls}>
+                    {(['Last Week', 'This Week', 'This Month'] as EarningPeriod[]).map((p) => (
+                        <button
+                            key={p}
+                            className={`${styles.periodBtn} ${period === p ? styles.active : ''}`}
+                            onClick={() => setPeriod(p)}
+                        >
+                            {p}
+                        </button>
+                    ))}
+                </div>
             </div>
 
             <div className={styles.barChartContainer}>
                 {/* Y-Axis */}
                 <div className={styles.barYAxis}>
-                    <span>40</span>
-                    <span>30</span>
-                    <span>20</span>
-                    <span>10</span>
-                    <span>0</span>
+                    {getYAxisLabels().map((label, i) => (
+                        <span key={i}>{label}</span>
+                    ))}
                 </div>
 
                 {/* Bars */}
@@ -408,49 +481,95 @@ function TotalProfitCard() {
 // LAST TRANSACTIONS LIST
 // ============================================================================
 
-function LastTransactions() {
-    const [period, setPeriod] = useState('Today');
+type TransactionPeriod = 'Today' | 'Yesterday';
 
-    const transactions = [
-        {
-            name: 'Grilled Chicken Sandwich',
-            time: '09:15 AM',
-            price: 1030,
-            image: 'https://images.unsplash.com/photo-1553909489-cd47e0907980?w=100&h=100&fit=crop'
-        },
-        {
-            name: 'Veggie Burger',
-            time: '09:42 AM',
-            price: 1263,
-            image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=100&h=100&fit=crop'
-        },
-        {
-            name: 'Pepperoni Pizza',
-            time: '11:23 AM',
-            price: 1556,
-            image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=100&h=100&fit=crop'
-        },
-        {
-            name: 'Sushi Platter',
-            time: '01:05 PM',
-            price: 2069,
-            image: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=100&h=100&fit=crop'
-        },
-        {
-            name: 'Chicken Biryani',
-            time: '02:30 PM',
-            price: 1030,
-            image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=100&h=100&fit=crop'
-        },
-    ];
+function LastTransactions() {
+    const [period, setPeriod] = useState<TransactionPeriod>('Today');
+
+    const transactionsData = {
+        'Today': [
+            {
+                name: 'Grilled Chicken Sandwich',
+                time: '09:15 AM',
+                price: 1030,
+                image: 'https://images.unsplash.com/photo-1553909489-cd47e0907980?w=100&h=100&fit=crop'
+            },
+            {
+                name: 'Veggie Burger',
+                time: '09:42 AM',
+                price: 1263,
+                image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=100&h=100&fit=crop'
+            },
+            {
+                name: 'Pepperoni Pizza',
+                time: '11:23 AM',
+                price: 1556,
+                image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=100&h=100&fit=crop'
+            },
+            {
+                name: 'Sushi Platter',
+                time: '01:05 PM',
+                price: 2069,
+                image: 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=100&h=100&fit=crop'
+            },
+            {
+                name: 'Chicken Biryani',
+                time: '02:30 PM',
+                price: 1030,
+                image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=100&h=100&fit=crop'
+            },
+        ],
+        'Yesterday': [
+            {
+                name: 'Butter Chicken',
+                time: '10:30 AM',
+                price: 849,
+                image: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=100&h=100&fit=crop'
+            },
+            {
+                name: 'Paneer Tikka',
+                time: '11:15 AM',
+                price: 599,
+                image: 'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=100&h=100&fit=crop'
+            },
+            {
+                name: 'Dal Makhani',
+                time: '12:45 PM',
+                price: 449,
+                image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=100&h=100&fit=crop'
+            },
+            {
+                name: 'Masala Dosa',
+                time: '01:30 PM',
+                price: 299,
+                image: 'https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=100&h=100&fit=crop'
+            },
+            {
+                name: 'Tandoori Roti',
+                time: '03:00 PM',
+                price: 69,
+                image: 'https://images.unsplash.com/photo-1626100134176-e93d12767d23?w=100&h=100&fit=crop'
+            },
+        ],
+    };
+
+    const transactions = transactionsData[period];
 
     return (
         <div className={styles.transactionsCard}>
             <div className={styles.cardHeader}>
                 <h3 className={styles.cardTitle}>Last Transaction</h3>
-                <button className={styles.periodBtn}>
-                    {period} <ChevronDownIcon />
-                </button>
+                <div className={styles.chartControls}>
+                    {(['Today', 'Yesterday'] as TransactionPeriod[]).map((p) => (
+                        <button
+                            key={p}
+                            className={`${styles.periodBtn} ${period === p ? styles.active : ''}`}
+                            onClick={() => setPeriod(p)}
+                        >
+                            {p}
+                        </button>
+                    ))}
+                </div>
             </div>
 
             <div className={styles.transactionsList}>
@@ -520,10 +639,94 @@ function PopularMenuItems() {
 }
 
 // ============================================================================
-// SPECIALTIES SALES (with availability)
+// SPECIALTIES SALES (with availability) + MODAL
 // ============================================================================
 
+const CloseIcon = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M18 6L6 18M6 6l12 12" />
+    </svg>
+);
+
+const PromoteIcon = () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M12 2l3 7h7l-5.5 4.5 2 7.5-6.5-4.5-6.5 4.5 2-7.5L2 9h7l3-7z" />
+    </svg>
+);
+
+// Top 10 dishes data for modal
+const top10Dishes = [
+    { rank: 1, name: 'Butter Chicken', category: 'Main Course', sales: 2847, change: 24.5, image: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=120&h=120&fit=crop' },
+    { rank: 2, name: 'Paneer Tikka', category: 'Starters', sales: 2156, change: 18.2, image: 'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=120&h=120&fit=crop' },
+    { rank: 3, name: 'Chicken Biryani', category: 'Rice & Biryani', sales: 1984, change: 15.8, image: 'https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=120&h=120&fit=crop' },
+    { rank: 4, name: 'Masala Dosa', category: 'South Indian', sales: 1756, change: 12.3, image: 'https://images.unsplash.com/photo-1668236543090-82eba5ee5976?w=120&h=120&fit=crop' },
+    { rank: 5, name: 'Dal Makhani', category: 'Main Course', sales: 1623, change: 9.7, image: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=120&h=120&fit=crop' },
+    { rank: 6, name: 'Tandoori Roti', category: 'Breads', sales: 1489, change: 8.1, image: 'https://images.unsplash.com/photo-1626100134176-e93d12767d23?w=120&h=120&fit=crop' },
+    { rank: 7, name: 'Gulab Jamun', category: 'Desserts', sales: 1345, change: 6.5, image: 'https://images.unsplash.com/photo-1601303516361-f5db35e9d0ce?w=120&h=120&fit=crop' },
+    { rank: 8, name: 'Mango Lassi', category: 'Beverages', sales: 1212, change: 5.2, image: 'https://images.unsplash.com/photo-1587735243615-c03f25aaff15?w=120&h=120&fit=crop' },
+    { rank: 9, name: 'Samosa', category: 'Starters', sales: 1098, change: 3.8, image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=120&h=120&fit=crop' },
+    { rank: 10, name: 'Palak Paneer', category: 'Main Course', sales: 987, change: 2.4, image: 'https://images.unsplash.com/photo-1645177628172-a94c1f96e6db?w=120&h=120&fit=crop' },
+];
+
+interface SpecialtiesModalProps {
+    isOpen: boolean;
+    onClose: () => void;
+}
+
+function SpecialtiesModal({ isOpen, onClose }: SpecialtiesModalProps) {
+    if (!isOpen) return null;
+
+    const handlePromote = (dishName: string) => {
+        // Placeholder for promote functionality
+        alert(`Promoting ${dishName}! This will boost visibility in the menu.`);
+    };
+
+    return (
+        <div className={styles.modalOverlay} onClick={onClose}>
+            <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+                <div className={styles.modalHeader}>
+                    <h2 className={styles.modalTitle}>Top 10 Specialties</h2>
+                    <button className={styles.modalCloseBtn} onClick={onClose}>
+                        <CloseIcon />
+                    </button>
+                </div>
+
+                <div className={styles.modalBody}>
+                    <div className={styles.dishesGrid}>
+                        {top10Dishes.map((dish) => (
+                            <div key={dish.rank} className={styles.dishCard}>
+                                <div className={styles.dishRank}>#{dish.rank}</div>
+                                <div className={styles.dishImageWrapper}>
+                                    <img src={dish.image} alt={dish.name} className={styles.dishImage} />
+                                </div>
+                                <div className={styles.dishInfo}>
+                                    <span className={styles.dishCategory}>{dish.category}</span>
+                                    <span className={styles.dishName}>{dish.name}</span>
+                                    <div className={styles.dishStats}>
+                                        <span className={styles.dishSales}>{dish.sales.toLocaleString()} sold</span>
+                                        <span className={`${styles.dishChange} ${styles.positive}`}>
+                                            ↑ {dish.change}%
+                                        </span>
+                                    </div>
+                                </div>
+                                <button
+                                    className={styles.promoteBtn}
+                                    onClick={() => handlePromote(dish.name)}
+                                >
+                                    <PromoteIcon /> Promote this dish
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
 function SpecialtiesSales() {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     const specialties = [
         { name: 'Pasta Alfredo', category: 'Food', change: 20.8, available: 85 },
         { name: 'Margherita Pizza', category: 'Food', change: 15.2, available: 92 },
@@ -531,42 +734,60 @@ function SpecialtiesSales() {
     ];
 
     return (
-        <div className={styles.specialtiesCard}>
-            <h3 className={styles.cardTitle}>Specialties Sales</h3>
+        <>
+            <div className={styles.specialtiesCard}>
+                <div className={styles.cardHeader}>
+                    <h3 className={styles.cardTitle}>Specialties Sales</h3>
+                    <button
+                        className={styles.viewMoreBtn}
+                        onClick={() => setIsModalOpen(true)}
+                    >
+                        View Top 10
+                    </button>
+                </div>
 
-            <div className={styles.specialtiesList}>
-                {specialties.map((item, index) => (
-                    <div key={index} className={styles.specialtyItem}>
-                        <div className={styles.specialtyImage}>
-                            <img
-                                src={`https://images.unsplash.com/photo-${1565299624946 + index}-b28f40a0ae38?w=80&h=80&fit=crop`}
-                                alt={item.name}
-                            />
-                        </div>
-                        <div className={styles.specialtyInfo}>
-                            <span className={styles.specialtyCategory}>{item.category}</span>
-                            <span className={styles.specialtyName}>{item.name}</span>
-                        </div>
-                        <span className={`${styles.specialtyChange} ${item.change >= 0 ? styles.positive : styles.negative}`}>
-                            {item.change >= 0 ? '↑' : '↓'} {Math.abs(item.change)}%
-                        </span>
-                        <div className={styles.specialtyAvailability}>
-                            <span className={styles.availLabel}>Available</span>
-                            <div className={styles.availBar}>
-                                <div className={styles.availFill} style={{ width: `${item.available}%` }} />
+                <div className={styles.specialtiesList}>
+                    {specialties.map((item, index) => (
+                        <div key={index} className={styles.specialtyItem}>
+                            <div className={styles.specialtyImage}>
+                                <img
+                                    src={`https://images.unsplash.com/photo-${1565299624946 + index}-b28f40a0ae38?w=80&h=80&fit=crop`}
+                                    alt={item.name}
+                                />
                             </div>
-                            <span className={styles.availPercent}>{item.available}%</span>
+                            <div className={styles.specialtyInfo}>
+                                <span className={styles.specialtyCategory}>{item.category}</span>
+                                <span className={styles.specialtyName}>{item.name}</span>
+                            </div>
+                            <span className={`${styles.specialtyChange} ${item.change >= 0 ? styles.positive : styles.negative}`}>
+                                {item.change >= 0 ? '↑' : '↓'} {Math.abs(item.change)}%
+                            </span>
+                            <div className={styles.specialtyAvailability}>
+                                <span className={styles.availLabel}>Available</span>
+                                <div className={styles.availBar}>
+                                    <div className={styles.availFill} style={{ width: `${item.available}%` }} />
+                                </div>
+                                <span className={styles.availPercent}>{item.available}%</span>
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
-        </div>
+
+            <SpecialtiesModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+        </>
     );
 }
 
 // ============================================================================
 // CUSTOMER REVIEWS
 // ============================================================================
+
+const ArrowRightIcon = () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M5 12h14M12 5l7 7-7 7" />
+    </svg>
+);
 
 function CustomerReviews() {
     const reviews = [
@@ -588,7 +809,12 @@ function CustomerReviews() {
 
     return (
         <div className={styles.reviewsCard}>
-            <h3 className={styles.cardTitle}>Customer Review</h3>
+            <div className={styles.cardHeader}>
+                <h3 className={styles.cardTitle}>Customer Review</h3>
+                <Link href="/customers" className={styles.viewAllBtn}>
+                    View All <ArrowRightIcon />
+                </Link>
+            </div>
 
             <div className={styles.reviewsList}>
                 {reviews.map((review, index) => (
