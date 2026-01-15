@@ -140,11 +140,13 @@
 @media (max-width: 768px) {
     .menuPage {
         gap: var(--spacing-4);
+        max-width: 100%;
+        overflow-x: hidden;
     }
 
     .headerSection {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
         gap: var(--spacing-3);
     }
 
@@ -177,6 +179,8 @@
     .categorySection {
         padding: var(--spacing-3);
         border-radius: var(--radius-lg);
+        overflow-x: auto;
+        max-width: 100%;
     }
 
     .menuGrid {
