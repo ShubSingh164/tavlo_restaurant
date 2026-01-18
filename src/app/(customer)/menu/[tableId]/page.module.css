@@ -1,0 +1,179 @@
+/**
+ * Tavlo - Customer Menu Page Styles
+ */
+
+.menuPage {
+    min-height: 100vh;
+    background: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logoWrapper {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    font-family: 'Pacifico', cursive;
+    font-size: 1.75rem;
+    color: #111827;
+    margin: 0;
+}
+
+.tableInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    border-radius: 50px;
+    color: white;
+}
+
+.tableLabel {
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.tableNumber {
+    font-size: 1.125rem;
+    font-weight: 700;
+}
+
+/* Main Content */
+.main {
+    flex: 1;
+    padding: 1.5rem;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Welcome Section */
+.welcomeSection {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.welcomeTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 0.5rem 0;
+}
+
+.welcomeText {
+    font-size: 0.9375rem;
+    color: #6b7280;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Categories Section */
+.categoriesSection {
+    margin-bottom: 2rem;
+}
+
+.sectionTitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #111827;
+    margin: 0 0 1rem 0;
+}
+
+.categoryGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.categoryCard {
+    padding: 1.25rem;
+    background: #ffffff;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 2px solid transparent;
+}
+
+.categoryCard:hover {
+    border-color: #f97316;
+    transform: translateY(-2px);
+}
+
+.categoryName {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+/* Menu Section */
+.menuSection {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.placeholder {
+    font-size: 0.9375rem;
+    color: #9ca3af;
+    text-align: center;
+    padding: 2rem;
+}
+
+/* Footer */
+.footer {
+    padding: 1rem;
+    text-align: center;
+    background: #ffffff;
+    border-top: 1px solid #e5e7eb;
+}
+
+.footer p {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+    .header {
+        padding: 1rem;
+    }
+
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    .main {
+        padding: 1rem;
+    }
+
+    .categoryGrid {
+        gap: 0.75rem;
+    }
+}
