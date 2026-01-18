@@ -16,11 +16,13 @@
  * @api GET /api/categories - Fetch categories
  */
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { AdminLayout } from '@/components/layout';
 import { FoodCard, CategoryFilter } from '@/components/menu';
 import { mockMenuItems, mockCategories } from '@/data/mock-data';
 import { matchesSearch } from '@/lib/utils';
+import { IMenuItem } from '@/types';
 import styles from './page.module.css';
 
 const PlusIcon = () => (
@@ -41,15 +43,31 @@ const SearchIcon = () => (
  * Menu management page component
  */
 export default function MenuPage() {
+    const router = useRouter();
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [searchQuery, setSearchQuery] = useState('');
+    const [menuItems, setMenuItems] = useState<IMenuItem[]>(mockMenuItems);
+
+    // Load new items from localStorage on mount
+    useEffect(() => {
+        const storedItems = localStorage.getItem('newMenuItems');
+        if (storedItems) {
+            try {
+                const newItems = JSON.parse(storedItems) as IMenuItem[];
+                // Combine mock items with new items (new items first)
+                setMenuItems([...newItems.reverse(), ...mockMenuItems]);
+            } catch (e) {
+                console.error('Failed to parse stored menu items:', e);
+            }
+        }
+    }, []);
 
     /**
      * Filter menu items based on category and search
      * @backend Replace with API call: GET /api/menu?category=X&search=Y
      */
     const filteredItems = useMemo(() => {
-        return mockMenuItems.filter((item) => {
+        return menuItems.filter((item) => {
             // Category filter
             if (selectedCategory && item.categoryId !== selectedCategory) {
                 return false;
@@ -60,33 +78,44 @@ export default function MenuPage() {
             }
             return true;
         });
-    }, [selectedCategory, searchQuery]);
+    }, [menuItems, selectedCategory, searchQuery]);
 
     /**
      * Handle adding a new menu item
-     * @backend Open modal and call POST /api/menu
+     * Navigate to add item page
      */
     const handleAddItem = () => {
-        console.log('Add new menu item');
-        // TODO: Open add item modal
+        router.push('/menu/add');
     };
 
     /**
      * Handle editing a menu item
-     * @backend Open modal and call PUT /api/menu/:id
+     * Navigate to the edit dish page
      */
-    const handleEditItem = (item: typeof mockMenuItems[0]) => {
-        console.log('Edit item:', item);
-        // TODO: Open edit item modal with item data
+    const handleEditItem = (item: IMenuItem) => {
+        router.push(`/menu/edit/${item._id}`);
     };
 
     /**
      * Handle deleting a menu item
-     * @backend Show confirmation and call DELETE /api/menu/:id
      */
     const handleDeleteItem = (itemId: string) => {
-        console.log('Delete item:', itemId);
-        // TODO: Show confirmation modal and delete via API
+        if (confirm('Are you sure you want to delete this item?')) {
+            // Remove from state
+            setMenuItems(prev => prev.filter(item => item._id !== itemId));
+
+            // Also remove from localStorage if it was a newly added item
+            const storedItems = localStorage.getItem('newMenuItems');
+            if (storedItems) {
+                try {
+                    const newItems = JSON.parse(storedItems) as IMenuItem[];
+                    const updatedItems = newItems.filter(item => item._id !== itemId);
+                    localStorage.setItem('newMenuItems', JSON.stringify(updatedItems));
+                } catch (e) {
+                    console.error('Failed to update stored menu items:', e);
+                }
+            }
+        }
     };
 
     return (

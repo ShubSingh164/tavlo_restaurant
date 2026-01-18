@@ -20,6 +20,7 @@
  */
 
 import React, { useState, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
 import { AdminLayout } from '@/components/layout';
 import { mockStaff } from '@/data/mock-data';
 import { formatCurrency } from '@/lib/utils';
@@ -186,10 +187,12 @@ function StaffStats() {
 interface StaffCardProps {
     staff: typeof mockStaff[0];
     onEdit: (staff: typeof mockStaff[0]) => void;
-    onDelete: (id: string) => void;
+    onDelete: (staff: typeof mockStaff[0]) => void;
+    onViewSchedule: (staff: typeof mockStaff[0]) => void;
+    onSendMessage: (staff: typeof mockStaff[0]) => void;
 }
 
-function StaffCard({ staff, onEdit, onDelete }: StaffCardProps) {
+function StaffCard({ staff, onEdit, onDelete, onViewSchedule, onSendMessage }: StaffCardProps) {
     const [showMenu, setShowMenu] = useState(false);
 
     const getStatusColor = (status: string) => {
@@ -247,11 +250,11 @@ function StaffCard({ staff, onEdit, onDelete }: StaffCardProps) {
                     {showMenu && (
                         <div className={styles.dropdown}>
                             <button onClick={() => { onEdit(staff); setShowMenu(false); }}>Edit Profile</button>
-                            <button onClick={() => setShowMenu(false)}>View Schedule</button>
-                            <button onClick={() => setShowMenu(false)}>Send Message</button>
+                            <button onClick={() => { onViewSchedule(staff); setShowMenu(false); }}>View Schedule</button>
+                            <button onClick={() => { onSendMessage(staff); setShowMenu(false); }}>Send Message</button>
                             <button
                                 className={styles.dangerItem}
-                                onClick={() => { onDelete(staff._id || ''); setShowMenu(false); }}
+                                onClick={() => { onDelete(staff); setShowMenu(false); }}
                             >
                                 Remove
                             </button>
@@ -355,9 +358,17 @@ function ShiftSchedule() {
 // ============================================================================
 
 export default function StaffPage() {
+    const router = useRouter();
     const [view, setView] = useState<'grid' | 'list'>('grid');
     const [selectedRole, setSelectedRole] = useState('all');
     const [searchQuery, setSearchQuery] = useState('');
+
+    // Modal states
+    const [selectedStaff, setSelectedStaff] = useState<typeof mockStaff[0] | null>(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showScheduleModal, setShowScheduleModal] = useState(false);
+    const [showMessageModal, setShowMessageModal] = useState(false);
+    const [messageText, setMessageText] = useState('');
 
     const filteredStaff = useMemo(() => {
         return mockStaff.filter(staff => {
@@ -368,11 +379,45 @@ export default function StaffPage() {
     }, [selectedRole, searchQuery]);
 
     const handleEditStaff = (staff: typeof mockStaff[0]) => {
-        console.log('Edit staff:', staff);
+        // Navigate to edit page (would need to create edit staff page)
+        // For now, show alert with staff info
+        router.push(`/staff/edit/${staff._id}`);
     };
 
-    const handleDeleteStaff = (id: string) => {
-        console.log('Delete staff:', id);
+    const handleViewSchedule = (staff: typeof mockStaff[0]) => {
+        setSelectedStaff(staff);
+        setShowScheduleModal(true);
+    };
+
+    const handleSendMessage = (staff: typeof mockStaff[0]) => {
+        setSelectedStaff(staff);
+        setMessageText('');
+        setShowMessageModal(true);
+    };
+
+    const handleDeleteStaff = (staff: typeof mockStaff[0]) => {
+        setSelectedStaff(staff);
+        setShowDeleteModal(true);
+    };
+
+    const confirmDelete = () => {
+        if (selectedStaff) {
+            console.log('Deleting staff:', selectedStaff._id);
+            // In a real app, would call API and update state
+            setShowDeleteModal(false);
+            setSelectedStaff(null);
+        }
+    };
+
+    const sendMessage = () => {
+        if (selectedStaff && messageText.trim()) {
+            console.log('Sending message to:', selectedStaff.name, 'Message:', messageText);
+            // In a real app, would call notification API
+            alert(`Message sent to ${selectedStaff.name}!`);
+            setShowMessageModal(false);
+            setMessageText('');
+            setSelectedStaff(null);
+        }
     };
 
     return (
@@ -415,7 +460,7 @@ export default function StaffPage() {
                                         <ListIcon />
                                     </button>
                                 </div>
-                                <button className={styles.addBtn}>
+                                <button className={styles.addBtn} onClick={() => router.push('/staff/add')}>
                                     <PlusIcon />
                                     <span>Add Staff</span>
                                 </button>
@@ -443,6 +488,8 @@ export default function StaffPage() {
                                     staff={staff}
                                     onEdit={handleEditStaff}
                                     onDelete={handleDeleteStaff}
+                                    onViewSchedule={handleViewSchedule}
+                                    onSendMessage={handleSendMessage}
                                 />
                             ))}
                         </div>
@@ -454,6 +501,133 @@ export default function StaffPage() {
                     </div>
                 </div>
             </div>
+
+            {/* Delete Confirmation Modal */}
+            {showDeleteModal && selectedStaff && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modal}>
+                        <div className={styles.modalIcon} style={{ background: '#fef2f2' }}>
+                            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#dc2626" strokeWidth="2">
+                                <polyline points="3 6 5 6 21 6" />
+                                <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2" />
+                            </svg>
+                        </div>
+                        <h3 className={styles.modalTitle}>Remove Staff Member</h3>
+                        <p className={styles.modalText}>
+                            Are you sure you want to remove <strong>{selectedStaff.name}</strong> from your team?
+                            This action cannot be undone.
+                        </p>
+                        <div className={styles.modalActions}>
+                            <button
+                                className={styles.modalCancelBtn}
+                                onClick={() => setShowDeleteModal(false)}
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                className={styles.modalDeleteBtn}
+                                onClick={confirmDelete}
+                            >
+                                Yes, Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Schedule Modal */}
+            {showScheduleModal && selectedStaff && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modal} style={{ maxWidth: '500px' }}>
+                        <div className={styles.modalIcon} style={{ background: '#dbeafe' }}>
+                            <CalendarIcon />
+                        </div>
+                        <h3 className={styles.modalTitle}>{selectedStaff.name}'s Schedule</h3>
+                        <div className={styles.scheduleDetails}>
+                            <div className={styles.scheduleItem}>
+                                <span className={styles.scheduleLabel}>Current Status</span>
+                                <span className={styles.scheduleValue} style={{
+                                    color: selectedStaff.status === 'on-duty' ? '#22c55e' :
+                                        selectedStaff.status === 'on-break' ? '#f97316' : '#6b7280'
+                                }}>
+                                    {selectedStaff.status === 'on-duty' ? '🟢 On Duty' :
+                                        selectedStaff.status === 'on-break' ? '🟡 On Break' : '⚫ Off Duty'}
+                                </span>
+                            </div>
+                            <div className={styles.scheduleItem}>
+                                <span className={styles.scheduleLabel}>Next Shift</span>
+                                <span className={styles.scheduleValue}>{selectedStaff.shift}</span>
+                            </div>
+                            <div className={styles.scheduleItem}>
+                                <span className={styles.scheduleLabel}>Role</span>
+                                <span className={styles.scheduleValue}>{selectedStaff.role.charAt(0).toUpperCase() + selectedStaff.role.slice(1)}</span>
+                            </div>
+                            <div className={styles.scheduleItem}>
+                                <span className={styles.scheduleLabel}>Weekly Hours</span>
+                                <span className={styles.scheduleValue}>40 hours</span>
+                            </div>
+                        </div>
+                        <div className={styles.modalActions}>
+                            <button
+                                className={styles.modalCancelBtn}
+                                onClick={() => setShowScheduleModal(false)}
+                            >
+                                Close
+                            </button>
+                            <button
+                                className={styles.modalPrimaryBtn}
+                                onClick={() => {
+                                    setShowScheduleModal(false);
+                                    // Would navigate to full schedule view
+                                }}
+                            >
+                                View Full Schedule
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Send Message Modal */}
+            {showMessageModal && selectedStaff && (
+                <div className={styles.modalOverlay}>
+                    <div className={styles.modal} style={{ maxWidth: '450px' }}>
+                        <div className={styles.modalIcon} style={{ background: '#dcfce7' }}>
+                            <MailIcon />
+                        </div>
+                        <h3 className={styles.modalTitle}>Send Message to {selectedStaff.name}</h3>
+                        <div className={styles.messageForm}>
+                            <label className={styles.messageLabel}>Message</label>
+                            <textarea
+                                className={styles.messageTextarea}
+                                placeholder="Type your message here..."
+                                value={messageText}
+                                onChange={(e) => setMessageText(e.target.value)}
+                                rows={4}
+                            />
+                            <div className={styles.messageMeta}>
+                                <span>📱 {selectedStaff.phone}</span>
+                                <span>✉️ {selectedStaff.email}</span>
+                            </div>
+                        </div>
+                        <div className={styles.modalActions}>
+                            <button
+                                className={styles.modalCancelBtn}
+                                onClick={() => setShowMessageModal(false)}
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                className={styles.modalPrimaryBtn}
+                                onClick={sendMessage}
+                                disabled={!messageText.trim()}
+                            >
+                                Send Message
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </AdminLayout>
     );
 }

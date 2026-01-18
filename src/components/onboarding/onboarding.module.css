@@ -1,27 +1,26 @@
 /**
  * Tavlo Restaurant ERP - Onboarding Pages Styles
- * Multi-step wizard with orange gradient background and white card
+ * Multi-step wizard with clean card-based design
  */
 
-/* Main Wrapper - Orange Gradient Background */
+/* Main Wrapper - Clean Card Background */
 .onboardingPage {
     min-height: 100vh;
-    background: linear-gradient(135deg, #7c2d12 0%, #c2410c 40%, #f97316 63%, #431407 100%);
-    padding: 20px;
+    background: #f8f9fa;
+    padding: 15px;
     box-sizing: border-box;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
 }
 
 /* White Card Container */
 .onboardingCard {
     width: 100%;
-    max-width: 1100px;
-    min-height: calc(100vh - 40px);
+    min-height: calc(100vh - 30px);
     background: #ffffff;
-    border-radius: 2rem;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    border-radius: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     display: flex;
     overflow: hidden;
 }
@@ -72,7 +71,16 @@
 }
 
 .stepItem.active {
-    background: #fff5f5;
+    background: rgba(249, 115, 22, 0.1);
+}
+
+.stepItem.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.stepItem.disabled:hover {
+    background: transparent;
 }
 
 .stepIndicator {
@@ -89,14 +97,14 @@
 }
 
 .stepIndicator.completed {
-    background: #b91c1c;
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
     color: white;
 }
 
 .stepIndicator.active {
-    background: #b91c1c;
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
     color: white;
-    box-shadow: 0 0 0 4px rgba(185, 28, 28, 0.2);
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.2);
 }
 
 .stepIndicator.pending {
@@ -113,7 +121,7 @@
 }
 
 .stepItem.active .stepLabel {
-    color: #b91c1c;
+    color: #f97316;
     font-weight: 600;
 }
 
@@ -307,9 +315,9 @@
 }
 
 .toggleBtn.active {
-    background: #ffffff;
-    color: #111827;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(249, 115, 22, 0.3);
 }
 
 /* Form Actions */
@@ -368,7 +376,7 @@
     font-size: 14px;
     font-weight: 600;
     color: #ffffff;
-    background: #111827;
+    background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -376,8 +384,8 @@
 }
 
 .btnNext:hover {
-    background: #1f2937;
     transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
 }
 
 .btnGoLive {
@@ -500,12 +508,12 @@
 
 @media (max-width: 640px) {
     .onboardingPage {
-        padding: 12px;
+        padding: 15px;
     }
 
     .onboardingCard {
-        min-height: calc(100vh - 24px);
-        border-radius: 1.5rem;
+        min-height: calc(100vh - 30px);
+        border-radius: 1rem;
     }
 
     .sidebar {

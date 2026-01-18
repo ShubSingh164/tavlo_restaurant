@@ -3,11 +3,11 @@
 /**
  * Tavlo Restaurant ERP - OTP Verification Page
  * 
- * Email verification page with:
- * - Split layout (form + carousel)
+ * Modern verification page with:
+ * - Card-based layout matching signin/signup theme
  * - 6-digit OTP input boxes
+ * - Security showcase on the right
  * - Resend code functionality
- * - Responsive design
  * 
  * @component VerifyOTPPage
  * @route /verify-otp
@@ -18,25 +18,35 @@ import Link from 'next/link';
 import Image from 'next/image';
 import styles from './page.module.css';
 
-const slides = [
-    {
-        img: '/loginimage.svg',
-        text: 'Track Sales and Performance in Real-Time using Tavlo.',
-    },
-    {
-        img: '/logoimage2.svg',
-        text: 'Get powerful analytics and insights to grow your business faster.',
-    },
-    {
-        img: '/logoimage3.svg',
-        text: 'Collaborate with your team and manage everything from one dashboard.',
-    },
-];
+// Icons
+const ShieldIcon = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+    </svg>
+);
+
+const LockIcon = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+        <path d="M7 11V7a5 5 0 0110 0v4" />
+    </svg>
+);
+
+const CheckIcon = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <polyline points="20,6 9,17 4,12" />
+    </svg>
+);
+
+const MailIcon = () => (
+    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+        <polyline points="22,6 12,13 2,6" />
+    </svg>
+);
 
 export default function VerifyOTPPage() {
     const [email, setEmail] = useState('abc@gmail.com');
-    const [current, setCurrent] = useState(1);
-    const [transitionEnabled, setTransitionEnabled] = useState(true);
     const [otp, setOtp] = useState(['', '', '', '', '', '']);
     const [error, setError] = useState('');
     const [isResending, setIsResending] = useState(false);
@@ -44,7 +54,7 @@ export default function VerifyOTPPage() {
 
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-    // Get email from URL on client side only
+    // Get email from URL on client side
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const urlParams = new URLSearchParams(window.location.search);
@@ -54,37 +64,6 @@ export default function VerifyOTPPage() {
             }
         }
     }, []);
-
-    // Clone first and last slides for infinite loop effect
-    const extendedSlides = [
-        slides[slides.length - 1],
-        ...slides,
-        slides[0],
-    ];
-
-    // Carousel auto-rotation
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrent((prev) => prev + 1);
-        }, 5000);
-        return () => clearInterval(interval);
-    }, []);
-
-    useEffect(() => {
-        if (current === extendedSlides.length - 1) {
-            setTimeout(() => {
-                setTransitionEnabled(false);
-                setCurrent(1);
-            }, 900);
-        } else if (current === 0) {
-            setTimeout(() => {
-                setTransitionEnabled(false);
-                setCurrent(extendedSlides.length - 2);
-            }, 900);
-        } else {
-            setTransitionEnabled(true);
-        }
-    }, [current, extendedSlides.length]);
 
     // Resend timer countdown
     useEffect(() => {
@@ -96,14 +75,13 @@ export default function VerifyOTPPage() {
 
     // Handle OTP input change
     const handleOtpChange = (index: number, value: string) => {
-        if (!/^\d*$/.test(value)) return; // Only allow digits
+        if (!/^\d*$/.test(value)) return;
 
         const newOtp = [...otp];
-        newOtp[index] = value.slice(-1); // Take only last character
+        newOtp[index] = value.slice(-1);
         setOtp(newOtp);
         setError('');
 
-        // Auto-focus next input
         if (value && index < 5) {
             inputRefs.current[index + 1]?.focus();
         }
@@ -125,8 +103,6 @@ export default function VerifyOTPPage() {
             if (i < 6) newOtp[i] = char;
         });
         setOtp(newOtp);
-
-        // Focus last filled input or the next empty one
         const lastFilledIndex = Math.min(pastedData.length, 5);
         inputRefs.current[lastFilledIndex]?.focus();
     };
@@ -136,10 +112,9 @@ export default function VerifyOTPPage() {
         if (resendTimer > 0) return;
 
         setIsResending(true);
-        // Simulate API call
         await new Promise(resolve => setTimeout(resolve, 1000));
         setIsResending(false);
-        setResendTimer(60); // 60 second cooldown
+        setResendTimer(60);
     };
 
     // Handle form submission
@@ -154,8 +129,6 @@ export default function VerifyOTPPage() {
             return;
         }
 
-        // For demo: accept any 6-digit code
-        // In production, this would validate against backend
         if (otpCode === '123456') {
             window.location.href = '/onboarding/basic-details';
         } else {
@@ -170,133 +143,130 @@ export default function VerifyOTPPage() {
         return `${localPart.slice(0, 3)}***@${domain}`;
     };
 
+    const securityFeatures = [
+        { icon: <ShieldIcon />, text: 'Bank-grade encryption' },
+        { icon: <LockIcon />, text: 'Two-factor authentication' },
+        { icon: <CheckIcon />, text: 'Verified secure connection' },
+    ];
+
     return (
         <div className={styles.authPage}>
-            {/* Left Section - Form */}
-            <div className={styles.formSection}>
-                <div className={styles.logoWrapper}>
-                    <Image
-                        src="/images/tavlo-logo.png"
-                        alt="Tavlo"
-                        width={140}
-                        height={50}
-                        className={styles.logo}
-                    />
+            <div className={styles.authCard}>
+                {/* Left Section - Form */}
+                <div className={styles.formSection}>
+                    <div className={styles.formContent}>
+                        <div className={styles.logoWrapper}>
+                            <Image
+                                src="/images/tavlo-logo.png"
+                                alt="Tavlo"
+                                width={140}
+                                height={50}
+                                className={styles.logo}
+                            />
+                        </div>
+
+                        <div className={styles.headerSection}>
+                            <div className={styles.mailIconWrapper}>
+                                <MailIcon />
+                            </div>
+                            <h1 className={styles.title}>Verify your email</h1>
+                            <p className={styles.subtitle}>
+                                We&apos;ve sent a 6-digit verification code to
+                            </p>
+                            <div className={styles.emailDisplay}>
+                                <span className={styles.emailText}>{maskEmail(email)}</span>
+                                <Link href="/signin" className={styles.editEmail}>
+                                    Change
+                                </Link>
+                            </div>
+                        </div>
+
+                        <form className={styles.form} onSubmit={handleSubmit}>
+                            {error && (
+                                <div className={styles.errorMessage}>
+                                    ⚠️ {error}
+                                </div>
+                            )}
+
+                            {/* OTP Input Boxes */}
+                            <div className={styles.otpContainer} onPaste={handlePaste}>
+                                {otp.map((digit, index) => (
+                                    <input
+                                        key={index}
+                                        ref={el => { inputRefs.current[index] = el; }}
+                                        type="text"
+                                        inputMode="numeric"
+                                        maxLength={1}
+                                        value={digit}
+                                        onChange={(e) => handleOtpChange(index, e.target.value)}
+                                        onKeyDown={(e) => handleKeyDown(index, e)}
+                                        className={`${styles.otpInput} ${digit ? styles.filled : ''}`}
+                                        autoFocus={index === 0}
+                                    />
+                                ))}
+                            </div>
+
+                            {/* Resend Code */}
+                            <div className={styles.resendSection}>
+                                <span className={styles.resendText}>Didn&apos;t receive the code?</span>
+                                {resendTimer > 0 ? (
+                                    <span className={styles.resendTimer}>Resend in {resendTimer}s</span>
+                                ) : (
+                                    <button
+                                        type="button"
+                                        className={styles.resendLink}
+                                        onClick={handleResendCode}
+                                        disabled={isResending}
+                                    >
+                                        {isResending ? 'Sending...' : 'Resend code'}
+                                    </button>
+                                )}
+                            </div>
+
+                            <button type="submit" className={styles.submitBtn}>
+                                Verify & Continue
+                            </button>
+                        </form>
+
+                        <p className={styles.switchText}>
+                            <Link href="/signin" className={styles.switchLink}>
+                                ← Back to Sign In
+                            </Link>
+                        </p>
+                    </div>
                 </div>
 
-                <div className={styles.formContainer}>
-                    <h1 className={styles.title}>We emailed you a code</h1>
-                    <p className={styles.subtitle}>Verify it&apos;s you</p>
-
-                    <p className={styles.emailInfo}>
-                        Enter the verification code sent to:
-                    </p>
-                    <div className={styles.emailDisplay}>
-                        <span>{maskEmail(email)}</span>
-                        <Link href="/signin" className={styles.editEmail}>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" />
-                                <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" />
-                            </svg>
-                        </Link>
-                    </div>
-
-                    <form className={styles.form} onSubmit={handleSubmit}>
-                        {error && (
-                            <div className={styles.errorMessage}>
-                                {error}
+                {/* Right Section - Security Showcase */}
+                <div className={styles.showcaseSection}>
+                    <div className={styles.showcaseContent}>
+                        <div className={styles.securityHeader}>
+                            <div className={styles.securityIconBig}>
+                                <ShieldIcon />
                             </div>
-                        )}
+                            <h2 className={styles.securityTitle}>Your security matters</h2>
+                            <p className={styles.securitySubtitle}>
+                                This extra step helps keep your account safe from unauthorized access
+                            </p>
+                        </div>
 
-                        {/* OTP Input Boxes */}
-                        <div className={styles.otpContainer} onPaste={handlePaste}>
-                            {otp.map((digit, index) => (
-                                <input
-                                    key={index}
-                                    ref={el => { inputRefs.current[index] = el; }}
-                                    type="text"
-                                    inputMode="numeric"
-                                    maxLength={1}
-                                    value={digit}
-                                    onChange={(e) => handleOtpChange(index, e.target.value)}
-                                    onKeyDown={(e) => handleKeyDown(index, e)}
-                                    className={styles.otpInput}
-                                    autoFocus={index === 0}
-                                />
+                        <div className={styles.securityFeatures}>
+                            {securityFeatures.map((feature, index) => (
+                                <div key={index} className={styles.securityFeature}>
+                                    <span className={styles.securityFeatureIcon}>
+                                        {feature.icon}
+                                    </span>
+                                    <span className={styles.securityFeatureText}>
+                                        {feature.text}
+                                    </span>
+                                </div>
                             ))}
                         </div>
 
-                        {/* Resend Code */}
-                        <div className={styles.resendSection}>
-                            <span className={styles.resendText}>didn&apos;t received code yet?</span>
-                            {resendTimer > 0 ? (
-                                <span className={styles.resendTimer}>Resend in {resendTimer}s</span>
-                            ) : (
-                                <button
-                                    type="button"
-                                    className={styles.resendLink}
-                                    onClick={handleResendCode}
-                                    disabled={isResending}
-                                >
-                                    {isResending ? 'Sending...' : 'Resend Code'}
-                                </button>
-                            )}
+                        <div className={styles.helpSection}>
+                            <p className={styles.helpText}>
+                                Having trouble? <a href="mailto:support@tavlo.in">Contact Support</a>
+                            </p>
                         </div>
-
-                        <button type="submit" className={styles.submitBtn}>
-                            Continue
-                        </button>
-                    </form>
-
-                    <p className={styles.switchText}>
-                        <Link href="/signin" className={styles.switchLink}>
-                            ← Back to Sign In
-                        </Link>
-                    </p>
-                </div>
-            </div>
-
-            {/* Right Section - Carousel */}
-            <div className={styles.carouselSection}>
-                <div className={styles.carouselBg}></div>
-                <div className={styles.carouselContent}>
-                    <div
-                        className={`${styles.carouselTrack} ${transitionEnabled ? styles.animated : ''}`}
-                        style={{
-                            transform: `translateX(-${current * 100}%)`,
-                            width: `${extendedSlides.length * 100}%`,
-                        }}
-                    >
-                        {extendedSlides.map((slide, i) => (
-                            <div key={i} className={styles.slide}>
-                                <Image
-                                    src={slide.img}
-                                    alt={`Slide ${i}`}
-                                    width={400}
-                                    height={400}
-                                    className={styles.slideImage}
-                                />
-                                <p className={styles.slideText}>{slide.text}</p>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Dots */}
-                    <div className={styles.dots}>
-                        {slides.map((_, i) => (
-                            <span
-                                key={i}
-                                className={`${styles.dot} ${i === ((current - 1 + slides.length) % slides.length) ? styles.activeDot : ''
-                                    }`}
-                            ></span>
-                        ))}
-                    </div>
-
-                    {/* Trusted Partners */}
-                    <div className={styles.trustedSection}>
-                        <span className={styles.trustedLine}></span>
-                        <span className={styles.trustedText}>Trusted Partners</span>
-                        <span className={styles.trustedLine}></span>
                     </div>
                 </div>
             </div>

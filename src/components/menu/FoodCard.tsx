@@ -100,13 +100,6 @@ export default function FoodCard({
                         >
                             <EditIcon />
                         </button>
-                        <button
-                            className={`${styles.actionBtn} ${styles.deleteBtn}`}
-                            onClick={() => onDelete?.(item._id || '')}
-                            aria-label="Delete item"
-                        >
-                            <TrashIcon />
-                        </button>
                     </div>
                 )}
             </div>

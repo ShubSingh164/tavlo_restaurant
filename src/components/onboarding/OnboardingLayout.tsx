@@ -61,17 +61,37 @@ export default function OnboardingLayout({
                         <ul className={styles.stepList}>
                             {steps.map((step) => {
                                 const status = getStepStatus(step.id);
+                                const canNavigate = status === 'completed' || status === 'active';
+
+                                // Only allow navigation backward (to completed steps) or current step
+                                // Disable forward navigation to pending steps
+                                if (canNavigate) {
+                                    return (
+                                        <li key={step.id}>
+                                            <Link
+                                                href={step.path}
+                                                className={`${styles.stepItem} ${status === 'active' ? styles.active : ''} ${status === 'completed' ? styles.completed : ''}`}
+                                            >
+                                                <span className={`${styles.stepIndicator} ${styles[status]}`}>
+                                                    {status === 'completed' ? '✓' : step.id}
+                                                </span>
+                                                <span className={styles.stepLabel}>{step.label}</span>
+                                            </Link>
+                                        </li>
+                                    );
+                                }
+
+                                // Render disabled step (no Link, not clickable)
                                 return (
                                     <li key={step.id}>
-                                        <Link
-                                            href={step.path}
-                                            className={`${styles.stepItem} ${status === 'active' ? styles.active : ''} ${status === 'completed' ? styles.completed : ''}`}
+                                        <div
+                                            className={`${styles.stepItem} ${styles.disabled}`}
                                         >
                                             <span className={`${styles.stepIndicator} ${styles[status]}`}>
-                                                {status === 'completed' ? '✓' : step.id}
+                                                {step.id}
                                             </span>
                                             <span className={styles.stepLabel}>{step.label}</span>
-                                        </Link>
+                                        </div>
                                     </li>
                                 );
                             })}
