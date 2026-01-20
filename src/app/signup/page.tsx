@@ -63,7 +63,8 @@ export default function SignUpPage() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        window.location.href = `/verify-otp?email=${encodeURIComponent(email)}`;
+        // Redirect to role selection page
+        window.location.href = '/select-role';
     };
 
     const benefits = [

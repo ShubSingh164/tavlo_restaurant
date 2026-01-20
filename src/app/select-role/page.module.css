@@ -1,0 +1,414 @@
+/**
+ * Tavlo - Role Selection Page Styles
+ * Premium glassmorphism design with animated cards
+ */
+
+.page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Background Decorations */
+.bgBlob1 {
+    position: absolute;
+    top: -20%;
+    left: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(249, 115, 22, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(60px);
+    animation: float1 20s ease-in-out infinite;
+}
+
+.bgBlob2 {
+    position: absolute;
+    bottom: -30%;
+    right: -10%;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.12) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: float2 25s ease-in-out infinite;
+}
+
+.bgBlob3 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(100px);
+    animation: pulse 10s ease-in-out infinite;
+}
+
+.bgGrid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 50px 50px;
+    mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
+}
+
+@keyframes float1 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    33% {
+        transform: translate(30px, -30px) scale(1.05);
+    }
+
+    66% {
+        transform: translate(-20px, 20px) scale(0.95);
+    }
+}
+
+@keyframes float2 {
+
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate(-40px, -30px) scale(1.1);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 0.5;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+}
+
+/* Container */
+.container {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Header */
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.logoWrapper {
+    margin-bottom: 1.5rem;
+}
+
+.logo {
+    filter: brightness(1.1);
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(249, 115, 22, 0.15);
+    border: 1px solid rgba(249, 115, 22, 0.3);
+    border-radius: 50px;
+    margin-bottom: 1.5rem;
+}
+
+.badgeIcon {
+    font-size: 1rem;
+}
+
+.badge span:last-child {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #f97316;
+    letter-spacing: 0.5px;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0 0 0.75rem 0;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+.subtitle {
+    font-size: 1.125rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+    max-width: 400px;
+}
+
+/* Cards Grid */
+.cardsGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    width: 100%;
+    margin-bottom: 2.5rem;
+}
+
+.cardsGrid.navigating .roleCard:not(.selected) {
+    opacity: 0.3;
+    transform: scale(0.95);
+    filter: blur(2px);
+}
+
+/* Role Card */
+.roleCard {
+    position: relative;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: cardEnter 0.6s ease-out both;
+    animation-delay: var(--card-delay);
+    overflow: hidden;
+}
+
+@keyframes cardEnter {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.roleCard:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: var(--role-color);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        0 0 60px color-mix(in srgb, var(--role-color) 20%, transparent);
+}
+
+.roleCard.selected {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--role-color);
+    transform: scale(1.05);
+    box-shadow:
+        0 25px 50px rgba(0, 0, 0, 0.4),
+        0 0 80px color-mix(in srgb, var(--role-color) 30%, transparent);
+}
+
+/* Card Glow */
+.cardGlow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 150px;
+    background: var(--role-gradient);
+    opacity: 0;
+    filter: blur(40px);
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.roleCard:hover .cardGlow {
+    opacity: 0.15;
+}
+
+.roleCard.selected .cardGlow {
+    opacity: 0.25;
+}
+
+/* Card Border Glow */
+.cardBorder {
+    position: absolute;
+    inset: 0;
+    border-radius: 24px;
+    padding: 1px;
+    background: linear-gradient(135deg, transparent 40%, var(--role-color) 100%);
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.roleCard:hover .cardBorder {
+    opacity: 0.5;
+}
+
+/* Card Content */
+.cardContent {
+    position: relative;
+    z-index: 1;
+}
+
+.iconWrapper {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--role-gradient);
+    border-radius: 16px;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--role-color) 30%, transparent);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.roleCard:hover .iconWrapper {
+    transform: scale(1.1) rotate(-5deg);
+    box-shadow: 0 12px 32px color-mix(in srgb, var(--role-color) 40%, transparent);
+}
+
+.icon {
+    font-size: 2rem;
+}
+
+.cardTitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 0.5rem 0;
+}
+
+.cardDesc {
+    font-size: 0.9375rem;
+    color: rgba(255, 255, 255, 0.55);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.cardArrow {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    color: rgba(255, 255, 255, 0.4);
+    transition: all 0.3s ease;
+}
+
+.roleCard:hover .cardArrow {
+    background: var(--role-gradient);
+    color: #ffffff;
+    transform: translateX(4px);
+}
+
+/* Footer */
+.footerText {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.9375rem;
+}
+
+.footerLink {
+    color: #f97316;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.footerLink:hover {
+    color: #fb923c;
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .page {
+        padding: 1.5rem;
+    }
+
+    .title {
+        font-size: 1.75rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .cardsGrid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .roleCard {
+        padding: 1.5rem;
+    }
+
+    .iconWrapper {
+        width: 56px;
+        height: 56px;
+    }
+
+    .icon {
+        font-size: 1.5rem;
+    }
+
+    .cardTitle {
+        font-size: 1.25rem;
+    }
+
+    .cardArrow {
+        top: 1.5rem;
+        right: 1.5rem;
+        width: 36px;
+        height: 36px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page {
+        padding: 1rem;
+    }
+
+    .header {
+        margin-bottom: 2rem;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .cardsGrid {
+        margin-bottom: 2rem;
+    }
+}

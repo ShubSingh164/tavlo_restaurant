@@ -16,11 +16,42 @@
  * @route /dashboard
  */
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import Link from 'next/link';
+import { QRCodeCanvas } from 'qrcode.react';
 import { mockDashboardMetrics, mockMenuItems, mockCategories } from '@/data/mock-data';
 import { formatCurrency } from '@/lib/utils';
 import styles from './page.module.css';
+
+// ============================================================================
+// HELPER FUNCTIONS
+// ============================================================================
+
+// Helper function to draw rounded rectangles on canvas
+const roundRect = (
+    ctx: CanvasRenderingContext2D,
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    radius: number,
+    fill: boolean
+) => {
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.lineTo(x + width - radius, y);
+    ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+    ctx.lineTo(x + width, y + height - radius);
+    ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    ctx.lineTo(x + radius, y + height);
+    ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+    ctx.lineTo(x, y + radius);
+    ctx.quadraticCurveTo(x, y, x + radius, y);
+    ctx.closePath();
+    if (fill) {
+        ctx.fill();
+    }
+};
 
 // ============================================================================
 // ICON COMPONENTS
@@ -56,6 +87,31 @@ const ChevronDownIcon = () => (
 const StarIcon = () => (
     <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
         <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+    </svg>
+);
+
+const QRCodeIcon = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <rect x="3" y="3" width="7" height="7" />
+        <rect x="14" y="3" width="7" height="7" />
+        <rect x="3" y="14" width="7" height="7" />
+        <rect x="14" y="14" width="2" height="2" />
+        <rect x="18" y="14" width="2" height="2" />
+        <rect x="14" y="18" width="2" height="2" />
+        <rect x="18" y="18" width="2" height="2" />
+    </svg>
+);
+
+const DownloadIcon = () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+    </svg>
+);
+
+const EyeIcon = () => (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+        <circle cx="12" cy="12" r="3" />
     </svg>
 );
 
@@ -840,6 +896,241 @@ function CustomerReviews() {
 }
 
 // ============================================================================
+// TABLE QR CODE GENERATOR
+// ============================================================================
+
+function TableQRGenerator() {
+    const [tableNumber, setTableNumber] = useState('');
+    const [generatedQR, setGeneratedQR] = useState<string | null>(null);
+    const [showModal, setShowModal] = useState(false);
+    const [isExpanded, setIsExpanded] = useState(false);
+    const qrRef = useRef<HTMLDivElement>(null);
+
+    // Get base URL for QR code
+    const getBaseUrl = () => {
+        if (typeof window !== 'undefined') {
+            return window.location.origin;
+        }
+        return 'http://localhost:3000';
+    };
+
+    const handleGenerate = () => {
+        const num = parseInt(tableNumber);
+        if (num >= 1 && num <= 99) {
+            setGeneratedQR(`${getBaseUrl()}/menu/${num}`);
+        }
+    };
+
+    const handleDownload = useCallback(() => {
+        if (!qrRef.current || !generatedQR) return;
+
+        const canvas = qrRef.current.querySelector('canvas');
+        if (!canvas) return;
+
+        // Create a new canvas with padding and label
+        const padding = 40;
+        const labelHeight = 60;
+        const newCanvas = document.createElement('canvas');
+        newCanvas.width = canvas.width + padding * 2;
+        newCanvas.height = canvas.height + padding * 2 + labelHeight;
+        const ctx = newCanvas.getContext('2d');
+
+        if (ctx) {
+            // White background
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, newCanvas.width, newCanvas.height);
+
+            // Orange header
+            ctx.fillStyle = '#f97316';
+            ctx.fillRect(0, 0, newCanvas.width, labelHeight);
+
+            // Table label
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 24px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(`Table ${tableNumber}`, newCanvas.width / 2, 40);
+
+            // Draw QR code
+            const qrX = padding;
+            const qrY = labelHeight + padding / 2;
+            ctx.drawImage(canvas, qrX, qrY);
+
+            // Draw center number badge (rounded square)
+            const badgeSize = 44;
+            const badgeX = qrX + canvas.width / 2 - badgeSize / 2;
+            const badgeY = qrY + canvas.height / 2 - badgeSize / 2;
+            const borderRadius = 10;
+
+            // White border background
+            ctx.fillStyle = '#ffffff';
+            const borderSize = 4;
+            roundRect(ctx, badgeX - borderSize, badgeY - borderSize, badgeSize + borderSize * 2, badgeSize + borderSize * 2, borderRadius + 2, true);
+
+            // Orange gradient badge
+            const gradient = ctx.createLinearGradient(badgeX, badgeY, badgeX + badgeSize, badgeY + badgeSize);
+            gradient.addColorStop(0, '#f97316');
+            gradient.addColorStop(1, '#ea580c');
+            ctx.fillStyle = gradient;
+            roundRect(ctx, badgeX, badgeY, badgeSize, badgeSize, borderRadius, true);
+
+            // Table number text
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 18px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(tableNumber, badgeX + badgeSize / 2, badgeY + badgeSize / 2);
+
+            // Tavlo branding
+            ctx.fillStyle = '#6b7280';
+            ctx.font = '14px Arial';
+            ctx.textBaseline = 'alphabetic';
+            ctx.fillText('Scan to view menu', newCanvas.width / 2, newCanvas.height - 15);
+
+            // Download
+            const link = document.createElement('a');
+            link.download = `tavlo-table-${tableNumber}-qr.png`;
+            link.href = newCanvas.toDataURL('image/png');
+            link.click();
+        }
+    }, [generatedQR, tableNumber]);
+
+    const handleModalDownload = useCallback(() => {
+        handleDownload();
+        setShowModal(false);
+    }, [handleDownload]);
+
+    return (
+        <>
+            <div className={`${styles.qrGeneratorCard} ${isExpanded ? styles.qrExpanded : ''}`}>
+                <div className={styles.cardHeader} onClick={() => setIsExpanded(!isExpanded)} style={{ cursor: 'pointer' }}>
+                    <h3 className={styles.cardTitle}>Table QR Generator</h3>
+                    <button className={`${styles.qrCollapseBtn} ${isExpanded ? styles.qrCollapseBtnOpen : ''}`} aria-label={isExpanded ? 'Collapse' : 'Expand'}>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+                </div>
+
+                {isExpanded && (
+                    <div className={styles.qrGeneratorContent}>
+                        {/* Left Panel - Input Section */}
+                        <div className={styles.qrInputSection}>
+                            <div className={styles.qrInputGroup}>
+                                <label className={styles.qrLabel}>Table Number</label>
+                                <input
+                                    type="number"
+                                    className={styles.qrInput}
+                                    placeholder="1-99"
+                                    min="1"
+                                    max="99"
+                                    value={tableNumber}
+                                    onChange={(e) => setTableNumber(e.target.value)}
+                                />
+                            </div>
+                            <button
+                                className={styles.qrGenerateBtn}
+                                onClick={handleGenerate}
+                                disabled={!tableNumber || parseInt(tableNumber) < 1 || parseInt(tableNumber) > 99}
+                            >
+                                <QRCodeIcon />
+                                Generate QR Code
+                            </button>
+                            <p className={styles.qrHelpText}>
+                                Generate a unique QR code for each table. Customers can scan to view the menu.
+                            </p>
+                        </div>
+
+                        <div className={styles.qrPreviewSection}>
+                            {generatedQR ? (
+                                <div className={styles.qrDisplay}>
+                                    <div className={styles.qrCodeWrapper} ref={qrRef}>
+                                        <div className={styles.qrCodeContainer}>
+                                            <QRCodeCanvas
+                                                value={generatedQR}
+                                                size={180}
+                                                level="H"
+                                                includeMargin={false}
+                                                fgColor="#1f2937"
+                                            />
+                                            <div className={styles.qrCenterOverlay}>
+                                                <span className={styles.qrCenterNumber}>{tableNumber}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span className={styles.qrTableLabel}>
+                                        Table <span>{tableNumber}</span>
+                                    </span>
+                                    <div className={styles.qrActions}>
+                                        <button className={styles.qrDownloadBtn} onClick={handleDownload}>
+                                            <DownloadIcon />
+                                            Download PNG
+                                        </button>
+                                        <button className={styles.qrPreviewBtn} onClick={() => setShowModal(true)}>
+                                            <EyeIcon />
+                                            Preview
+                                        </button>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className={styles.qrPlaceholder}>
+                                    <QRCodeIcon />
+                                    <span>Enter a table number and click Generate</span>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            {/* Preview Modal */}
+            {showModal && generatedQR && (
+                <div className={styles.qrModal} onClick={() => setShowModal(false)}>
+                    <div className={styles.qrModalContent} onClick={(e) => e.stopPropagation()}>
+                        <div className={styles.qrModalHeader}>
+                            <h3 className={styles.qrModalTitle}>QR Code Preview</h3>
+                            <button
+                                className={styles.qrModalCloseBtn}
+                                onClick={() => setShowModal(false)}
+                            >
+                                <CloseIcon />
+                            </button>
+                        </div>
+                        <div className={styles.qrModalBody}>
+                            <div className={styles.qrModalQRWrapper}>
+                                <div className={styles.qrModalQRInner}>
+                                    <div className={styles.qrCodeContainer}>
+                                        <QRCodeCanvas
+                                            value={generatedQR}
+                                            size={200}
+                                            level="H"
+                                            includeMargin={false}
+                                            fgColor="#1f2937"
+                                        />
+                                        <div className={styles.qrCenterOverlay}>
+                                            <span className={styles.qrCenterNumber}>{tableNumber}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={styles.qrModalInfo}>
+                                <span className={styles.qrModalTableNumber}>Table {tableNumber}</span>
+                                <span className={styles.qrModalUrl}>{generatedQR}</span>
+                            </div>
+                            <div className={styles.qrModalActions}>
+                                <button className={styles.qrModalDownloadBtn} onClick={handleModalDownload}>
+                                    <DownloadIcon />
+                                    Download PNG
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </>
+    );
+}
+
+// ============================================================================
 // MAIN DASHBOARD PAGE
 // ============================================================================
 
@@ -895,6 +1186,11 @@ export default function DashboardPage() {
             <section className={styles.bottomRow}>
                 <SpecialtiesSales />
                 <CustomerReviews />
+            </section>
+
+            {/* Row 5: QR Code Generator */}
+            <section className={styles.qrRow}>
+                <TableQRGenerator />
             </section>
         </div>
     );
