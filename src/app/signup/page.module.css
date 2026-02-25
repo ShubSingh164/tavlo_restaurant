@@ -209,6 +209,27 @@
     color: #9ca3af;
 }
 
+/* Password Visibility Toggle */
+.eyeToggle {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s;
+}
+
+.eyeToggle:hover {
+    color: #6b7280;
+}
+
 .nameRow {
     display: grid;
     grid-template-columns: 1fr 1fr;
