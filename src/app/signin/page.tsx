@@ -14,11 +14,19 @@
  */
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './page.module.css';
 
-// Icons
+
+
+// BACKEND INTEGRATION: API client for making authenticated requests to NestJS backend
+import { authApi, ApiError } from '@/lib/api-client';
+
+// ─── SVG Icons ──────────────────────────────────────────────────────────────
+// Inline SVG icons used in form inputs and feature showcase cards.
+// These are defined as React components for reusability and easy styling.
 const EmailIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
@@ -60,32 +68,55 @@ const ClipboardIcon = () => (
 );
 
 export default function SignInPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
-  const [error, setError] = useState('');
+  // ─── Navigation ─────────────────────────────────────────────────────────────
+  const router = useRouter(); // Used to redirect after successful login
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // ─── Form State ─────────────────────────────────────────────────────────────
+  const [email, setEmail] = useState('');          // User's email input
+  const [password, setPassword] = useState('');    // User's password input
+  const [rememberMe, setRememberMe] = useState(false); // Remember me checkbox (UI only, not yet wired)
+  const [error, setError] = useState('');          // Error message displayed below form
+  const [isLoading, setIsLoading] = useState(false); // Loading state to disable submit button
+
+  /**
+   * BACKEND INTEGRATION: Dashboard Login
+   * 
+   * Calls POST /auth/login on the NestJS backend with platform type "dashboard".
+   * On success, the backend sets HttpOnly JWT cookies (access + refresh tokens).
+   * On failure, displays the error message from the API response.
+   * 
+   * API: POST /api/backend/auth/login → proxied to NestJS /auth/login
+   * Headers: x-platform-type: "dashboard" (set automatically by api-client)
+   */
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
 
-    // Hardcoded login credentials
-    const validEmail = 'tavlo123@gmail.com';
-    const validPassword = '@123456';
-
-    if (email === validEmail && password === validPassword) {
-      window.location.href = `/verify-otp?email=${encodeURIComponent(email)}`;
-    } else {
-      setError('Invalid email or password. Please try again.');
+    try {
+      await authApi.loginDashboard(email, password);
+      router.push('/dashboard');
+    } catch (err) {
+      if (err instanceof ApiError) {
+        setError(err.message);
+      } else {
+        setError('Something went wrong. Please try again.');
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
+  // ─── Render ───────────────────────────────────────────────────────────────
   return (
     <div className={styles.authPage}>
       <div className={styles.authCard}>
-        {/* Left Section - Form */}
+
+        {/* ── Left Section: Login Form ──────────────────────────────────── */}
         <div className={styles.formSection}>
           <div className={styles.formContent}>
+
+            {/* Logo */}
             <div className={styles.logoWrapper}>
               <Image
                 src="/images/tavlo-logo.png"
@@ -96,6 +127,7 @@ export default function SignInPage() {
               />
             </div>
 
+            {/* Page Title & Subtitle */}
             <div className={styles.headerSection}>
               <h1 className={styles.title}>Sign in to Tavlo</h1>
               <p className={styles.subtitle}>
@@ -103,24 +135,30 @@ export default function SignInPage() {
               </p>
             </div>
 
+            {/* Google OAuth Button — TODO: wire to Google OAuth flow */}
             <button className={styles.googleBtn}>
               <Image src="/google.svg" alt="Google" width={20} height={20} />
               Continue with Google
             </button>
 
+            {/* Divider between OAuth and email/password form */}
             <div className={styles.divider}>
               <span className={styles.dividerLine}></span>
               <span className={styles.dividerText}>OR</span>
               <span className={styles.dividerLine}></span>
             </div>
 
+            {/* ── Email/Password Login Form ────────────────────────────── */}
             <form className={styles.form} onSubmit={handleSubmit}>
+
+              {/* Error banner — shown when login fails */}
               {error && (
                 <div className={styles.errorMessage}>
                   ⚠️ {error}
                 </div>
               )}
 
+              {/* Email Input */}
               <div className={styles.inputGroup}>
                 <label className={styles.label}>Email Address</label>
                 <div className={styles.inputWrapper}>
@@ -151,6 +189,7 @@ export default function SignInPage() {
                 </div>
               </div>
 
+              {/* Remember Me & Forgot Password Row */}
               <div className={styles.formOptions}>
                 <label className={styles.rememberMe}>
                   <input
@@ -166,11 +205,13 @@ export default function SignInPage() {
                 </div>
               </div>
 
+              {/* Submit Button */}
               <button type="submit" className={styles.submitBtn}>
                 Sign In
               </button>
             </form>
 
+            {/* Link to Sign Up page for new users */}
             <p className={styles.switchText}>
               New to Tavlo?{' '}
               <Link href="/signup" className={styles.switchLink}>
@@ -180,7 +221,8 @@ export default function SignInPage() {
           </div>
         </div>
 
-        {/* Right Section - Feature Showcase */}
+        {/* ── Right Section: Feature Showcase ────────────────────────── */}
+        {/* Displays key features and a customer testimonial to build trust */}
         <div className={styles.showcaseSection}>
           <div className={styles.showcaseContent}>
             <div className={styles.featureCards}>
@@ -215,6 +257,7 @@ export default function SignInPage() {
               </div>
             </div>
 
+            {/* Customer Testimonial Quote */}
             <div className={styles.quoteSection}>
               <p className={styles.quoteText}>
                 "Tavlo transformed how we run our restaurant. Everything in one place!"

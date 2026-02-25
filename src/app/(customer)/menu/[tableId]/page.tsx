@@ -19,6 +19,7 @@ import React, { useState, useMemo, useRef, useEffect, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCartStore } from '@/store/cart-store';
+import { useThemeStore } from '@/store/theme-store';
 import { IMenuItem, ICategory } from '@/types';
 import QRScanner from '@/components/customer/QRScanner';
 import BottomSheetCart from '@/components/customer/BottomSheetCart';
@@ -238,7 +239,7 @@ export default function CustomerMenuPage() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [favorites, setFavorites] = useState<string[]>([]);
     const [activeNav, setActiveNav] = useState('home');
-    const [isDarkMode, setIsDarkMode] = useState(false);
+    const { isDarkMode, toggleTheme } = useThemeStore();
     const [showQRScanner, setShowQRScanner] = useState(false);
     const [extras, setExtras] = useState<ExtraOption[]>([
         { id: '1', name: 'Extra Cheese', price: 30, selected: false },
@@ -432,7 +433,7 @@ export default function CustomerMenuPage() {
                     <div className={styles.headerRight}>
                         <motion.button
                             className={styles.themeToggle}
-                            onClick={() => setIsDarkMode(!isDarkMode)}
+                            onClick={toggleTheme}
                             whileTap={{ scale: 0.9 }}
                         >
                             {isDarkMode ? <SunIcon /> : <MoonIcon />}
@@ -690,7 +691,7 @@ export default function CustomerMenuPage() {
 
             {/* View Cart Button - Professional Design */}
             {cartItemCount > 0 && !showCart && (
-                <button className={styles.viewCartBtn} onClick={() => setShowCart(true)}>
+                <button className={styles.viewCartBtn} onClick={() => router.push('/cart')}>
                     <div className={styles.cartLeft}>
                         <span className={styles.cartCount}>{cartItemCount} {cartItemCount === 1 ? 'item' : 'items'}</span>
                         <span className={styles.cartAmount}>₹{cartTotal.total}</span>

@@ -14,11 +14,17 @@
  */
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './page.module.css';
 
-// Icons
+// BACKEND INTEGRATION: API client for onboarding flow (register → OTP → complete)
+import { onboardingApi, ApiError } from '@/lib/api-client';
+
+// ─── SVG Icons ──────────────────────────────────────────────────────────────
+// Inline SVG icons used in form inputs and benefits showcase.
+// These are defined as React components for reusability and easy styling.
 const UserIcon = () => (
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
@@ -54,19 +60,62 @@ const CheckCircleIcon = () => (
 );
 
 export default function SignUpPage() {
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    const [password, setPassword] = useState('');
-    const [agreedToTerms, setAgreedToTerms] = useState(false);
+    // ─── Navigation ───────────────────────────────────────────────────────────
+    const router = useRouter(); // Used to redirect after successful registration
 
-    const handleSubmit = (e: React.FormEvent) => {
+    // ─── Form State ───────────────────────────────────────────────────────────
+    const [firstName, setFirstName] = useState('');       // User's first name
+    const [lastName, setLastName] = useState('');         // User's last name
+    const [email, setEmail] = useState('');               // Email — sent to backend for OTP
+    const [phone, setPhone] = useState('');               // Phone number (optional)
+    const [password, setPassword] = useState('');         // Password — stored in sessionStorage, used in Step 3
+    const [agreedToTerms, setAgreedToTerms] = useState(false); // Terms & Conditions checkbox
+    const [error, setError] = useState('');               // API error message displayed in form
+    const [isLoading, setIsLoading] = useState(false);    // Loading spinner state for submit button
+
+    /**
+     * BACKEND INTEGRATION: Onboarding Registration (Step 1 of 3)
+     * 
+     * Calls POST /onboarding/register on the NestJS backend.
+     * This creates an onboarding request and sends an OTP to the user's email.
+     * 
+     * Flow: Register → OTP sent to email → Redirect to /verify-otp
+     * 
+     * Form data (name, password) is stored in sessionStorage because it's
+     * needed later in Step 3 (onboarding/complete) after OTP verification.
+     * 
+     * API: POST /api/backend/onboarding/register
+     * Body: { email, phone? }
+     */
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Redirect to role selection page
-        window.location.href = '/select-role';
+        setError('');
+        setIsLoading(true);
+
+        try {
+            // BACKEND: Register and send OTP to user's email
+            await onboardingApi.register(email, phone || undefined);
+
+            // Store form data in sessionStorage for the onboarding/complete step later
+            sessionStorage.setItem('tavlo_onboarding', JSON.stringify({
+                email, firstName, lastName, password, phone
+            }));
+
+            // Navigate to OTP verification page
+            router.push(`/verify-otp?email=${encodeURIComponent(email)}&flow=onboarding`);
+        } catch (err) {
+            // BACKEND: Display API error message (e.g., "Email already registered")
+            if (err instanceof ApiError) {
+                setError(err.message);
+            } else {
+                setError('Something went wrong. Please try again.');
+            }
+        } finally {
+            setIsLoading(false);
+        }
     };
 
+    // ─── Benefits List (shown on right panel) ──────────────────────────────
     const benefits = [
         'Free 14-day trial, no credit card required',
         'Manage unlimited orders and staff',
@@ -75,12 +124,16 @@ export default function SignUpPage() {
         'Mobile app for on-the-go management',
     ];
 
+    // ─── Render ───────────────────────────────────────────────────────────────
     return (
         <div className={styles.authPage}>
             <div className={styles.authCard}>
-                {/* Left Section - Form */}
+
+                {/* ── Left Section: Registration Form ───────────────────────── */}
                 <div className={styles.formSection}>
                     <div className={styles.formContent}>
+
+                        {/* Logo */}
                         <div className={styles.logoWrapper}>
                             <Image
                                 src="/images/tavlo-logo.png"
@@ -91,6 +144,7 @@ export default function SignUpPage() {
                             />
                         </div>
 
+                        {/* Page Title & Subtitle */}
                         <div className={styles.headerSection}>
                             <h1 className={styles.title}>Create your account</h1>
                             <p className={styles.subtitle}>
@@ -98,18 +152,23 @@ export default function SignUpPage() {
                             </p>
                         </div>
 
+                        {/* Google OAuth Button — TODO: wire to Google OAuth flow */}
                         <button className={styles.googleBtn}>
                             <Image src="/google.svg" alt="Google" width={20} height={20} />
                             Continue with Google
                         </button>
 
+                        {/* Divider between OAuth and registration form */}
                         <div className={styles.divider}>
                             <span className={styles.dividerLine}></span>
                             <span className={styles.dividerText}>OR</span>
                             <span className={styles.dividerLine}></span>
                         </div>
 
+                        {/* ── Registration Form ───────────────────────────────── */}
                         <form className={styles.form} onSubmit={handleSubmit}>
+
+                            {/* First & Last Name (side by side) */}
                             <div className={styles.nameRow}>
                                 <div className={styles.inputGroup}>
                                     <label className={styles.label}>First Name</label>
@@ -156,6 +215,7 @@ export default function SignUpPage() {
                                 </div>
                             </div>
 
+                            {/* Phone Number Input (optional) */}
                             <div className={styles.inputGroup}>
                                 <label className={styles.label}>Phone Number</label>
                                 <div className={styles.inputWrapper}>
@@ -170,6 +230,7 @@ export default function SignUpPage() {
                                 </div>
                             </div>
 
+                            {/* Password Input — stored in sessionStorage for onboarding/complete */}
                             <div className={styles.inputGroup}>
                                 <label className={styles.label}>Password</label>
                                 <div className={styles.inputWrapper}>
@@ -185,6 +246,7 @@ export default function SignUpPage() {
                                 </div>
                             </div>
 
+                            {/* Terms & Conditions Checkbox */}
                             <label className={styles.termsCheckbox}>
                                 <input
                                     type="checkbox"
@@ -200,11 +262,13 @@ export default function SignUpPage() {
                                 </span>
                             </label>
 
+                            {/* Submit Button — triggers backend registration */}
                             <button type="submit" className={styles.submitBtn}>
                                 Create Account
                             </button>
                         </form>
 
+                        {/* Link to Sign In page for existing users */}
                         <p className={styles.switchText}>
                             Already have an account?{' '}
                             <Link href="/signin" className={styles.switchLink}>
@@ -214,7 +278,8 @@ export default function SignUpPage() {
                     </div>
                 </div>
 
-                {/* Right Section - Benefits Showcase */}
+                {/* ── Right Section: Benefits Showcase ───────────────────── */}
+                {/* Shows key selling points and platform stats to encourage sign-up */}
                 <div className={styles.showcaseSection}>
                     <div className={styles.showcaseContent}>
                         <div className={styles.benefitsHeader}>
@@ -224,6 +289,7 @@ export default function SignUpPage() {
                             </p>
                         </div>
 
+                        {/* Benefits Checklist */}
                         <div className={styles.benefitsList}>
                             {benefits.map((benefit, index) => (
                                 <div key={index} className={styles.benefitItem}>
@@ -235,6 +301,7 @@ export default function SignUpPage() {
                             ))}
                         </div>
 
+                        {/* Platform Statistics */}
                         <div className={styles.statsSection}>
                             <div className={styles.statItem}>
                                 <span className={styles.statNumber}>2,500+</span>

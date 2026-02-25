@@ -13,12 +13,20 @@
  * @route /verify-otp
  */
 
+// ─── Dependencies ───────────────────────────────────────────────────────────
 import React, { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/navigation'; // Next.js client-side navigation
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './page.module.css';
 
-// Icons
+// BACKEND INTEGRATION: API client for OTP verification and onboarding completion
+import { onboardingApi, ApiError } from '@/lib/api-client';
+
+// ─── SVG Icons ──────────────────────────────────────────────────────────────
+// Inline SVG icons used in the security info sidebar.
+// ShieldIcon, LockIcon, CheckIcon — for security features
+// MailIcon — large icon in the email verification header
 const ShieldIcon = () => (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -46,26 +54,37 @@ const MailIcon = () => (
 );
 
 export default function VerifyOTPPage() {
-    const [email, setEmail] = useState('abc@gmail.com');
-    const [otp, setOtp] = useState(['', '', '', '', '', '']);
-    const [error, setError] = useState('');
-    const [isResending, setIsResending] = useState(false);
-    const [resendTimer, setResendTimer] = useState(0);
+    // ─── Navigation ───────────────────────────────────────────────────────────
+    const router = useRouter(); // Redirect after OTP verification
 
+    // ─── Component State ──────────────────────────────────────────────────────
+    const [email, setEmail] = useState('abc@gmail.com');  // User's email (from URL params)
+    const [flow, setFlow] = useState<'onboarding' | 'signin'>('onboarding'); // Determines post-verify redirect
+    const [otp, setOtp] = useState(['', '', '', '', '', '']); // 6-digit OTP, one digit per array element
+    const [error, setError] = useState('');               // Error message from backend
+    const [isLoading, setIsLoading] = useState(false);    // Submit button loading state
+    const [isResending, setIsResending] = useState(false); // Resend OTP loading state
+    const [resendTimer, setResendTimer] = useState(0);    // Countdown timer (seconds) before resend is allowed
+
+    // Refs for the 6 OTP input boxes (used for auto-focus navigation)
     const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
-    // Get email from URL on client side
+    // ─── Effects ────────────────────────────────────────────────────────────
+
+    // Parse email and flow type from URL query params on page load
+    // URL format: /verify-otp?email=user@example.com&flow=onboarding
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const urlParams = new URLSearchParams(window.location.search);
             const emailParam = urlParams.get('email');
-            if (emailParam) {
-                setEmail(emailParam);
-            }
+            const flowParam = urlParams.get('flow');
+            if (emailParam) setEmail(emailParam);
+            if (flowParam === 'onboarding') setFlow('onboarding');
+            else setFlow('signin');
         }
     }, []);
 
-    // Resend timer countdown
+    // Countdown timer for resend button cooldown (ticks every second)
     useEffect(() => {
         if (resendTimer > 0) {
             const timer = setTimeout(() => setResendTimer(resendTimer - 1), 1000);
@@ -73,7 +92,9 @@ export default function VerifyOTPPage() {
         }
     }, [resendTimer]);
 
-    // Handle OTP input change
+    // ─── OTP Input Handlers ───────────────────────────────────────────────────
+
+    // Handle typing a digit — only allows numbers, auto-focuses next input
     const handleOtpChange = (index: number, value: string) => {
         if (!/^\d*$/.test(value)) return;
 
@@ -87,14 +108,14 @@ export default function VerifyOTPPage() {
         }
     };
 
-    // Handle backspace navigation
+    // Handle backspace key — navigates focus to previous input
     const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Backspace' && !otp[index] && index > 0) {
             inputRefs.current[index - 1]?.focus();
         }
     };
 
-    // Handle paste
+    // Handle paste — distributes pasted digits across all 6 input boxes
     const handlePaste = (e: React.ClipboardEvent) => {
         e.preventDefault();
         const pastedData = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
@@ -107,18 +128,54 @@ export default function VerifyOTPPage() {
         inputRefs.current[lastFilledIndex]?.focus();
     };
 
-    // Handle resend code
+    /**
+     * BACKEND INTEGRATION: Resend OTP (Rate Limited)
+     * 
+     * Calls POST /onboarding/resend-otp on the NestJS backend.
+     * The backend rate-limits resend requests (max 3 within 5 minutes).
+     * A 60-second cooldown timer prevents rapid clicking on the frontend.
+     * 
+     * API: POST /api/backend/onboarding/resend-otp
+     * Body: { email }
+     */
     const handleResendCode = async () => {
         if (resendTimer > 0) return;
 
         setIsResending(true);
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        setIsResending(false);
-        setResendTimer(60);
+        setError('');
+        try {
+            await onboardingApi.resendOtp(email);
+            setResendTimer(60);
+        } catch (err) {
+            if (err instanceof ApiError) {
+                setError(err.message);
+            } else {
+                setError('Failed to resend OTP.');
+            }
+        } finally {
+            setIsResending(false);
+        }
     };
 
-    // Handle form submission
-    const handleSubmit = (e: React.FormEvent) => {
+    /**
+     * BACKEND INTEGRATION: OTP Verification (Step 2 of 3)
+     * 
+     * Calls POST /onboarding/verify-otp on the NestJS backend.
+     * The backend checks the 6-digit OTP against the value stored in Redis.
+     * 
+     * If flow === 'onboarding':
+     *   - Also calls POST /onboarding/complete (Step 3) to create the user account
+     *   - Uses form data stored in sessionStorage from the signup page
+     *   - Assigns the MANAGER role to the new user
+     *   - Then redirects to /onboarding/basic-details
+     * 
+     * If flow === 'signin':
+     *   - Just verifies and redirects to /dashboard
+     * 
+     * API: POST /api/backend/onboarding/verify-otp
+     * Body: { email, code }
+     */
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
 
@@ -129,32 +186,67 @@ export default function VerifyOTPPage() {
             return;
         }
 
-        if (otpCode === '123456') {
-            window.location.href = '/onboarding/basic-details';
-        } else {
-            setError('Invalid verification code. Please try again.');
+        setIsLoading(true);
+
+        try {
+            // BACKEND: Verify OTP against Redis-stored value
+            await onboardingApi.verifyOtp(email, otpCode);
+
+            if (flow === 'onboarding') {
+                // BACKEND: Complete onboarding — create user account with MANAGER role
+                const stored = sessionStorage.getItem('tavlo_onboarding');
+                if (stored) {
+                    const data = JSON.parse(stored);
+                    await onboardingApi.complete({
+                        email: data.email,
+                        password: data.password,
+                        firstName: data.firstName,
+                        lastName: data.lastName,
+                        restaurantName: data.restaurantName || 'My Restaurant',
+                    });
+                    sessionStorage.removeItem('tavlo_onboarding');
+                }
+                router.push('/onboarding/basic-details');
+            } else {
+                router.push('/dashboard');
+            }
+        } catch (err) {
+            if (err instanceof ApiError) {
+                setError(err.message);
+            } else {
+                setError('Verification failed. Please try again.');
+            }
+        } finally {
+            setIsLoading(false);
         }
     };
 
-    // Mask email for display
+    // ─── Helpers ────────────────────────────────────────────────────────────
+
+    // Mask email for display: "abc***@gmail.com" for privacy
     const maskEmail = (emailStr: string) => {
         const [localPart, domain] = emailStr.split('@');
         if (!domain || localPart.length <= 3) return emailStr;
         return `${localPart.slice(0, 3)}***@${domain}`;
     };
 
+    // Security badges shown in the right panel sidebar
     const securityFeatures = [
         { icon: <ShieldIcon />, text: 'Bank-grade encryption' },
         { icon: <LockIcon />, text: 'Two-factor authentication' },
         { icon: <CheckIcon />, text: 'Verified secure connection' },
     ];
 
+    // ─── Render ───────────────────────────────────────────────────────────────
     return (
         <div className={styles.authPage}>
             <div className={styles.authCard}>
-                {/* Left Section - Form */}
+
+                {/* ── Left Section: OTP Verification Form ───────────────── */}
                 <div className={styles.formSection}>
                     <div className={styles.formContent}>
+
+                        {/* Logo */}
                         <div className={styles.logoWrapper}>
                             <Image
                                 src="/images/tavlo-logo.png"
