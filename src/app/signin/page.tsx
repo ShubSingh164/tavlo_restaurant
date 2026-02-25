@@ -97,8 +97,11 @@ export default function SignInPage() {
       await authApi.loginDashboard(email, password);
       router.push('/dashboard');
     } catch (err) {
+      console.error('Login error:', err); // Log full error for debugging
       if (err instanceof ApiError) {
         setError(err.message);
+      } else if (err instanceof TypeError && (err as Error).message.includes('fetch')) {
+        setError('Cannot connect to server. Make sure the backend is running.');
       } else {
         setError('Something went wrong. Please try again.');
       }
