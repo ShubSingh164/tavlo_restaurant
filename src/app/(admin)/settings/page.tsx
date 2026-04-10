@@ -562,36 +562,36 @@ export default function SettingsPage() {
     };
 
     return (
-        
-            <div className={styles.settingsPage}>
-                {/* Sidebar Navigation */}
-                <aside className={styles.settingsSidebar}>
-                    <div className={styles.sidebarHeader}>
-                        <h2 className={styles.sidebarTitle}>Settings</h2>
-                    </div>
-                    <nav className={styles.settingsNav}>
-                        {settingsSections.map((section) => (
-                            <button
-                                key={section.id}
-                                className={`${styles.navItem} ${activeSection === section.id ? styles.active : ''}`}
-                                onClick={() => setActiveSection(section.id)}
-                            >
-                                <span className={styles.navIcon}>{section.icon}</span>
-                                <div className={styles.navContent}>
-                                    <span className={styles.navLabel}>{section.label}</span>
-                                    <span className={styles.navDescription}>{section.description}</span>
-                                </div>
-                                <ChevronRightIcon />
-                            </button>
-                        ))}
-                    </nav>
-                </aside>
 
-                {/* Content Area */}
-                <main className={styles.settingsContent}>
-                    {renderSection()}
-                </main>
-            </div>
-        
+        <div className={styles.settingsPage}>
+            {/* Sidebar Navigation */}
+            <aside className={styles.settingsSidebar}>
+                <div className={styles.sidebarHeader}>
+                    <h2 className={styles.sidebarTitle}>Settings</h2>
+                </div>
+                <nav className={styles.settingsNav}>
+                    {settingsSections.map((section) => (
+                        <button
+                            key={section.id}
+                            className={`${styles.navItem} ${activeSection === section.id ? styles.active : ''}`}
+                            onClick={() => setActiveSection(section.id)}
+                        >
+                            <span className={styles.navIcon}>{section.icon}</span>
+                            <div className={styles.navContent}>
+                                <span className={styles.navLabel}>{section.label}</span>
+                                <span className={styles.navDescription}>{section.description}</span>
+                            </div>
+                            <ChevronRightIcon />
+                        </button>
+                    ))}
+                </nav>
+            </aside>
+
+            {/* Content Area */}
+            <main className={styles.settingsContent}>
+                {renderSection()}
+            </main>
+        </div>
+
     );
 }

@@ -37,7 +37,7 @@ export class ApiError extends Error {
 // All requests are routed through Next.js rewrites (see next.config.ts)
 // /api/backend/* → proxied to NestJS backend at http://localhost:3000/*
 
-const BASE_URL = '/api/backend';
+const BASE_URL = '/api';
 
 // ─── Core Fetch Wrapper ───────────────────────────────────────────────────
 
@@ -66,12 +66,24 @@ async function request<T>(
     const json = await res.json();
 
     if (!res.ok) {
+        // Handle both formats: { responseInfo: {...} } and { code, message }
+        const info = json.responseInfo || json;
         throw new ApiError(
-            json.code || 'UNKNOWN_ERROR',
-            json.message || 'An unexpected error occurred',
+            info.code || 'UNKNOWN_ERROR',
+            info.message || 'An unexpected error occurred',
             res.status,
             json.data
         );
+    }
+
+    // Normalize response: backend returns { responseInfo, data }
+    // Frontend expects { code, message, data }
+    if (json.responseInfo) {
+        return {
+            code: json.responseInfo.code,
+            message: json.responseInfo.message,
+            data: json.data,
+        } as ApiResponse<T>;
     }
 
     return json as ApiResponse<T>;
@@ -147,3 +159,23 @@ export const onboardingApi = {
         return api.post('/onboarding/complete', data as unknown as Record<string, unknown>);
     },
 };
+
+// ─── Restaurant Onboarding Helpers ────────────────────────────────────────
+// Used by all 6 onboarding pages to save/load restaurant details
+export const restaurantApi = {
+    /** Get restaurant data for the logged-in user */
+    getByEmail(email: string) {
+        return api.get<Record<string, unknown>>(`/restaurant?email=${encodeURIComponent(email)}`);
+    },
+
+    /** Save/update a step's data */
+    saveStep(email: string, step: number, data: Record<string, unknown>, ownerId?: string) {
+        return api.post('/restaurant', { email, step, data, ...(ownerId ? { ownerId } : {}) });
+    },
+
+    /** Mark restaurant as live (step 6) */
+    goLive(email: string) {
+        return api.post('/restaurant', { email, goLive: true });
+    },
+};
+

@@ -1,0 +1,1166 @@
+/**
+ * Tavlo — Chef / Kitchen Display System Styles
+ * Premium dark-mode mobile-first KDS design
+ * 
+ * Palette:
+ *   Background:   #0c0c0c
+ *   Surface:      #161616
+ *   Card:         #1c1c1c
+ *   Accent Fire:  #f59e0b (Amber)
+ *   Success:      #22c55e
+ *   Danger:       #ef4444
+ *   Text:         #fafafa
+ *   Muted:        #737373
+ *   Border:       #282828
+ */
+
+/* ============================================================================
+   BASE
+   ============================================================================ */
+
+.page {
+    min-height: 100vh;
+    background: #0c0c0c;
+    color: #fafafa;
+    padding-bottom: 2rem;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.page.loaded {
+    opacity: 1;
+}
+
+/* ── Light Mode Overrides ────────────────────────────── */
+.page.lightMode {
+    background: #f5f5f7;
+    color: #1f2937;
+}
+
+.page.lightMode .header {
+    background: #ffffff;
+    border-bottom-color: #e5e7eb;
+}
+
+.page.lightMode .greeting { color: #6b7280; }
+.page.lightMode .chefName { color: #1f2937; }
+
+.page.lightMode .statCard { background: #f3f4f6; }
+.page.lightMode .statLabel { color: #6b7280; }
+
+.page.lightMode .tab {
+    color: #6b7280;
+    background: #f3f4f6;
+}
+.page.lightMode .tab.tabActive {
+    background: #f59e0b;
+    color: #fff;
+}
+
+.page.lightMode .sectionTitle { color: #1f2937; }
+
+.page.lightMode .orderTicket {
+    background: #ffffff;
+    border-color: #e5e7eb;
+}
+.page.lightMode .ticketOrder { color: #1f2937; }
+.page.lightMode .itemName { color: #1f2937; }
+.page.lightMode .progressTrack { background: #e5e7eb; }
+
+.page.lightMode .menuCard {
+    background: #ffffff;
+    border-color: #e5e7eb;
+}
+.page.lightMode .menuCardName { color: #1f2937; }
+
+.page.lightMode .perfCard {
+    background: #ffffff;
+    border-color: #e5e7eb;
+}
+.page.lightMode .perfValue { color: #1f2937; }
+
+.page.lightMode .topSection {
+    background: #ffffff;
+    border-color: #e5e7eb;
+}
+.page.lightMode .topTitle { color: #1f2937; }
+.page.lightMode .topName { color: #1f2937; }
+.page.lightMode .barTrack { background: #e5e7eb; }
+
+.page.lightMode .teamCard {
+    background: #f9fafb;
+    border-color: #e5e7eb;
+}
+.page.lightMode .teamName { color: #1f2937; }
+
+.page.lightMode .backBtn {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.page.lightMode .themeToggle {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+.page.lightMode .menuHint { color: #6b7280; }
+
+.page.lightMode .ticketFooter { border-top-color: #e5e7eb; }
+
+/* ============================================================================
+   HEADER
+   ============================================================================ */
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: #161616;
+    padding: 1rem 1.25rem;
+    padding-top: max(1rem, env(safe-area-inset-top));
+    border-bottom: 1px solid #282828;
+}
+
+.headerTop {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.backBtn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #222;
+    border: none;
+    border-radius: 12px;
+    color: #e5e5e5;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.backBtn:hover {
+    background: #2a2a2a;
+    color: #f59e0b;
+}
+
+.headerInfo {
+    flex: 1;
+}
+
+.greeting {
+    font-size: 0.8125rem;
+    color: #737373;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.chefName {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fafafa;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.themeToggle {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #222;
+    border: none;
+    border-radius: 12px;
+    color: #fbbf24;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.themeToggle:hover { background: #2a2a2a; }
+
+.liveIndicator {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.75rem;
+    background: rgba(239, 68, 68, 0.12);
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    border-radius: 100px;
+    font-size: 0.6875rem;
+    font-weight: 800;
+    color: #ef4444;
+    letter-spacing: 1px;
+}
+
+.liveDot {
+    width: 8px;
+    height: 8px;
+    background: #ef4444;
+    border-radius: 50%;
+    animation: livePulse 1.5s ease-in-out infinite;
+}
+
+@keyframes livePulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.8); }
+}
+
+/* ── Stats Row ──────────────────────────────────────── */
+
+.statsRow {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.statCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.625rem 0.25rem;
+    background: #1c1c1c;
+    border-radius: 14px;
+    text-align: center;
+}
+
+.statValue {
+    font-size: 1.375rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.statLabel {
+    font-size: 0.625rem;
+    font-weight: 600;
+    color: #737373;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 0.125rem;
+}
+
+.statPending .statValue { color: #ef4444; }
+.statPreparing .statValue { color: #f59e0b; }
+.statReady .statValue { color: #22c55e; }
+.statAvg .statValue { color: #3b82f6; }
+
+/* ── Tab Bar ────────────────────────────────────────── */
+
+.tabBar {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    padding: 0.625rem 0.5rem;
+    background: #1c1c1c;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #737373;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tab:hover { color: #a3a3a3; background: #222; }
+
+.tab.tabActive {
+    background: #f59e0b;
+    color: #1c1c1c;
+    font-weight: 700;
+    box-shadow: 0 4px 16px rgba(245, 158, 11, 0.3);
+}
+
+.tabBadge {
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    background: #ef4444;
+    border-radius: 100px;
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tabBadgeWarn {
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    background: #f59e0b;
+    border-radius: 100px;
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: #1c1c1c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tab.tabActive .tabBadge,
+.tab.tabActive .tabBadgeWarn {
+    background: #1c1c1c;
+    color: #f59e0b;
+}
+
+/* ============================================================================
+   MAIN CONTENT
+   ============================================================================ */
+
+.main {
+    padding: 1.25rem;
+}
+
+.tabContent {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.25rem;
+}
+
+.sectionTitle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: #fafafa;
+    margin: 0;
+}
+
+.sectionTitle svg {
+    color: #f59e0b;
+}
+
+.sectionCount {
+    font-size: 0.8125rem;
+    color: #737373;
+    font-weight: 500;
+}
+
+/* ── Empty State ────────────────────────────────────── */
+
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 1rem;
+    text-align: center;
+}
+
+.emptyIcon { font-size: 3rem; margin-bottom: 1rem; }
+
+.emptyState p {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #a3a3a3;
+    margin: 0 0 0.25rem;
+}
+
+.emptySubtext {
+    font-size: 0.8125rem;
+    color: #525252;
+}
+
+/* ============================================================================
+   ORDER QUEUE (KDS Tickets)
+   ============================================================================ */
+
+.orderQueue {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.orderTicket {
+    background: #1c1c1c;
+    border-radius: 18px;
+    border: 1px solid #282828;
+    overflow: hidden;
+    transition: all 0.25s ease;
+}
+
+.orderTicket:hover {
+    border-color: #3a3a3a;
+}
+
+.ticketDone {
+    border-color: rgba(34, 197, 94, 0.3);
+    opacity: 0.7;
+}
+
+.ticketUrgent {
+    border-color: rgba(239, 68, 68, 0.4);
+    animation: urgentPulse 2s ease-in-out infinite;
+}
+
+@keyframes urgentPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    50% { box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.12); }
+}
+
+/* ── Ticket Header ─────────────────────────────────── */
+
+.ticketHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1rem 0.5rem;
+}
+
+.ticketHeaderLeft {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.ticketOrder {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #fafafa;
+}
+
+.ticketTable {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    background: rgba(245, 158, 11, 0.12);
+    color: #f59e0b;
+    padding: 0.125rem 0.5rem;
+    border-radius: 100px;
+}
+
+.ticketType {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    background: rgba(59, 130, 246, 0.12);
+    color: #3b82f6;
+    padding: 0.125rem 0.5rem;
+    border-radius: 100px;
+    text-transform: capitalize;
+}
+
+.ticketTimer {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.375rem 0.625rem;
+    border: 1.5px solid;
+    border-radius: 10px;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.ticketTimer svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* ── Ticket Progress ───────────────────────────────── */
+
+.ticketProgress {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 1rem 0.5rem;
+}
+
+.progressTrack {
+    flex: 1;
+    height: 4px;
+    background: #282828;
+    border-radius: 100px;
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    border-radius: 100px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progressText {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    color: #525252;
+    min-width: 30px;
+    text-align: right;
+}
+
+/* ── Ticket Items ──────────────────────────────────── */
+
+.ticketItems {
+    padding: 0 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+}
+
+.ticketItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.625rem 0.5rem;
+    border-radius: 10px;
+    transition: background 0.2s;
+}
+
+.ticketItem:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.itemOOS {
+    opacity: 0.4;
+    text-decoration: line-through;
+}
+
+.ticketItemLeft {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.itemStatusDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+}
+
+.itemDetails {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.itemNameRow {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.itemName {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #e5e5e5;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.itemQty {
+    font-size: 0.8125rem;
+    font-weight: 800;
+    color: #f59e0b;
+    flex-shrink: 0;
+}
+
+.itemMeta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    flex-wrap: wrap;
+}
+
+.prepTime {
+    color: #525252;
+}
+
+.vegBadge {
+    padding: 0.0625rem 0.375rem;
+    background: rgba(34, 197, 94, 0.12);
+    color: #22c55e;
+    border-radius: 4px;
+    font-size: 0.5625rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.oosBadge {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.0625rem 0.375rem;
+    background: rgba(239, 68, 68, 0.12);
+    color: #ef4444;
+    border-radius: 4px;
+    font-size: 0.5625rem;
+    font-weight: 800;
+}
+
+.oosBadge svg {
+    width: 10px;
+    height: 10px;
+}
+
+.specialNote {
+    padding: 0.375rem 0.5rem;
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    border-radius: 8px;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: #f59e0b;
+    margin-top: 0.25rem;
+}
+
+/* ── Ticket Item Actions ───────────────────────────── */
+
+.ticketItemActions {
+    flex-shrink: 0;
+    margin-left: 0.5rem;
+}
+
+.startBtn {
+    padding: 0.375rem 0.875rem;
+    background: rgba(245, 158, 11, 0.12);
+    color: #f59e0b;
+    border: 1.5px solid rgba(245, 158, 11, 0.3);
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.startBtn:hover {
+    background: rgba(245, 158, 11, 0.2);
+    transform: scale(1.05);
+}
+
+.readyBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.375rem 0.875rem;
+    background: rgba(34, 197, 94, 0.12);
+    color: #22c55e;
+    border: 1.5px solid rgba(34, 197, 94, 0.3);
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.readyBtn:hover {
+    background: rgba(34, 197, 94, 0.2);
+    transform: scale(1.05);
+}
+
+.readyLabel {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #22c55e;
+}
+
+.servedLabel {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: #525252;
+}
+
+/* ── Ticket Footer ─────────────────────────────────── */
+
+.ticketFooter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-top: 1px solid #282828;
+    margin-top: 0.25rem;
+}
+
+.startAllBtn {
+    flex: 1;
+    padding: 0.625rem;
+    background: rgba(245, 158, 11, 0.12);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.25);
+    border-radius: 10px;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.startAllBtn:hover {
+    background: rgba(245, 158, 11, 0.2);
+    transform: translateY(-1px);
+}
+
+.readyAllBtn {
+    flex: 1;
+    padding: 0.625rem;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.25);
+}
+
+.readyAllBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(34, 197, 94, 0.35);
+}
+
+.ticketComplete {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: #22c55e;
+    text-align: center;
+    width: 100%;
+}
+
+/* ============================================================================
+   MENU / 86 TAB
+   ============================================================================ */
+
+.oosCount {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.12);
+    padding: 0.25rem 0.625rem;
+    border-radius: 100px;
+}
+
+.menuHint {
+    font-size: 0.8125rem;
+    color: #525252;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.menuCategories {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.menuCategory {}
+
+.catHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #a3a3a3;
+    margin: 0 0 0.625rem;
+}
+
+.menuItemList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.menuCard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    background: #1c1c1c;
+    border: 1px solid #282828;
+    border-radius: 14px;
+    transition: all 0.2s ease;
+}
+
+.menuCard:hover {
+    border-color: #3a3a3a;
+}
+
+.menuCardOOS {
+    opacity: 0.5;
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.menuCardLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.menuCardInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.menuCardName {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #e5e5e5;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.vegDot {
+    color: #22c55e;
+    font-size: 0.625rem;
+}
+
+.menuCardPrice {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #f59e0b;
+}
+
+.menuCardMeta {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.6875rem;
+    color: #525252;
+    font-weight: 500;
+}
+
+.spiceBadge {
+    text-transform: capitalize;
+}
+
+/* Toggle Switch */
+.toggleBtn {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    border-radius: 100px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    flex-shrink: 0;
+}
+
+.toggleOn {
+    background: #22c55e;
+}
+
+.toggleOff {
+    background: #ef4444;
+}
+
+.toggleKnob {
+    position: absolute;
+    top: 2px;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border-radius: 50%;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.toggleOn .toggleKnob {
+    left: 22px;
+}
+
+.toggleOff .toggleKnob {
+    left: 2px;
+}
+
+/* ============================================================================
+   STATS TAB
+   ============================================================================ */
+
+.perfGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+}
+
+.perfCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.25rem 0.75rem;
+    background: #1c1c1c;
+    border: 1px solid #282828;
+    border-radius: 18px;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.perfCard:hover {
+    border-color: #3a3a3a;
+    transform: translateY(-2px);
+}
+
+.perfIcon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.perfValue {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #fafafa;
+    line-height: 1.2;
+}
+
+.perfLabel {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: #737373;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 0.25rem;
+}
+
+/* ── Top Section Cards ─────────────────────────────── */
+
+.topSection {
+    background: #1c1c1c;
+    border: 1px solid #282828;
+    border-radius: 18px;
+    padding: 1.25rem;
+    margin-top: 0.5rem;
+}
+
+.topTitle {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #fafafa;
+    margin: 0 0 1rem;
+}
+
+.topList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.topItem {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #222;
+}
+
+.topItem:last-child {
+    border-bottom: none;
+}
+
+.topRank {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #f59e0b;
+    min-width: 24px;
+}
+
+.topName {
+    flex: 1;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #e5e5e5;
+}
+
+.topCount {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #737373;
+}
+
+.topTrend {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    min-width: 36px;
+    text-align: right;
+}
+
+.trendUp { color: #22c55e; }
+.trendDown { color: #ef4444; }
+
+/* ── Bar Chart ─────────────────────────────────────── */
+
+.barChart {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.barRow {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+}
+
+.barLabel {
+    font-size: 0.75rem;
+    color: #a3a3a3;
+    font-weight: 500;
+    min-width: 85px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.barTrack {
+    flex: 1;
+    height: 8px;
+    background: #282828;
+    border-radius: 100px;
+    overflow: hidden;
+}
+
+.barFill {
+    height: 100%;
+    border-radius: 100px;
+}
+
+.barValue {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #a3a3a3;
+    min-width: 30px;
+    text-align: right;
+}
+
+/* ── Team Grid ─────────────────────────────────────── */
+
+.teamGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+}
+
+.teamCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0.5rem;
+    background: #222;
+    border: 1px solid #2a2a2a;
+    border-radius: 14px;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.teamCard:hover {
+    border-color: #3a3a3a;
+    transform: translateY(-2px);
+}
+
+.teamAvatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #f59e0b;
+    margin-bottom: 0.5rem;
+}
+
+.teamName {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: #e5e5e5;
+}
+
+.teamRole {
+    font-size: 0.625rem;
+    font-weight: 600;
+    color: #737373;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.teamStat {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #f59e0b;
+    margin-top: 0.25rem;
+}
+
+/* ============================================================================
+   TOAST
+   ============================================================================ */
+
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.75rem 1.25rem;
+    background: #1c1c1c;
+    color: #fafafa;
+    border: 1px solid #282828;
+    border-radius: 12px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    z-index: 100;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    white-space: nowrap;
+    max-width: 90vw;
+}
+
+.page.lightMode .toast {
+    background: #1f2937;
+    color: #fff;
+    border-color: #374151;
+}
+
+/* ============================================================================
+   RESPONSIVE
+   ============================================================================ */
+
+@media (min-width: 768px) {
+    .page {
+        max-width: 520px;
+        margin: 0 auto;
+        box-shadow: 0 0 60px rgba(0, 0, 0, 0.3);
+        min-height: 100vh;
+    }
+}
+
+@media (min-width: 480px) {
+    .teamGrid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}

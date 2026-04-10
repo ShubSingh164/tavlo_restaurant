@@ -2,61 +2,153 @@
 
 /**
  * Tavlo Restaurant ERP - Review & Go Live (Step 6)
- * Final step: Review all information and go live
+ * Final step: Review all information from the database and go live.
+ *
+ * BACKEND INTEGRATION:
+ *   - GET /api/restaurant?email=... — Loads all saved onboarding data
+ *   - POST /api/restaurant { goLive: true } — Marks restaurant as live
  */
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import OnboardingLayout from '@/components/onboarding/OnboardingLayout';
 import styles from '@/components/onboarding/onboarding.module.css';
+import { restaurantApi } from '@/lib/api-client';
 
-// Mock data - In real app, this would come from context/state
-const mockData = {
-    basic: {
-        restaurantName: 'Haldiram',
-        restaurantType: 'Quick Service Restaurant',
-        cuisineType: 'North Indian, South Indian',
-        yearEstablished: '1984',
-    },
-    location: {
-        address: '123 Main Street, Chandni Chowk',
-        city: 'Delhi',
-        state: 'Delhi',
-        pincode: '110006',
-        phone: '+91 98765 43210',
-        ownerName: 'Shiv Kishan Agarwal',
-        supportEmail: 'support@haldiram.com',
-    },
-    legal: {
-        businessType: 'Private Limited Company',
-        gstNo: '09AAACH1234A1Z5',
-        fssaiNo: '10012345678901',
-        panNo: 'AAACH1234A',
-        legalName: 'Haldiram Foods Pvt. Ltd.',
-    },
-    operations: {
-        openTime: '09:00 AM',
-        closeTime: '11:00 PM',
-        serviceTypes: 'Dine-In, Takeaway, Delivery',
-        seatingCapacity: '150',
-    },
-    payment: {
-        paymentMethods: 'UPI, Card, Cash',
-        accountHolder: 'Haldiram Foods Pvt. Ltd.',
-        accountNo: '****4567',
-        ifscCode: 'PUNB0044400',
-    },
+// ─── Label Mappers (for display-friendly values) ─────────────────────────────
+
+const restaurantTypeLabels: Record<string, string> = {
+    'fine-dining': 'Fine Dining',
+    'casual-dining': 'Casual Dining',
+    'fast-food': 'Fast Food',
+    'cafe': 'Cafe',
+    'qsr': 'Quick Service Restaurant',
+    'cloud-kitchen': 'Cloud Kitchen',
+    'food-truck': 'Food Truck',
 };
+
+const businessTypeLabels: Record<string, string> = {
+    'sole-proprietorship': 'Sole Proprietorship',
+    'partnership': 'Partnership',
+    'pvt-ltd': 'Private Limited Company',
+    'llp': 'Limited Liability Partnership',
+    'opc': 'One Person Company',
+};
+
+const stateLabels: Record<string, string> = {
+    'delhi': 'Delhi',
+    'maharashtra': 'Maharashtra',
+    'karnataka': 'Karnataka',
+    'tamil-nadu': 'Tamil Nadu',
+    'gujarat': 'Gujarat',
+    'rajasthan': 'Rajasthan',
+    'uttar-pradesh': 'Uttar Pradesh',
+    'west-bengal': 'West Bengal',
+};
+
+interface RestaurantData {
+    restaurantName?: string;
+    restaurantType?: string;
+    cuisineType?: string[];
+    yearEstablished?: string;
+    address?: string;
+    city?: string;
+    state?: string;
+    pincode?: string;
+    phone?: string;
+    ownerName?: string;
+    supportEmail?: string;
+    businessType?: string;
+    gstNo?: string;
+    fssaiNo?: string;
+    panNo?: string;
+    legalName?: string;
+    openTime?: string;
+    closeTime?: string;
+    dineInEnabled?: boolean;
+    takeawayEnabled?: boolean;
+    deliveryEnabled?: boolean;
+    seatingCapacity?: string;
+    avgPrepTime?: string;
+    paymentMethods?: string[];
+    accountHolder?: string;
+    accountNo?: string;
+    ifscCode?: string;
+    bankLegalName?: string;
+}
 
 export default function ReviewPage() {
     const router = useRouter();
+    const [data, setData] = useState<RestaurantData>({});
+    const [isLoading, setIsLoading] = useState(true);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleGoLive = () => {
-        // In real app, submit all data to API
-        alert('Congratulations! Your restaurant is now live on Tavlo!');
-        router.push('/dashboard');
+    // ─── Load all restaurant data from backend ───────────────────────────
+    useEffect(() => {
+        const stored = sessionStorage.getItem('tavlo_onboarding');
+        if (stored) {
+            const { email } = JSON.parse(stored);
+            if (email) {
+                restaurantApi.getByEmail(email)
+                    .then((res) => {
+                        if (res.data) {
+                            setData(res.data as unknown as RestaurantData);
+                        }
+                    })
+                    .catch((err) => console.error('Failed to load review data:', err))
+                    .finally(() => setIsLoading(false));
+            } else {
+                setIsLoading(false);
+            }
+        } else {
+            setIsLoading(false);
+        }
+    }, []);
+
+    // ─── Go Live Handler ─────────────────────────────────────────────────
+    const handleGoLive = async () => {
+        setIsSubmitting(true);
+        try {
+            const stored = sessionStorage.getItem('tavlo_onboarding');
+            if (stored) {
+                const { email } = JSON.parse(stored);
+                await restaurantApi.goLive(email);
+            }
+            alert('🎉 Congratulations! Your restaurant is now live on Tavlo!');
+            router.push('/dashboard');
+        } catch (error) {
+            console.error('Failed to go live:', error);
+            alert('Something went wrong. Please try again.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
+
+    // ─── Helpers ─────────────────────────────────────────────────────────
+
+    const getServiceTypes = () => {
+        const services: string[] = [];
+        if (data.dineInEnabled) services.push('Dine-In');
+        if (data.takeawayEnabled) services.push('Takeaway');
+        if (data.deliveryEnabled) services.push('Delivery');
+        return services.join(', ') || '—';
+    };
+
+    const maskAccountNo = (accNo?: string) => {
+        if (!accNo || accNo.length < 4) return accNo || '—';
+        return '****' + accNo.slice(-4);
+    };
+
+    if (isLoading) {
+        return (
+            <OnboardingLayout currentStep={6} title="Review & Go Live" subtitle="Loading your data...">
+                <div className={styles.form}>
+                    <p style={{ textAlign: 'center', padding: '40px', color: '#888' }}>Loading restaurant details...</p>
+                </div>
+            </OnboardingLayout>
+        );
+    }
 
     return (
         <OnboardingLayout
@@ -69,26 +161,24 @@ export default function ReviewPage() {
                 <div className={styles.reviewSection}>
                     <div className={styles.reviewSectionHeader}>
                         <h3 className={styles.reviewSectionTitle}>Restaurant Basic Details</h3>
-                        <Link href="/onboarding/basic-details" className={styles.editLink}>
-                            Edit
-                        </Link>
+                        <Link href="/onboarding/basic-details" className={styles.editLink}>Edit</Link>
                     </div>
                     <div className={styles.reviewGrid}>
                         <div className={styles.reviewItem}>
                             <span className={styles.reviewLabel}>Restaurant Name</span>
-                            <span className={styles.reviewValue}>{mockData.basic.restaurantName}</span>
+                            <span className={styles.reviewValue}>{data.restaurantName || '—'}</span>
                         </div>
                         <div className={styles.reviewItem}>
                             <span className={styles.reviewLabel}>Type</span>
-                            <span className={styles.reviewValue}>{mockData.basic.restaurantType}</span>
+                            <span className={styles.reviewValue}>{restaurantTypeLabels[data.restaurantType || ''] || data.restaurantType || '—'}</span>
                         </div>
                         <div className={styles.reviewItem}>
                             <span className={styles.reviewLabel}>Cuisine</span>
-                            <span className={styles.reviewValue}>{mockData.basic.cuisineType}</span>
+                            <span className={styles.reviewValue}>{data.cuisineType?.join(', ') || '—'}</span>
                         </div>
                         <div className={styles.reviewItem}>
                             <span className={styles.reviewLabel}>Established</span>
-                            <span className={styles.reviewValue}>{mockData.basic.yearEstablished}</span>
+                            <span className={styles.reviewValue}>{data.yearEstablished || '—'}</span>
                         </div>
                     </div>
                 </div>
@@ -97,26 +187,32 @@ export default function ReviewPage() {
                 <div className={styles.reviewSection}>
                     <div className={styles.reviewSectionHeader}>
                         <h3 className={styles.reviewSectionTitle}>Location & Contact</h3>
-                        <Link href="/onboarding/location" className={styles.editLink}>
-                            Edit
-                        </Link>
+                        <Link href="/onboarding/location" className={styles.editLink}>Edit</Link>
                     </div>
                     <div className={styles.reviewGrid}>
                         <div className={styles.reviewItem}>
                             <span className={styles.reviewLabel}>Address</span>
-                            <span className={styles.reviewValue}>{mockData.location.address}</span>
+                            <span className={styles.reviewValue}>{data.address || '—'}</span>
                         </div>
                         <div className={styles.reviewItem}>
                             <span className={styles.reviewLabel}>City</span>
-                            <span className={styles.reviewValue}>{mockData.location.city}</span>
+                            <span className={styles.reviewValue}>{data.city || '—'}</span>
+                        </div>
+                        <div className={styles.reviewItem}>
+                            <span className={styles.reviewLabel}>State</span>
+                            <span className={styles.reviewValue}>{stateLabels[data.state || ''] || data.state || '—'}</span>
                         </div>
                         <div className={styles.reviewItem}>
                             <span className={styles.reviewLabel}>Phone</span>
-                            <span className={styles.reviewValue}>{mockData.location.phone}</span>
+                            <span className={styles.reviewValue}>{data.phone || '—'}</span>
+                        </div>
+                        <div className={styles.reviewItem}>
+                            <span className={styles.reviewLabel}>Owner</span>
+                            <span className={styles.reviewValue}>{data.ownerName || '—'}</span>
                         </div>
                         <div className={styles.reviewItem}>
                             <span className={styles.reviewLabel}>Email</span>
-                            <span className={styles.reviewValue}>{mockData.location.supportEmail}</span>
+                            <span className={styles.reviewValue}>{data.supportEmail || '—'}</span>
                         </div>
                     </div>
                 </div>
@@ -125,26 +221,50 @@ export default function ReviewPage() {
                 <div className={styles.reviewSection}>
                     <div className={styles.reviewSectionHeader}>
                         <h3 className={styles.reviewSectionTitle}>Legal & Business</h3>
-                        <Link href="/onboarding/legal" className={styles.editLink}>
-                            Edit
-                        </Link>
+                        <Link href="/onboarding/legal" className={styles.editLink}>Edit</Link>
                     </div>
                     <div className={styles.reviewGrid}>
                         <div className={styles.reviewItem}>
                             <span className={styles.reviewLabel}>Business Type</span>
-                            <span className={styles.reviewValue}>{mockData.legal.businessType}</span>
+                            <span className={styles.reviewValue}>{businessTypeLabels[data.businessType || ''] || data.businessType || '—'}</span>
                         </div>
                         <div className={styles.reviewItem}>
                             <span className={styles.reviewLabel}>GST No.</span>
-                            <span className={styles.reviewValue}>{mockData.legal.gstNo}</span>
+                            <span className={styles.reviewValue}>{data.gstNo || '—'}</span>
                         </div>
                         <div className={styles.reviewItem}>
                             <span className={styles.reviewLabel}>FSSAI No.</span>
-                            <span className={styles.reviewValue}>{mockData.legal.fssaiNo}</span>
+                            <span className={styles.reviewValue}>{data.fssaiNo || '—'}</span>
                         </div>
                         <div className={styles.reviewItem}>
                             <span className={styles.reviewLabel}>Legal Name</span>
-                            <span className={styles.reviewValue}>{mockData.legal.legalName}</span>
+                            <span className={styles.reviewValue}>{data.legalName || '—'}</span>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Operations Section */}
+                <div className={styles.reviewSection}>
+                    <div className={styles.reviewSectionHeader}>
+                        <h3 className={styles.reviewSectionTitle}>Operations</h3>
+                        <Link href="/onboarding/operations" className={styles.editLink}>Edit</Link>
+                    </div>
+                    <div className={styles.reviewGrid}>
+                        <div className={styles.reviewItem}>
+                            <span className={styles.reviewLabel}>Hours</span>
+                            <span className={styles.reviewValue}>{data.openTime || '—'} — {data.closeTime || '—'}</span>
+                        </div>
+                        <div className={styles.reviewItem}>
+                            <span className={styles.reviewLabel}>Service Types</span>
+                            <span className={styles.reviewValue}>{getServiceTypes()}</span>
+                        </div>
+                        <div className={styles.reviewItem}>
+                            <span className={styles.reviewLabel}>Seating</span>
+                            <span className={styles.reviewValue}>{data.seatingCapacity || '—'}</span>
+                        </div>
+                        <div className={styles.reviewItem}>
+                            <span className={styles.reviewLabel}>Avg Prep Time</span>
+                            <span className={styles.reviewValue}>{data.avgPrepTime ? `${data.avgPrepTime} min` : '—'}</span>
                         </div>
                     </div>
                 </div>
@@ -153,26 +273,24 @@ export default function ReviewPage() {
                 <div className={styles.reviewSection}>
                     <div className={styles.reviewSectionHeader}>
                         <h3 className={styles.reviewSectionTitle}>Payment Setup</h3>
-                        <Link href="/onboarding/payment" className={styles.editLink}>
-                            Edit
-                        </Link>
+                        <Link href="/onboarding/payment" className={styles.editLink}>Edit</Link>
                     </div>
                     <div className={styles.reviewGrid}>
                         <div className={styles.reviewItem}>
                             <span className={styles.reviewLabel}>Payment Methods</span>
-                            <span className={styles.reviewValue}>{mockData.payment.paymentMethods}</span>
+                            <span className={styles.reviewValue}>{data.paymentMethods?.map(m => m.toUpperCase()).join(', ') || '—'}</span>
                         </div>
                         <div className={styles.reviewItem}>
                             <span className={styles.reviewLabel}>Account Holder</span>
-                            <span className={styles.reviewValue}>{mockData.payment.accountHolder}</span>
+                            <span className={styles.reviewValue}>{data.accountHolder || '—'}</span>
                         </div>
                         <div className={styles.reviewItem}>
                             <span className={styles.reviewLabel}>Account No.</span>
-                            <span className={styles.reviewValue}>{mockData.payment.accountNo}</span>
+                            <span className={styles.reviewValue}>{maskAccountNo(data.accountNo)}</span>
                         </div>
                         <div className={styles.reviewItem}>
                             <span className={styles.reviewLabel}>IFSC</span>
-                            <span className={styles.reviewValue}>{mockData.payment.ifscCode}</span>
+                            <span className={styles.reviewValue}>{data.ifscCode || '—'}</span>
                         </div>
                     </div>
                 </div>
@@ -189,8 +307,9 @@ export default function ReviewPage() {
                         type="button"
                         className={styles.btnGoLive}
                         onClick={handleGoLive}
+                        disabled={isSubmitting}
                     >
-                        Go Live 🚀
+                        {isSubmitting ? 'Going Live...' : 'Go Live 🚀'}
                     </button>
                 </div>
             </div>

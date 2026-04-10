@@ -1,0 +1,1054 @@
+/**
+ * Tavlo — Waiter Dashboard Styles
+ * Premium dark-mode mobile-first design
+ * 
+ * Palette:
+ *   Background:  #0a0a0a
+ *   Surface:     #141414
+ *   Card:        #1a1a1a
+ *   Card Hover:  #222222
+ *   Accent:      #f97316
+ *   Text:        #f5f5f5
+ *   Muted:       #737373
+ *   Border:      #2a2a2a
+ */
+
+/* ============================================================================
+   BASE
+   ============================================================================ */
+
+.page {
+    min-height: 100vh;
+    background: #0a0a0a;
+    color: #f5f5f5;
+    padding-bottom: 100px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.page.loaded {
+    opacity: 1;
+}
+
+/* Light Mode */
+.page.lightMode {
+    background: #f5f5f7;
+    color: #1f2937;
+}
+
+.page.lightMode .header {
+    background: #ffffff;
+    border-bottom-color: #e5e7eb;
+}
+
+.page.lightMode .greeting { color: #6b7280; }
+.page.lightMode .waiterName { color: #1f2937; }
+
+.page.lightMode .statPill {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.page.lightMode .tab {
+    color: #6b7280;
+    background: #f3f4f6;
+}
+
+.page.lightMode .tab.tabActive {
+    background: #f97316;
+    color: #fff;
+}
+
+.page.lightMode .tableCard {
+    background: #ffffff;
+    border-color: #e5e7eb;
+}
+
+.page.lightMode .tableNumber { color: #1f2937; }
+.page.lightMode .tableName { color: #6b7280; }
+
+.page.lightMode .sectionTitle { color: #1f2937; }
+
+.page.lightMode .requestCard {
+    background: #ffffff;
+    border-color: #e5e7eb;
+}
+
+.page.lightMode .orderCard {
+    background: #ffffff;
+    border-color: #e5e7eb;
+}
+
+.page.lightMode .orderNumber { color: #1f2937; }
+.page.lightMode .orderItemName { color: #1f2937; }
+.page.lightMode .billRow { color: #374151; }
+
+.page.lightMode .quickActions {
+    background: #ffffff;
+    border-top-color: #e5e7eb;
+}
+
+.page.lightMode .quickBtn {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.page.lightMode .themeToggle {
+    background: #f3f4f6;
+    color: #6b7280;
+}
+
+.page.lightMode .backBtn {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.page.lightMode .bellBtn {
+    background: #fff7ed;
+}
+
+.page.lightMode .progressBar {
+    background: #e5e7eb;
+}
+
+.page.lightMode .orderDetails {
+    border-top-color: #e5e7eb;
+}
+
+.page.lightMode .billDivider {
+    border-color: #e5e7eb;
+}
+
+/* ============================================================================
+   HEADER
+   ============================================================================ */
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: #141414;
+    padding: 1rem 1.25rem;
+    padding-top: max(1rem, env(safe-area-inset-top));
+    border-bottom: 1px solid #2a2a2a;
+}
+
+.headerTop {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.backBtn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1f1f1f;
+    border: none;
+    border-radius: 12px;
+    color: #e5e5e5;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.backBtn:hover {
+    background: #2a2a2a;
+    color: #f97316;
+}
+
+.headerInfo {
+    flex: 1;
+}
+
+.greeting {
+    font-size: 0.8125rem;
+    color: #737373;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.waiterName {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #f5f5f5;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.themeToggle {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1f1f1f;
+    border: none;
+    border-radius: 12px;
+    color: #fbbf24;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.themeToggle:hover {
+    background: #2a2a2a;
+}
+
+.bellBtn {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(249, 115, 22, 0.12);
+    border: none;
+    border-radius: 12px;
+    color: #f97316;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.bellBtn:hover {
+    background: rgba(249, 115, 22, 0.2);
+}
+
+.bellBadge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    background: #ef4444;
+    border-radius: 100px;
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #141414;
+    animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+
+/* ── Stats Row ─────────────────────────────────────── */
+
+.statsRow {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-bottom: 1rem;
+}
+
+.statsRow::-webkit-scrollbar { display: none; }
+
+.statPill {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    background: #1f1f1f;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #a3a3a3;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.statPill svg {
+    width: 14px;
+    height: 14px;
+    opacity: 0.7;
+}
+
+.statCurrency {
+    font-weight: 800;
+    color: #22c55e;
+    font-size: 0.8125rem;
+}
+
+.statAlert {
+    background: rgba(249, 115, 22, 0.12);
+    color: #f97316;
+}
+
+.statAlert svg {
+    color: #f97316;
+    opacity: 1;
+}
+
+/* ── Tab Bar ───────────────────────────────────────── */
+
+.tabBar {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    padding: 0.625rem 0.75rem;
+    background: #1a1a1a;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #737373;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.tab:hover {
+    color: #a3a3a3;
+    background: #222;
+}
+
+.tab.tabActive {
+    background: #f97316;
+    color: #ffffff;
+    box-shadow: 0 4px 16px rgba(249, 115, 22, 0.3);
+}
+
+.tabBadge {
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    background: #ef4444;
+    border-radius: 100px;
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tab.tabActive .tabBadge {
+    background: #fff;
+    color: #f97316;
+}
+
+/* ============================================================================
+   MAIN CONTENT
+   ============================================================================ */
+
+.main {
+    padding: 1.25rem;
+}
+
+.tabContent {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.sectionHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.25rem;
+}
+
+.sectionTitle {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: #f5f5f5;
+    margin: 0;
+}
+
+.sectionCount {
+    font-size: 0.8125rem;
+    color: #737373;
+    font-weight: 500;
+}
+
+.clearBtn {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #f97316;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.clearBtn:hover {
+    background: rgba(249, 115, 22, 0.1);
+}
+
+/* ── Empty State ───────────────────────────────────── */
+
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    text-align: center;
+}
+
+.emptyIcon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.emptyState p {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #a3a3a3;
+    margin: 0 0 0.25rem;
+}
+
+.emptySubtext {
+    font-size: 0.8125rem;
+    color: #525252;
+}
+
+/* ============================================================================
+   TABLE GRID
+   ============================================================================ */
+
+.tableGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+}
+
+.tableCard {
+    background: #1a1a1a;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid #2a2a2a;
+}
+
+.tableCard:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    border-color: #3a3a3a;
+}
+
+.tableStatusLine {
+    height: 3px;
+    width: 100%;
+    border-radius: 0;
+}
+
+.tableCardContent {
+    padding: 0.875rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.tableTop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tableNumber {
+    font-size: 1.125rem;
+    font-weight: 800;
+    color: #f5f5f5;
+    letter-spacing: -0.25px;
+}
+
+.tableBadge {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    padding: 0.25rem 0.5rem;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.tableName {
+    font-size: 0.75rem;
+    color: #525252;
+    margin-top: -0.25rem;
+}
+
+.tableBottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.25rem;
+}
+
+.tableCapacity {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    color: #737373;
+}
+
+.tableCapacity svg {
+    width: 13px;
+    height: 13px;
+}
+
+.tableTotal {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #f97316;
+}
+
+.tableOrderInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #2a2a2a;
+    font-size: 0.6875rem;
+    color: #737373;
+}
+
+.tableOrderInfo svg {
+    width: 12px;
+    height: 12px;
+    opacity: 0.6;
+}
+
+/* ============================================================================
+   SERVICE REQUESTS
+   ============================================================================ */
+
+.requestList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.requestCard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    background: #1a1a1a;
+    border-radius: 16px;
+    border: 1px solid #2a2a2a;
+    transition: all 0.25s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.requestCard:hover {
+    border-color: #3a3a3a;
+}
+
+.requestPending {
+    border-color: rgba(249, 115, 22, 0.3);
+}
+
+.requestDone {
+    opacity: 0.5;
+}
+
+.requestPulse {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    animation: requestPulseAnim 1.5s ease-in-out infinite;
+}
+
+@keyframes requestPulseAnim {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+.requestLeft {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.requestIcon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.requestInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.requestLabel {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #f5f5f5;
+}
+
+.requestMeta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.requestTable {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #f97316;
+    background: rgba(249, 115, 22, 0.12);
+    padding: 0.125rem 0.5rem;
+    border-radius: 100px;
+}
+
+.requestTime {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.6875rem;
+    color: #737373;
+}
+
+.requestTime svg {
+    width: 12px;
+    height: 12px;
+}
+
+.requestActions {
+    flex-shrink: 0;
+    margin-left: 0.5rem;
+}
+
+.acceptBtn {
+    padding: 0.5rem 1rem;
+    background: #f97316;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.acceptBtn:hover {
+    background: #ea580c;
+    transform: scale(1.03);
+}
+
+.doneBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem 1rem;
+    background: rgba(34, 197, 94, 0.12);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    border-radius: 10px;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.doneBtn:hover {
+    background: rgba(34, 197, 94, 0.2);
+    transform: scale(1.03);
+}
+
+.completedLabel {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #22c55e;
+}
+
+.page.lightMode .requestLabel { color: #1f2937; }
+
+/* ============================================================================
+   LIVE ORDERS
+   ============================================================================ */
+
+.orderList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.875rem;
+}
+
+.orderCard {
+    background: #1a1a1a;
+    border-radius: 18px;
+    border: 1px solid #2a2a2a;
+    overflow: hidden;
+    transition: all 0.25s ease;
+}
+
+.orderCard:hover {
+    border-color: #3a3a3a;
+}
+
+.orderComplete {
+    border-color: rgba(34, 197, 94, 0.3);
+}
+
+.orderHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1rem 0.5rem;
+    cursor: pointer;
+}
+
+.orderHeaderLeft {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.orderNumber {
+    font-size: 0.9375rem;
+    font-weight: 800;
+    color: #f5f5f5;
+}
+
+.orderTableBadge {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    background: rgba(249, 115, 22, 0.12);
+    color: #f97316;
+    padding: 0.125rem 0.5rem;
+    border-radius: 100px;
+}
+
+.orderHeaderRight {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #737373;
+}
+
+.orderTime {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    color: #737373;
+}
+
+.orderTime svg {
+    width: 12px;
+    height: 12px;
+}
+
+/* ── Progress Bar ─────────────────────────────────── */
+
+.progressBar {
+    height: 3px;
+    background: #2a2a2a;
+    margin: 0.25rem 1rem;
+    border-radius: 100px;
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    border-radius: 100px;
+    transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.progressLabel {
+    display: block;
+    padding: 0px 1rem 0.5rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: #525252;
+}
+
+/* ── Order Items ──────────────────────────────────── */
+
+.orderItems {
+    padding: 0 0.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.orderItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.625rem 0.5rem;
+    border-radius: 10px;
+    transition: background 0.2s ease;
+}
+
+.orderItem:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.orderItemLeft {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.orderItemStatus {
+    font-size: 0.875rem;
+    flex-shrink: 0;
+}
+
+.orderItemInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+    min-width: 0;
+}
+
+.orderItemName {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #e5e5e5;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.orderItemQty {
+    font-weight: 500;
+    color: #737373;
+    font-size: 0.75rem;
+}
+
+.orderItemLabel {
+    font-size: 0.6875rem;
+    font-weight: 600;
+}
+
+.advanceBtn {
+    padding: 0.375rem 0.75rem;
+    background: transparent;
+    border: 1.5px solid;
+    border-radius: 8px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.advanceBtn:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+}
+
+/* ── Order Details (Expanded) ─────────────────────── */
+
+.orderDetails {
+    overflow: hidden;
+    border-top: 1px solid #2a2a2a;
+    margin-top: 0.5rem;
+}
+
+.orderBill {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.billRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.8125rem;
+    color: #a3a3a3;
+}
+
+.billRow span:last-child {
+    font-weight: 600;
+}
+
+.billTotal {
+    font-size: 1rem;
+    font-weight: 800 !important;
+    color: #f5f5f5 !important;
+}
+
+.billTotal span:last-child {
+    color: #f97316;
+}
+
+.orderTypeBadge {
+    padding: 0.125rem 0.5rem;
+    background: rgba(59, 130, 246, 0.12);
+    color: #3b82f6;
+    border-radius: 100px;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.billDivider {
+    border: none;
+    border-top: 1px dashed #2a2a2a;
+    margin: 0.25rem 0;
+}
+
+.markAllBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: calc(100% - 2rem);
+    margin: 0 1rem 1rem;
+    padding: 0.75rem;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 16px rgba(34, 197, 94, 0.25);
+}
+
+.markAllBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(34, 197, 94, 0.35);
+}
+
+/* ============================================================================
+   QUICK ACTIONS
+   ============================================================================ */
+
+.quickActions {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    background: #141414;
+    border-top: 1px solid #2a2a2a;
+    z-index: 40;
+}
+
+.quickBtn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.75rem 0.5rem;
+    background: #1f1f1f;
+    border: 1px solid #2a2a2a;
+    border-radius: 14px;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: #a3a3a3;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quickBtn span:first-child {
+    font-size: 1.25rem;
+}
+
+.quickBtn:hover {
+    transform: translateY(-2px);
+    border-color: #f97316;
+    color: #f97316;
+    background: rgba(249, 115, 22, 0.08);
+}
+
+.quickBtn:active {
+    transform: scale(0.96);
+}
+
+/* ============================================================================
+   TOAST
+   ============================================================================ */
+
+.toast {
+    position: fixed;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.75rem 1.25rem;
+    background: #1f1f1f;
+    color: #f5f5f5;
+    border: 1px solid #2a2a2a;
+    border-radius: 12px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    z-index: 100;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    white-space: nowrap;
+    max-width: 90vw;
+}
+
+.page.lightMode .toast {
+    background: #1f2937;
+    color: #fff;
+    border-color: #374151;
+}
+
+/* ============================================================================
+   RESPONSIVE — Wider screens
+   ============================================================================ */
+
+@media (min-width: 768px) {
+    .page {
+        max-width: 480px;
+        margin: 0 auto;
+        box-shadow: 0 0 60px rgba(0, 0, 0, 0.3);
+        min-height: 100vh;
+    }
+
+    .quickActions {
+        max-width: 480px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+@media (min-width: 480px) {
+    .tableGrid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
