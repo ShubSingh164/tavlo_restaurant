@@ -16,8 +16,8 @@ import { useRouter } from 'next/navigation'; // Next.js client-side navigation
 import Image from 'next/image';
 import styles from './page.module.css'; // CSS Modules for scoped styling
 
-// BACKEND INTEGRATION: API client for customer OTP-based authentication
-import { onboardingApi, authApi, ApiError } from '@/lib/api-client';
+// BACKEND INTEGRATION: Disabled for now — using dummy login
+// import { onboardingApi, authApi, ApiError } from '@/lib/api-client';
 
 export default function CustomerLoginPage() {
     // ─── Navigation ───────────────────────────────────────────────────────────
@@ -66,16 +66,8 @@ export default function CustomerLoginPage() {
     };
 
     /**
-     * BACKEND INTEGRATION: Send OTP to Customer Phone
-     * 
-     * Calls POST /onboarding/register with a generated email format:
-     * {phone}@customer.tavlo.in (e.g., 9876543210@customer.tavlo.in)
-     * 
-     * This reuses the onboarding flow for customers. The backend creates
-     * an onboarding request and sends an OTP to the generated email.
-     * 
-     * API: POST /api/backend/onboarding/register
-     * Body: { email: "{phone}@customer.tavlo.in", phone: "+91{phone}" }
+     * DUMMY LOGIN: Send OTP (no backend call)
+     * Simply transitions to OTP step after a brief delay to feel natural.
      */
     const handleSendOtp = async () => {
         if (phone.length !== 10) {
@@ -86,21 +78,13 @@ export default function CustomerLoginPage() {
         setIsLoading(true);
         setError('');
 
-        try {
-            // BACKEND: Use phone-based email format for customer OTP flow
-            await onboardingApi.register(`${phone}@customer.tavlo.in`, `+91${phone}`);
-            setStep('otp');
-            setCountdown(30);
-            setTimeout(() => otpRefs[0].current?.focus(), 100);
-        } catch (err) {
-            if (err instanceof ApiError) {
-                setError(err.message);
-            } else {
-                setError('Failed to send OTP. Please try again.');
-            }
-        } finally {
-            setIsLoading(false);
-        }
+        // Simulate a short network delay
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        setStep('otp');
+        setCountdown(30);
+        setIsLoading(false);
+        setTimeout(() => otpRefs[0].current?.focus(), 100);
     };
 
     // Handle typing a digit in OTP box — supports paste and auto-focus
@@ -137,14 +121,8 @@ export default function CustomerLoginPage() {
     };
 
     /**
-     * BACKEND INTEGRATION: Verify Customer OTP
-     * 
-     * Calls POST /onboarding/verify-otp with the generated customer email.
-     * The 4-digit OTP is zero-padded to 6 digits to match backend format.
-     * On success, redirects to the menu page.
-     * 
-     * API: POST /api/backend/onboarding/verify-otp
-     * Body: { email: "{phone}@customer.tavlo.in", code: "00XXXX" }
+     * DUMMY LOGIN: Verify OTP (no backend call)
+     * Accepts any 4-digit OTP and redirects to the menu page.
      */
     const handleVerifyOtp = async () => {
         const otpString = otp.join('');
@@ -156,46 +134,24 @@ export default function CustomerLoginPage() {
         setIsLoading(true);
         setError('');
 
-        try {
-            // BACKEND: Verify OTP using generated customer email
-            const customerEmail = `${phone}@customer.tavlo.in`;
-            await onboardingApi.verifyOtp(customerEmail, otpString.padStart(6, '0'));
-            // Redirect to menu on success
-            router.push('/menu/01');
-        } catch (err) {
-            if (err instanceof ApiError) {
-                setError(err.message);
-            } else {
-                setError('Verification failed. Please try again.');
-            }
-        } finally {
-            setIsLoading(false);
-        }
+        // Simulate a short network delay
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        setIsLoading(false);
+        // Redirect to menu on success
+        router.push('/menu/01');
     };
 
     /**
-     * BACKEND INTEGRATION: Resend Customer OTP
-     * 
-     * Calls POST /onboarding/resend-otp. Rate limited by the backend.
-     * 
-     * API: POST /api/backend/onboarding/resend-otp
-     * Body: { email: "{phone}@customer.tavlo.in" }
+     * DUMMY LOGIN: Resend OTP (no backend call)
+     * Just resets the OTP inputs and countdown timer.
      */
     const handleResendOtp = async () => {
         if (countdown > 0) return;
 
-        try {
-            // BACKEND: Resend OTP using customer email format
-            const customerEmail = `${phone}@customer.tavlo.in`;
-            await onboardingApi.resendOtp(customerEmail);
-            setOtp(['', '', '', '']);
-            setCountdown(30);
-            otpRefs[0].current?.focus();
-        } catch (err) {
-            if (err instanceof ApiError) {
-                setError(err.message);
-            }
-        }
+        setOtp(['', '', '', '']);
+        setCountdown(30);
+        otpRefs[0].current?.focus();
     };
 
     // Navigate back to phone number entry step, reset OTP state

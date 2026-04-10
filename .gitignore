@@ -2,3 +2,14 @@ tavlo.zip
 login-reference/
 .next/
 node_modules/
+
+# Environment
+.env.local
+.env*.local
+
+# OS
+.DS_Store
+
+# Build
+tsconfig.tsbuildinfo
+tavlo-nest/

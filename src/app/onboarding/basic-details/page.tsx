@@ -3,21 +3,51 @@
 /**
  * Tavlo Restaurant ERP - Restaurant Basic Details (Step 1)
  * First step of the onboarding process
+ *
+ * BACKEND INTEGRATION: Saves/loads data via POST/GET /api/restaurant
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import OnboardingLayout from '@/components/onboarding/OnboardingLayout';
 import styles from '@/components/onboarding/onboarding.module.css';
+import { restaurantApi } from '@/lib/api-client';
 
 export default function BasicDetailsPage() {
     const router = useRouter();
+    const [isLoading, setIsLoading] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
     const [formData, setFormData] = useState({
         restaurantName: '',
         restaurantType: '',
         cuisineType: [] as string[],
         yearEstablished: '',
     });
+
+    // ─── Load existing data from backend ──────────────────────────────────
+    useEffect(() => {
+        const stored = sessionStorage.getItem('tavlo_onboarding');
+        if (stored) {
+            const { email } = JSON.parse(stored);
+            if (email) {
+                setIsLoading(true);
+                restaurantApi.getByEmail(email)
+                    .then((res) => {
+                        const d = res.data;
+                        if (d) {
+                            setFormData({
+                                restaurantName: (d.restaurantName as string) || '',
+                                restaurantType: (d.restaurantType as string) || '',
+                                cuisineType: (d.cuisineType as string[]) || [],
+                                yearEstablished: (d.yearEstablished as string) || '',
+                            });
+                        }
+                    })
+                    .catch(() => { /* First time — no data yet */ })
+                    .finally(() => setIsLoading(false));
+            }
+        }
+    }, []);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -33,10 +63,25 @@ export default function BasicDetailsPage() {
         }));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    // ─── Save to backend and navigate ─────────────────────────────────────
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // In real app, save to state/context/API
-        router.push('/onboarding/location');
+        setIsSaving(true);
+
+        try {
+            const stored = sessionStorage.getItem('tavlo_onboarding');
+            if (stored) {
+                const { email } = JSON.parse(stored);
+                await restaurantApi.saveStep(email, 1, formData as unknown as Record<string, unknown>);
+            }
+            router.push('/onboarding/location');
+        } catch (error) {
+            console.error('Failed to save basic details:', error);
+            // Navigate anyway — data can be saved on retry
+            router.push('/onboarding/location');
+        } finally {
+            setIsSaving(false);
+        }
     };
 
     return (
@@ -58,6 +103,7 @@ export default function BasicDetailsPage() {
                         value={formData.restaurantName}
                         onChange={handleInputChange}
                         required
+                        disabled={isLoading}
                     />
                 </div>
 
@@ -71,6 +117,7 @@ export default function BasicDetailsPage() {
                         value={formData.restaurantType}
                         onChange={handleInputChange}
                         required
+                        disabled={isLoading}
                     >
                         <option value="">Select Option</option>
                         <option value="fine-dining">Fine Dining</option>
@@ -110,6 +157,7 @@ export default function BasicDetailsPage() {
                                     className={styles.checkbox}
                                     checked={formData.cuisineType.includes(cuisine)}
                                     onChange={() => handleCuisineChange(cuisine)}
+                                    disabled={isLoading}
                                 />
                                 {cuisine}
                             </label>
@@ -128,6 +176,7 @@ export default function BasicDetailsPage() {
                         placeholder="Ex. 1984 (optional)"
                         value={formData.yearEstablished}
                         onChange={handleInputChange}
+                        disabled={isLoading}
                     />
                 </div>
 
@@ -139,8 +188,8 @@ export default function BasicDetailsPage() {
                     >
                         Skip for now
                     </button>
-                    <button type="submit" className={styles.btnNext}>
-                        Save Changes
+                    <button type="submit" className={styles.btnNext} disabled={isSaving}>
+                        {isSaving ? 'Saving...' : 'Save Changes'}
                     </button>
                 </div>
             </form>
